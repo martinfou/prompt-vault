@@ -1,5 +1,6 @@
 // Prompt Vault - Button Functionality Test Script
 // Run this in the browser console on index.html
+// Note: File is located in tests/ directory, but should be run from root index.html
 
 (function() {
     console.log('%c🧪 Prompt Vault - Button Tests', 'font-size: 20px; font-weight: bold; color: #3b82f6;');

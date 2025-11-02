@@ -3,6 +3,7 @@
  * Creates a test prompt with tags and verifies functionality
  * 
  * Usage: Open index.html in browser, open console, paste and run this script
+ * Note: File is located in tests/ directory, but should be run from root index.html
  */
 
 (function() {

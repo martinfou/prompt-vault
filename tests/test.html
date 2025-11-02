@@ -141,7 +141,7 @@
         <div class="controls">
             <button class="btn-primary" onclick="runTests()">▶ Run All Tests</button>
             <button class="btn-secondary" onclick="clearResults()">🗑️ Clear Results</button>
-            <button class="btn-secondary" onclick="window.open('index.html', '_blank')">🔗 Open App</button>
+            <button class="btn-secondary" onclick="window.open('../index.html', '_blank')">🔗 Open App</button>
         </div>
 
         <div class="summary" id="summary" style="display: none;">
@@ -316,7 +316,7 @@
             if (!iframe) {
                 iframe = document.createElement('iframe');
                 iframe.id = 'app-iframe';
-                iframe.src = 'index.html';
+                iframe.src = '../index.html';
                 iframe.style.width = '100%';
                 iframe.style.height = '600px';
                 iframe.style.border = '1px solid #e5e7eb';

@@ -273,9 +273,9 @@ Prompt Vault is a well-designed, single-page web application for managing LLM pr
    - Console-based test results
 
 2. **Test Files**
-   - `test.html` - Automated test suite
-   - `test-buttons.html` - Button functionality tests
-   - `test-script.js` - Console test script
+   - `tests/test.html` - Automated test suite
+   - `tests/test-buttons.html` - Button functionality tests
+   - `tests/test-script.js` - Console test script
 
 ### ⚠️ Testing Gaps
 

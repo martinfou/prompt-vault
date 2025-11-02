@@ -59,7 +59,7 @@ To verify tag functionality, you can create a test prompt using the browser cons
 
 1. Open `index.html` in your browser
 2. Open Developer Console (F12)
-3. Run the test script from `test-create-prompt.js` OR manually create:
+3. Run the test script from `tests/test-create-prompt.js` OR manually create:
 
 ```javascript
 // Get Alpine.js instance
@@ -96,7 +96,7 @@ app.filterPrompts();
    - Search for the prompt
 
 2. **Automated Testing:**
-   - Open `test-page.html` in browser
+   - Open `tests/test-page.html` in browser
    - Click "Open Application"
    - Click "Run Tests"
    - Check results
@@ -104,7 +104,7 @@ app.filterPrompts();
 3. **Console Testing:**
    - Open `index.html` in browser
    - Open console (F12)
-   - Copy and paste `test-create-prompt.js` content
+   - Copy and paste `tests/test-create-prompt.js` content
    - Run and check results
 
 ### 📊 Test Results
@@ -132,9 +132,9 @@ app.filterPrompts();
 ### 📚 Documentation
 
 - **README.md** - User guide and setup instructions
-- **APPLICATION_REVIEW.md** - Comprehensive code review
-- **test-create-prompt.js** - Test script for console
-- **test-page.html** - Interactive test page
+- **docs/APPLICATION_REVIEW.md** - Comprehensive code review
+- **tests/test-create-prompt.js** - Test script for console
+- **tests/test-page.html** - Interactive test page
 
 ---
 

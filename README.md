@@ -148,17 +148,19 @@ General navigation:
 
 ```
 prompt-vault/
-├── index.html          # Main application file
+├── index.html          # Main application file (entry point)
 ├── README.md           # Project documentation
 ├── LICENSE             # MIT License
 ├── .gitignore          # Git ignore rules
-├── test.html           # Automated test suite
-├── test-buttons.html   # Button functionality tests
-├── test-page.html      # Interactive test page
-├── test-script.js      # Console-based test script
-├── test-create-prompt.js # Test script for creating prompts
-├── APPLICATION_REVIEW.md # Comprehensive code review
-└── TESTING_SUMMARY.md  # Testing documentation
+├── docs/               # Documentation
+│   ├── APPLICATION_REVIEW.md # Comprehensive code review
+│   └── TESTING_SUMMARY.md    # Testing documentation
+└── tests/              # Test files
+    ├── test.html           # Automated test suite
+    ├── test-buttons.html   # Button functionality tests
+    ├── test-page.html      # Interactive test page
+    ├── test-script.js      # Console-based test script
+    └── test-create-prompt.js # Test script for creating prompts
 ```
 
 ## Technical Details
@@ -213,9 +215,10 @@ prompt-vault/
 ## Development
 
 ### Running Tests
-- Open `test.html` in your browser for automated button tests
-- Or run `test-script.js` in the browser console on `index.html`
+- Open `tests/test.html` in your browser for automated button tests
+- Or run `tests/test-script.js` in the browser console on `index.html`
 - Use the "🧪 Test Buttons" button in the app header for quick tests
+- Interactive test page: `tests/test-page.html`
 
 ### Customization
 - Modify `index.html` directly to customize the application

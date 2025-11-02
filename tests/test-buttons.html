@@ -69,7 +69,7 @@
         <h2>Test Controls</h2>
         <button onclick="runAllTests()">Run All Tests</button>
         <button onclick="clearResults()">Clear Results</button>
-        <button onclick="window.open('index.html', '_blank')">Open App in New Tab</button>
+        <button onclick="window.open('../index.html', '_blank')">Open App in New Tab</button>
     </div>
 
     <div class="test-section">
@@ -252,7 +252,7 @@
             // Open the app in an iframe for testing
             const iframe = document.createElement('iframe');
             iframe.id = 'app-iframe';
-            iframe.src = 'index.html';
+            iframe.src = '../index.html';
             iframe.style.width = '100%';
             iframe.style.height = '600px';
             iframe.style.border = '1px solid #ccc';

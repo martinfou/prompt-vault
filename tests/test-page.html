@@ -122,7 +122,7 @@
             <button onclick="openApp()">📱 Open Application</button>
             <button onclick="runTests()" class="secondary">🧪 Run Tests</button>
             <button onclick="clearResults()" class="secondary">🗑️ Clear Results</button>
-            <button onclick="window.open('index.html', '_blank')">🔗 Open in New Tab</button>
+            <button onclick="window.open('../index.html', '_blank')">🔗 Open in New Tab</button>
         </div>
 
         <div id="app-container"></div>
@@ -144,7 +144,7 @@
             
             appIframe = document.createElement('iframe');
             appIframe.id = 'app-iframe';
-            appIframe.src = 'index.html';
+                appIframe.src = '../index.html';
             appIframe.style.width = '100%';
             appIframe.style.height = '800px';
             appIframe.style.border = '2px solid #e5e7eb';
