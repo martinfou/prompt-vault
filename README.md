@@ -10,8 +10,8 @@ A modern, single-page web application for storing, organizing, and managing LLM 
 - ✅ **Tags**: Tag prompts with multiple tags for flexible organization
 - ✅ **Search**: Full-text search across titles, content, tags, and categories
 - ✅ **Filtering**: Filter prompts by category and tags
-- ✅ **Templates**: 24 pre-built prompt templates organized by framework:
-  - **CRISPE Framework** (9 templates):
+- ✅ **Templates**: 27 pre-built prompt templates organized by framework:
+  - **CRISPE Framework** (12 templates):
     - Professional Git Commit Message Generator
     - Senior Programmer Assistant
     - Scrum Master - Sprint Planning Assistant
@@ -21,6 +21,9 @@ A modern, single-page web application for storing, organizing, and managing LLM 
     - UX Designer & User Experience Architect
     - Individual Contributor Assistant
     - Engineering Manager Assistant
+    - Spring Boot MapStruct Mapper Example
+    - Spring Boot WebClient Example
+    - Professional Unit Test with Mockito & JUnit 5
   - **Elavis Framework** (7 templates):
     - Content Generator
     - Professional Email Writer

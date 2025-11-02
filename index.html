@@ -263,6 +263,9 @@
                                     <option value="ux-designer">UX Designer (CRISPE)</option>
                                     <option value="individual-contributor">Individual Contributor Assistant (CRISPE)</option>
                                     <option value="engineering-manager">Engineering Manager Assistant (CRISPE)</option>
+                                    <option value="springboot-mapstruct">Spring Boot MapStruct Mapper Example (CRISPE)</option>
+                                    <option value="springboot-webclient">Spring Boot WebClient Example (CRISPE)</option>
+                                    <option value="springboot-unit-test">Professional Unit Test with Mockito & JUnit 5 (CRISPE)</option>
                                 </optgroup>
                                 <optgroup label="Elavis Framework">
                                     <option value="content-generator">Content Generator (Elavis)</option>
@@ -2002,6 +2005,387 @@ Create documentation for the following work:`
 ---
 
 Create management documentation for the following:`
+                        },
+                        'springboot-mapstruct': {
+                            title: 'Spring Boot MapStruct Mapper Example (CRISPE)',
+                            category: 'Code Example Prompt',
+                            tags: ['springboot', 'java', 'mapstruct', 'mapper', 'code-example'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are working on a Spring Boot Java application where you need to map between domain entities and DTOs (Data Transfer Objects). MapStruct is a code generation library that provides compile-time mapping implementations, eliminating runtime overhead and providing type-safe mapping between Java beans.
+
+**Role**: Act as an expert Java developer specializing in Spring Boot applications and MapStruct. You excel at creating clean, efficient mapper interfaces with proper annotations, handling complex mapping scenarios, and following Spring Boot best practices.
+
+**Instruction**: Provide professional MapStruct mapper examples with complete, production-ready code snippets. Include the mapper interface, entity classes, DTO classes, and demonstrate best practices for mapping, null handling, and custom mapping methods.
+
+**Subject**: Spring Boot MapStruct mapper implementation, entity-to-DTO mapping, custom mapping methods, null handling, and MapStruct best practices.
+
+**Preset**:
+- Format: Complete Java code examples with proper package structure
+- Style: Follow Spring Boot conventions and Java best practices
+- Annotations: Use @Mapper, @Mapping, @Named, and other MapStruct annotations correctly
+- Structure: Include interface, entity, DTO, and configuration examples
+- Best Practices: Handle null values, use component model, demonstrate custom methods
+- Documentation: Include Javadoc comments explaining complex mappings
+
+**Exception**:
+- Do not provide code without proper null handling
+- Do not skip the @Mapper annotation configuration
+- Do not forget to include componentModel = "spring" for Spring integration
+- Do not omit custom mapping methods when needed
+- Do not ignore field mapping when names differ
+- Do not skip example entity and DTO classes
+
+---
+
+**Example MapStruct Mapper Implementation:**
+
+\`\`\`java
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.factory.Mappers;
+
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface UserMapper {
+    
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+    
+    @Mapping(source = "emailAddress", target = "email")
+    @Mapping(source = "createdAt", target = "registrationDate", dateFormat = "yyyy-MM-dd")
+    @Mapping(target = "id", ignore = true)
+    UserDto toDto(User user);
+    
+    @Mapping(source = "email", target = "emailAddress")
+    @Mapping(target = "createdAt", ignore = true)
+    User toEntity(UserDto userDto);
+    
+    List<UserDto> toDtoList(List<User> users);
+    
+    @Mapping(source = "user.name", target = "userName")
+    @Mapping(source = "user.email", target = "userEmail")
+    @Mapping(source = "profile.bio", target = "bio")
+    UserProfileDto toUserProfileDto(User user, UserProfile profile);
+}
+\`\`\`
+
+**Entity Example:**
+\`\`\`java
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    private String emailAddress;
+    
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+    
+    // Getters and setters
+}
+\`\`\`
+
+**DTO Example:**
+\`\`\`java
+public class UserDto {
+    private Long id;
+    private String name;
+    private String email;
+    private String registrationDate;
+    
+    // Getters and setters
+}
+\`\`\`
+
+Provide a MapStruct mapper implementation for the following mapping requirements:`
+                        },
+                        'springboot-webclient': {
+                            title: 'Spring Boot WebClient Example (CRISPE)',
+                            category: 'Code Example Prompt',
+                            tags: ['springboot', 'java', 'webclient', 'reactive', 'rest-client', 'code-example'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are working on a Spring Boot application that needs to make HTTP calls to external REST APIs. Spring WebClient is the modern, reactive, non-blocking HTTP client introduced in Spring 5, replacing the older RestTemplate. WebClient supports reactive streams and provides better performance for concurrent requests.
+
+**Role**: Act as an expert Java developer specializing in Spring Boot reactive programming and WebClient. You excel at creating clean, efficient HTTP client implementations with proper error handling, retry logic, timeouts, and reactive stream composition.
+
+**Instruction**: Provide professional WebClient examples with complete, production-ready code snippets. Include WebClient configuration, service implementations, error handling, retry logic, and demonstrate best practices for reactive programming.
+
+**Subject**: Spring Boot WebClient implementation, reactive HTTP clients, error handling, retry mechanisms, timeout configuration, and reactive programming best practices.
+
+**Preset**:
+- Format: Complete Java code examples with proper package structure
+- Style: Follow Spring Boot reactive programming conventions
+- Configuration: Include WebClient bean configuration with proper timeouts and error handling
+- Structure: Include configuration class, service class, and usage examples
+- Best Practices: Use reactive types (Mono/Flux), proper error handling, retry logic
+- Documentation: Include comments explaining reactive patterns and error handling
+
+**Exception**:
+- Do not provide code without error handling
+- Do not skip WebClient bean configuration
+- Do not forget to handle timeouts and connection pooling
+- Do not omit retry logic for transient failures
+- Do not ignore proper reactive type usage (Mono/Flux)
+- Do not skip example DTOs and response handling
+
+---
+
+**Example WebClient Configuration:**
+\`\`\`java
+@Configuration
+public class WebClientConfig {
+    
+    @Bean
+    public WebClient webClient(WebClient.Builder builder) {
+        return builder
+            .baseUrl("https://api.example.com")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+            .clientConnector(new ReactorClientHttpConnector(
+                HttpClient.create()
+                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
+                    .responseTimeout(Duration.ofSeconds(5))
+                    .doOnConnected(conn -> 
+                        conn.addHandlerLast(new ReadTimeoutHandler(5))
+                            .addHandlerLast(new WriteTimeoutHandler(5))
+                    )
+            ))
+            .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(1024 * 1024))
+            .build();
+    }
+}
+\`\`\`
+
+**Service Implementation Example:**
+\`\`\`java
+@Service
+@Slf4j
+public class ApiService {
+    
+    private final WebClient webClient;
+    
+    public ApiService(WebClient webClient) {
+        this.webClient = webClient;
+    }
+    
+    public Mono<UserDto> getUserById(Long id) {
+        return webClient.get()
+            .uri("/users/{id}", id)
+            .retrieve()
+            .bodyToMono(UserDto.class)
+            .timeout(Duration.ofSeconds(5))
+            .retryWhen(Retry.backoff(3, Duration.ofSeconds(1))
+                .filter(throwable -> throwable instanceof WebClientResponseException)
+                .onRetryExhaustedThrow((retryBackoffSpec, retrySignal) -> {
+                    throw new ServiceException("Failed to fetch user after retries", 
+                        retrySignal.failure());
+                }))
+            .doOnError(WebClientResponseException.class, ex -> 
+                log.error("Error fetching user {}: {}", id, ex.getStatusCode()))
+            .onErrorResume(WebClientResponseException.NotFound.class, 
+                ex -> Mono.empty())
+            .onErrorResume(WebClientResponseException.class, 
+                ex -> Mono.error(new ServiceException("API error", ex)));
+    }
+    
+    public Flux<UserDto> getAllUsers() {
+        return webClient.get()
+            .uri("/users")
+            .retrieve()
+            .bodyToFlux(UserDto.class)
+            .timeout(Duration.ofSeconds(10))
+            .doOnError(error -> log.error("Error fetching users", error));
+    }
+    
+    public Mono<UserDto> createUser(UserDto userDto) {
+        return webClient.post()
+            .uri("/users")
+            .bodyValue(userDto)
+            .retrieve()
+            .bodyToMono(UserDto.class)
+            .timeout(Duration.ofSeconds(5));
+    }
+}
+\`\`\`
+
+Provide a WebClient implementation for the following API requirements:`
+                        },
+                        'springboot-unit-test': {
+                            title: 'Professional Unit Test with Mockito & JUnit 5 (CRISPE)',
+                            category: 'Code Example Prompt',
+                            tags: ['springboot', 'java', 'junit5', 'mockito', 'testing', 'unit-test', 'code-example'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are writing unit tests for a Spring Boot application using JUnit 5 and Mockito. Professional unit tests should be isolated, fast, reliable, and test behavior rather than implementation. Tests should follow the AAA pattern (Arrange, Act, Assert) and use proper mocking to isolate the unit under test.
+
+**Role**: Act as an expert Java test engineer specializing in Spring Boot unit testing with JUnit 5 and Mockito. You excel at writing clean, maintainable tests with proper mocking, assertions, and test organization following best practices.
+
+**Instruction**: Provide professional unit test examples with complete, production-ready test code. Include test class structure, proper mocking with Mockito, JUnit 5 annotations, assertions, and demonstrate best practices for test organization and maintainability.
+
+**Subject**: JUnit 5 unit testing, Mockito mocking, Spring Boot test annotations, test organization, assertions, and unit testing best practices.
+
+**Preset**:
+- Format: Complete Java test code examples with proper package structure
+- Style: Follow JUnit 5 and Mockito best practices
+- Structure: Use @ExtendWith(MockitoExtension.class), @Mock, @InjectMocks annotations
+- Pattern: Follow AAA pattern (Arrange, Act, Assert)
+- Assertions: Use AssertJ or JUnit 5 assertions with descriptive messages
+- Best Practices: Test one behavior per test, use descriptive test names, avoid test interdependencies
+
+**Exception**:
+- Do not provide tests without proper setup and teardown
+- Do not skip mocking dependencies
+- Do not forget to verify interactions when needed
+- Do not omit test data setup (Arrange phase)
+- Do not ignore edge cases and error scenarios
+- Do not skip assertions with descriptive messages
+
+---
+
+**Example Unit Test Implementation:**
+
+\`\`\`java
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+@DisplayName("User Service Unit Tests")
+class UserServiceTest {
+    
+    @Mock
+    private UserRepository userRepository;
+    
+    @Mock
+    private EmailService emailService;
+    
+    @InjectMocks
+    private UserService userService;
+    
+    private User testUser;
+    private UserDto testUserDto;
+    
+    @BeforeEach
+    void setUp() {
+        testUser = User.builder()
+            .id(1L)
+            .name("John Doe")
+            .email("john.doe@example.com")
+            .build();
+        
+        testUserDto = UserDto.builder()
+            .name("John Doe")
+            .email("john.doe@example.com")
+            .build();
+    }
+    
+    @Test
+    @DisplayName("Should return user when user exists")
+    void findById_WhenUserExists_ShouldReturnUser() {
+        // Arrange
+        when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
+        
+        // Act
+        Optional<User> result = userService.findById(1L);
+        
+        // Assert
+        assertThat(result).isPresent();
+        assertThat(result.get().getId()).isEqualTo(1L);
+        assertThat(result.get().getName()).isEqualTo("John Doe");
+        verify(userRepository, times(1)).findById(1L);
+    }
+    
+    @Test
+    @DisplayName("Should return empty when user does not exist")
+    void findById_WhenUserDoesNotExist_ShouldReturnEmpty() {
+        // Arrange
+        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
+        
+        // Act
+        Optional<User> result = userService.findById(999L);
+        
+        // Assert
+        assertThat(result).isEmpty();
+        verify(userRepository, times(1)).findById(999L);
+    }
+    
+    @Test
+    @DisplayName("Should create user and send email")
+    void createUser_WhenValidData_ShouldCreateAndSendEmail() {
+        // Arrange
+        when(userRepository.save(any(User.class))).thenReturn(testUser);
+        doNothing().when(emailService).sendWelcomeEmail(anyString());
+        
+        // Act
+        User createdUser = userService.createUser(testUserDto);
+        
+        // Assert
+        assertThat(createdUser).isNotNull();
+        assertThat(createdUser.getName()).isEqualTo("John Doe");
+        verify(userRepository, times(1)).save(any(User.class));
+        verify(emailService, times(1)).sendWelcomeEmail(eq("john.doe@example.com"));
+    }
+    
+    @Test
+    @DisplayName("Should throw exception when email already exists")
+    void createUser_WhenEmailExists_ShouldThrowException() {
+        // Arrange
+        when(userRepository.existsByEmail(anyString())).thenReturn(true);
+        
+        // Act & Assert
+        assertThatThrownBy(() -> userService.createUser(testUserDto))
+            .isInstanceOf(DuplicateEmailException.class)
+            .hasMessage("Email already exists: john.doe@example.com");
+        
+        verify(userRepository, never()).save(any(User.class));
+        verify(emailService, never()).sendWelcomeEmail(anyString());
+    }
+    
+    @Test
+    @DisplayName("Should return all users")
+    void findAll_ShouldReturnAllUsers() {
+        // Arrange
+        List<User> users = List.of(testUser, User.builder().id(2L).name("Jane Doe").build());
+        when(userRepository.findAll()).thenReturn(users);
+        
+        // Act
+        List<User> result = userService.findAll();
+        
+        // Assert
+        assertThat(result).hasSize(2);
+        assertThat(result).contains(testUser);
+        verify(userRepository, times(1)).findAll();
+    }
+}
+\`\`\`
+
+**Test Configuration (application-test.properties):**
+\`\`\`properties
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driver-class-name=org.h2.Driver
+spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.show-sql=false
+\`\`\`
+
+Provide a professional unit test implementation for the following class/method:`
                         }
                     };
 
