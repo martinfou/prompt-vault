@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Vault - Quick Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+        .instructions {
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 6px;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 10px 10px 0;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        button.secondary {
+            background: #6b7280;
+        }
+        button.secondary:hover {
+            background: #4b5563;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .status.success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        iframe {
+            width: 100%;
+            height: 800px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .test-results {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+        }
+        .test-item {
+            padding: 10px;
+            margin: 5px 0;
+            border-left: 4px solid #d1d5db;
+            background: #f9fafb;
+        }
+        .test-item.pass {
+            border-left-color: #10b981;
+            background: #d1fae5;
+        }
+        .test-item.fail {
+            border-left-color: #ef4444;
+            background: #fee2e2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Prompt Vault - Quick Test Page</h1>
+        <p>This page helps you test the Prompt Vault application.</p>
+
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            <ol>
+                <li>Click "Open Application" to load the app in an iframe</li>
+                <li>Wait for the app to load completely</li>
+                <li>Click "Run Tests" to create a test prompt with tags</li>
+                <li>Check the console (F12) for detailed test results</li>
+                <li>Verify the test prompt appears in the application UI</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h2>Test Controls</h2>
+            <button onclick="openApp()">📱 Open Application</button>
+            <button onclick="runTests()" class="secondary">🧪 Run Tests</button>
+            <button onclick="clearResults()" class="secondary">🗑️ Clear Results</button>
+            <button onclick="window.open('index.html', '_blank')">🔗 Open in New Tab</button>
+        </div>
+
+        <div id="app-container"></div>
+
+        <div class="test-results" id="test-results" style="display: none;">
+            <h3>Test Results</h3>
+            <div id="results-content"></div>
+        </div>
+    </div>
+
+    <script>
+        let appIframe = null;
+
+        function openApp() {
+            const container = document.getElementById('app-container');
+            if (appIframe) {
+                container.removeChild(appIframe);
+            }
+            
+            appIframe = document.createElement('iframe');
+            appIframe.id = 'app-iframe';
+            appIframe.src = 'index.html';
+            appIframe.style.width = '100%';
+            appIframe.style.height = '800px';
+            appIframe.style.border = '2px solid #e5e7eb';
+            appIframe.style.borderRadius = '8px';
+            appIframe.style.marginTop = '20px';
+            container.appendChild(appIframe);
+            
+            addResult('Application loaded', 'success', 'Waiting for app to initialize...');
+        }
+
+        function getAppWindow() {
+            const iframe = document.getElementById('app-iframe');
+            if (!iframe || !iframe.contentWindow) {
+                return null;
+            }
+            return iframe.contentWindow;
+        }
+
+        function getAppDocument() {
+            const iframe = document.getElementById('app-iframe');
+            if (!iframe || !iframe.contentDocument) {
+                return null;
+            }
+            return iframe.contentDocument;
+        }
+
+        function addResult(testName, status, message) {
+            const resultsDiv = document.getElementById('test-results');
+            const contentDiv = document.getElementById('results-content');
+            
+            resultsDiv.style.display = 'block';
+            
+            const testItem = document.createElement('div');
+            testItem.className = `test-item ${status}`;
+            testItem.innerHTML = `
+                <strong>${testName}</strong>
+                <span class="status ${status}">${status.toUpperCase()}</span>
+                <div style="margin-top: 5px; color: #6b7280;">${message}</div>
+            `;
+            contentDiv.appendChild(testItem);
+        }
+
+        function clearResults() {
+            document.getElementById('results-content').innerHTML = '';
+            document.getElementById('test-results').style.display = 'none';
+        }
+
+        async function runTests() {
+            const appWindow = getAppWindow();
+            const appDoc = getAppDocument();
+            
+            if (!appWindow || !appDoc) {
+                alert('Please open the application first!');
+                return;
+            }
+
+            clearResults();
+            addResult('Test Initialization', 'success', 'Starting tests...');
+
+            // Wait for Alpine.js to initialize
+            await new Promise(resolve => {
+                const checkAlpine = () => {
+                    if (appWindow.Alpine && appDoc.querySelector('[x-data="app()"]')) {
+                        setTimeout(resolve, 500);
+                    } else {
+                        setTimeout(checkAlpine, 100);
+                    }
+                };
+                checkAlpine();
+            });
+
+            addResult('Alpine.js Initialized', 'success', 'Alpine.js is ready');
+
+            // Get Alpine.js app instance
+            const appElement = appDoc.querySelector('[x-data="app()"]');
+            if (!appElement || !appElement._x_dataStack || !appElement._x_dataStack[0]) {
+                addResult('Get App Instance', 'error', 'Could not access Alpine.js app instance');
+                return;
+            }
+
+            const app = appElement._x_dataStack[0];
+            addResult('App Instance Retrieved', 'success', 'Accessing application data...');
+
+            // Create test prompt
+            const testPrompt = {
+                id: Date.now().toString(),
+                title: 'Test Prompt - AI Code Review Assistant',
+                content: `You are an expert AI code reviewer. Your task is to review the provided code and provide constructive feedback.
+
+**Review Criteria:**
+1. Code Quality: Check for best practices, readability, and maintainability
+2. Performance: Identify potential bottlenecks or optimization opportunities
+3. Security: Look for security vulnerabilities or potential issues
+4. Design Patterns: Evaluate the use of appropriate design patterns
+5. Documentation: Assess code comments and documentation
+
+**Output Format:**
+- **Strengths**: What the code does well
+- **Issues**: Specific problems found with explanations
+- **Suggestions**: Concrete recommendations for improvement
+- **Code Examples**: Provide improved code snippets where relevant
+
+Be specific, constructive, and educational in your feedback.`,
+                category: 'Development',
+                tags: ['code-review', 'ai-assistant', 'best-practices', 'testing'],
+                createdAt: new Date().toISOString(),
+                modifiedAt: new Date().toISOString(),
+                lastUsedAt: null
+            };
+
+            // Add prompt
+            app.prompts.push(testPrompt);
+            app.saveData();
+            app.updateAllTags();
+            app.filterPrompts();
+
+            addResult('Create Test Prompt', 'success', `Created: "${testPrompt.title}" with tags: ${testPrompt.tags.join(', ')}`);
+
+            // Verify tags
+            const allTags = app.allTags;
+            const tagsFound = testPrompt.tags.every(tag => allTags.includes(tag));
+            addResult('Verify Tags', tagsFound ? 'success' : 'error', 
+                tagsFound ? `All tags found: ${allTags.join(', ')}` : 'Some tags missing');
+
+            // Test tag filtering
+            app.selectedTags = ['code-review'];
+            app.filterPrompts();
+            const filteredCount = app.filteredPrompts.length;
+            const foundInFilter = app.filteredPrompts.find(p => p.id === testPrompt.id);
+            addResult('Tag Filtering', foundInFilter ? 'success' : 'error', 
+                `Found ${filteredCount} prompts with 'code-review' tag`);
+
+            // Reset filters
+            app.selectedTags = [];
+            app.selectedCategory = null;
+            app.searchQuery = '';
+            app.filterPrompts();
+
+            // Test search
+            app.searchQuery = 'code review';
+            app.filterPrompts();
+            const searchResults = app.filteredPrompts.length;
+            const foundInSearch = app.filteredPrompts.find(p => p.id === testPrompt.id);
+            addResult('Search Functionality', foundInSearch ? 'success' : 'error', 
+                `Found ${searchResults} results for 'code review'`);
+
+            // Reset search
+            app.searchQuery = '';
+            app.filterPrompts();
+
+            // Final summary
+            addResult('Test Complete', 'success', 
+                `✅ All tests completed! Total prompts: ${app.prompts.length}, Total tags: ${app.allTags.length}`);
+
+            // Refresh the iframe to show the new prompt
+            setTimeout(() => {
+                appIframe.src = appIframe.src;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
+
+

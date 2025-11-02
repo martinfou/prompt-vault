@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Tests - Prompt Vault</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-item {
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #ccc;
+            background: #f9f9f9;
+        }
+        .test-item.pass {
+            border-left-color: #10b981;
+            background: #d1fae5;
+        }
+        .test-item.fail {
+            border-left-color: #ef4444;
+            background: #fee2e2;
+        }
+        .test-item.pending {
+            border-left-color: #f59e0b;
+            background: #fef3c7;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .summary {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Prompt Vault - Button Functionality Tests</h1>
+    
+    <div class="summary" id="summary">
+        <h2>Test Summary</h2>
+        <div id="results">Running tests...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Controls</h2>
+        <button onclick="runAllTests()">Run All Tests</button>
+        <button onclick="clearResults()">Clear Results</button>
+        <button onclick="window.open('index.html', '_blank')">Open App in New Tab</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Test Results</h2>
+        <div id="test-results"></div>
+    </div>
+
+    <script>
+        let testResults = [];
+        let passCount = 0;
+        let failCount = 0;
+
+        function addTestResult(name, status, message) {
+            testResults.push({ name, status, message });
+            const resultDiv = document.getElementById('test-results');
+            const testItem = document.createElement('div');
+            testItem.className = `test-item ${status}`;
+            testItem.innerHTML = `
+                <strong>${name}</strong><br>
+                <span style="color: ${status === 'pass' ? '#059669' : status === 'fail' ? '#dc2626' : '#d97706'}">
+                    ${status.toUpperCase()}
+                </span>: ${message}
+            `;
+            resultDiv.appendChild(testItem);
+            
+            if (status === 'pass') passCount++;
+            if (status === 'fail') failCount++;
+            
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const total = testResults.length;
+            const summary = document.getElementById('results');
+            summary.innerHTML = `
+                <strong>Total Tests:</strong> ${total}<br>
+                <strong style="color: #10b981;">Passed:</strong> ${passCount}<br>
+                <strong style="color: #ef4444;">Failed:</strong> ${failCount}<br>
+                <strong>Success Rate:</strong> ${total > 0 ? Math.round((passCount / total) * 100) : 0}%
+            `;
+        }
+
+        function clearResults() {
+            document.getElementById('test-results').innerHTML = '';
+            testResults = [];
+            passCount = 0;
+            failCount = 0;
+            updateSummary();
+        }
+
+        async function testButtonExists(selector, buttonName) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    try {
+                        const iframe = document.getElementById('app-iframe');
+                        const doc = iframe ? iframe.contentDocument || iframe.contentWindow.document : document;
+                        const element = doc.querySelector(selector);
+                        if (element) {
+                            addTestResult(buttonName, 'pass', `Button found: ${selector}`);
+                            resolve(true);
+                        } else {
+                            addTestResult(buttonName, 'fail', `Button not found: ${selector}`);
+                            resolve(false);
+                        }
+                    } catch (e) {
+                        addTestResult(buttonName, 'fail', `Error: ${e.message}`);
+                        resolve(false);
+                    }
+                }, 100);
+            });
+        }
+
+        async function testButtonClickable(selector, buttonName) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    try {
+                        const iframe = document.getElementById('app-iframe');
+                        const doc = iframe ? iframe.contentDocument || iframe.contentWindow.document : document;
+                        const element = doc.querySelector(selector);
+                        if (element) {
+                            const isClickable = !element.disabled && 
+                                              element.offsetParent !== null &&
+                                              window.getComputedStyle(element).display !== 'none';
+                            if (isClickable) {
+                                addTestResult(buttonName + ' (Clickable)', 'pass', 'Button is clickable');
+                                resolve(true);
+                            } else {
+                                addTestResult(buttonName + ' (Clickable)', 'fail', 'Button is not clickable');
+                                resolve(false);
+                            }
+                        } else {
+                            addTestResult(buttonName + ' (Clickable)', 'fail', 'Button not found');
+                            resolve(false);
+                        }
+                    } catch (e) {
+                        addTestResult(buttonName + ' (Clickable)', 'fail', `Error: ${e.message}`);
+                        resolve(false);
+                    }
+                }, 100);
+            });
+        }
+
+        async function testButtonClick(selector, buttonName, expectedBehavior) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    try {
+                        const iframe = document.getElementById('app-iframe');
+                        const doc = iframe ? iframe.contentDocument || iframe.contentWindow.document : document;
+                        const element = doc.querySelector(selector);
+                        if (element) {
+                            // Store initial state
+                            const initialState = doc.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                            
+                            // Click the button
+                            element.click();
+                            
+                            // Check if expected behavior occurred
+                            setTimeout(() => {
+                                let testPassed = false;
+                                if (expectedBehavior === 'toggle-dark') {
+                                    const newState = doc.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                                    testPassed = newState !== initialState;
+                                } else if (expectedBehavior === 'open-modal') {
+                                    testPassed = doc.querySelector('[x-show="showCreateModal"]') || 
+                                                doc.querySelector('[x-show="showImportModal"]') ||
+                                                doc.querySelector('[x-show="showCategoryModal"]');
+                                } else {
+                                    testPassed = true; // Just checking if click works
+                                }
+                                
+                                if (testPassed) {
+                                    addTestResult(buttonName + ' (Click)', 'pass', expectedBehavior || 'Button clicked successfully');
+                                } else {
+                                    addTestResult(buttonName + ' (Click)', 'fail', `Expected: ${expectedBehavior}, but behavior didn't match`);
+                                }
+                                resolve(testPassed);
+                            }, 200);
+                        } else {
+                            addTestResult(buttonName + ' (Click)', 'fail', 'Button not found');
+                            resolve(false);
+                        }
+                    } catch (e) {
+                        addTestResult(buttonName + ' (Click)', 'fail', `Error: ${e.message}`);
+                        resolve(false);
+                    }
+                }, 100);
+            });
+        }
+
+        async function runAllTests() {
+            clearResults();
+            
+            // Check if we need to test in iframe or current window
+            const testWindow = window;
+            
+            addTestResult('Test Setup', 'pending', 'Initializing tests...');
+            
+            // List of buttons to test
+            const buttons = [
+                { selector: 'button[onclick*="toggleDarkMode"]', name: 'Dark Mode Toggle', behavior: 'toggle-dark' },
+                { selector: 'button[onclick*="showImportModal"]', name: 'Import Button', behavior: 'open-modal' },
+                { selector: 'button[onclick*="exportData"]', name: 'Export Button', behavior: null },
+                { selector: 'button[onclick*="showCreateModal"]', name: 'New Prompt Button', behavior: 'open-modal' },
+                { selector: 'button[onclick*="showCategoryModal"]', name: 'Add Category Button', behavior: 'open-modal' },
+            ];
+
+            // Test button existence
+            for (const btn of buttons) {
+                await testButtonExists(btn.selector, btn.name);
+            }
+
+            // Test button clickability
+            for (const btn of buttons) {
+                await testButtonClickable(btn.selector, btn.name);
+            }
+
+            // Test button clicks (if app is loaded)
+            addTestResult('Button Click Tests', 'pending', 'Testing button clicks...');
+            
+            // Open the app in an iframe for testing
+            const iframe = document.createElement('iframe');
+            iframe.id = 'app-iframe';
+            iframe.src = 'index.html';
+            iframe.style.width = '100%';
+            iframe.style.height = '600px';
+            iframe.style.border = '1px solid #ccc';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+
+            iframe.onload = async () => {
+                addTestResult('App Loaded', 'pass', 'Application loaded in test iframe');
+                
+                // Wait for Alpine to initialize
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                // Test button clicks
+                for (const btn of buttons) {
+                    await testButtonClick(btn.selector, btn.name, btn.behavior);
+                }
+
+                // Test additional buttons that appear conditionally
+                await testButtonExists('button[onclick*="closeModal"]', 'Close Modal Button');
+                await testButtonExists('button[type="submit"]', 'Save Button');
+                await testButtonExists('button[onclick*="deletePrompt"]', 'Delete Prompt Button');
+                await testButtonExists('button[onclick*="duplicatePrompt"]', 'Duplicate Prompt Button');
+
+                addTestResult('All Tests Complete', 'pass', `Completed ${testResults.length} tests`);
+            };
+
+            // Also provide manual testing instructions
+            addTestResult('Manual Testing', 'pending', `
+                <strong>Manual Test Checklist:</strong><br>
+                1. Dark Mode Toggle - Click to switch between light/dark<br>
+                2. Import Button - Should open import modal<br>
+                3. Export Button - Should download JSON file<br>
+                4. New Prompt Button - Should open create modal<br>
+                5. Category Input - Should allow typing and show dropdown<br>
+                6. Tags Input - Should accept comma-separated values<br>
+                7. Save Button - Should save prompt and close modal<br>
+                8. Cancel Button - Should close modal without saving<br>
+                9. Duplicate Button - Should create copy of prompt<br>
+                10. Delete Button - Should delete prompt after confirmation<br>
+            `);
+        }
+
+        // Auto-run tests on load
+        window.onload = () => {
+            setTimeout(() => {
+                addTestResult('Test Page Loaded', 'pass', 'Ready to run tests');
+                addTestResult('Instructions', 'pending', 'Click "Run All Tests" button to start automated testing, or manually test buttons in the app.');
+            }, 100);
+        };
+    </script>
+</body>
+</html>

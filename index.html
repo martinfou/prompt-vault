@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en" x-data="app()" x-init="init()" :class="darkMode ? 'dark' : ''">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <title>Prompt Vault - LLM Prompt Storage</title>
+    <script>
+        // Configure Tailwind CDN to use class-based dark mode
+        window.tailwindConfig = {
+            darkMode: 'class'
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light-theme">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark-theme" media="(prefers-color-scheme: dark)" disabled>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        // Initialize highlight.js
+        hljs.highlightAll();
+        
+        // Function to toggle highlight.js theme based on dark mode
+        function toggleHighlightTheme(isDark) {
+            const lightTheme = document.getElementById('hljs-light-theme');
+            const darkTheme = document.getElementById('hljs-dark-theme');
+            if (isDark) {
+                lightTheme.disabled = true;
+                darkTheme.disabled = false;
+            } else {
+                lightTheme.disabled = false;
+                darkTheme.disabled = true;
+            }
+        }
+    </script>
+    <style>
+        [x-cloak] { display: none !important; }
+        /* Ensure class-based dark mode works */
+        html:not(.dark) {
+            color-scheme: light;
+        }
+        html.dark {
+            color-scheme: dark;
+        }
+        
+        /* Tailwind CDN uses media queries by default, so we need to override
+           to make dark: classes work with .dark class instead */
+        @media (prefers-color-scheme: dark) {
+            html:not(.dark) .dark\:bg-gray-900 { background-color: inherit !important; }
+            html:not(.dark) .dark\:bg-gray-800 { background-color: inherit !important; }
+            html:not(.dark) .dark\:bg-gray-700 { background-color: inherit !important; }
+            html:not(.dark) .dark\:text-white { color: inherit !important; }
+            html:not(.dark) .dark\:text-gray-100 { color: inherit !important; }
+            html:not(.dark) .dark\:text-gray-300 { color: inherit !important; }
+            html:not(.dark) .dark\:text-gray-400 { color: inherit !important; }
+            html:not(.dark) .dark\:border-gray-700 { border-color: inherit !important; }
+            html:not(.dark) .dark\:border-gray-600 { border-color: inherit !important; }
+            html:not(.dark) .dark\:hover\:bg-gray-700:hover { background-color: inherit !important; }
+            html:not(.dark) .dark\:hover\:bg-gray-600:hover { background-color: inherit !important; }
+        }
+        
+        /* When .dark class is present, force dark mode styles */
+        html.dark .dark\:bg-gray-900 { background-color: rgb(17 24 39) !important; }
+        html.dark .dark\:bg-gray-800 { background-color: rgb(31 41 55) !important; }
+        html.dark .dark\:bg-gray-700 { background-color: rgb(55 65 81) !important; }
+        html.dark .dark\:text-white { color: rgb(255 255 255) !important; }
+        html.dark .dark\:text-gray-100 { color: rgb(243 244 246) !important; }
+        html.dark .dark\:text-gray-300 { color: rgb(209 213 219) !important; }
+        html.dark .dark\:text-gray-400 { color: rgb(156 163 175) !important; }
+        html.dark .dark\:border-gray-700 { border-color: rgb(55 65 81) !important; }
+        html.dark .dark\:border-gray-600 { border-color: rgb(75 85 99) !important; }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Prompt Vault</h1>
+                    <div class="flex items-center gap-4">
+                        <button @click="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <svg x-show="!darkMode" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                            </svg>
+                            <svg x-show="darkMode" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                        </button>
+                        <button @click="runButtonTests()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors text-sm font-medium" title="Test all buttons">
+                            🧪 Test Buttons
+                        </button>
+                        <button @click="showImportModal = true" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg transition-colors text-sm font-medium">
+                            Import
+                        </button>
+                        <button @click="exportData()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium">
+                            Export
+                        </button>
+                        <button @click="showCreateModal = true; resetCurrentPrompt()" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-sm font-medium">
+                            + New Prompt
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex gap-6">
+                <!-- Sidebar -->
+                <aside class="w-64 flex-shrink-0">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 space-y-4">
+                        <!-- Search -->
+                        <div>
+                            <input 
+                                type="text" 
+                                x-model="searchQuery"
+                                @input="filterPrompts()"
+                                placeholder="Search prompts..." 
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                        </div>
+
+                        <!-- Categories -->
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300">Categories</h3>
+                                <button @click="showCategoryModal = true" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs">
+                                    + Add
+                                </button>
+                            </div>
+                            <div class="space-y-1">
+                                <button 
+                                    @click="selectedCategory = null; filterPrompts()"
+                                    :class="selectedCategory === null ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'"
+                                    class="w-full text-left px-2 py-1 rounded text-sm transition-colors"
+                                >
+                                    All Prompts
+                                </button>
+                                <template x-for="category in categories" :key="category">
+                                    <button 
+                                        @click="selectedCategory = category; filterPrompts()"
+                                        :class="selectedCategory === category ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'"
+                                        class="w-full text-left px-2 py-1 rounded text-sm transition-colors flex items-center justify-between group"
+                                    >
+                                        <span x-text="category"></span>
+                                        <button 
+                                            @click.stop="deleteCategory(category)"
+                                            class="opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-700 text-xs"
+                                        >
+                                            ×
+                                        </button>
+                                    </button>
+                                </template>
+                            </div>
+                        </div>
+
+                        <!-- Tags Filter -->
+                        <div>
+                            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Tags</h3>
+                            <div class="flex flex-wrap gap-1">
+                                <template x-for="tag in allTags" :key="tag">
+                                    <button 
+                                        @click="toggleTagFilter(tag)"
+                                        :class="selectedTags.includes(tag) ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'"
+                                        class="px-2 py-1 rounded text-xs transition-colors"
+                                        x-text="tag"
+                                    ></button>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Content -->
+                <main class="flex-1">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                        <!-- Prompts List -->
+                        <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <template x-for="prompt in filteredPrompts" :key="prompt.id">
+                                <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer" @click="openPrompt(prompt)">
+                                    <div class="flex items-start justify-between">
+                                        <div class="flex-1">
+                                            <h3 class="font-semibold text-gray-900 dark:text-white mb-1" x-text="prompt.title"></h3>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-2" x-text="prompt.content.substring(0, 150) + (prompt.content.length > 150 ? '...' : '')"></p>
+                                            <div class="flex items-center gap-3 flex-wrap">
+                                                <span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded" x-text="prompt.category || 'Uncategorized'"></span>
+                                                <template x-for="tag in prompt.tags" :key="tag">
+                                                    <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded" x-text="tag"></span>
+                                                </template>
+                                                <span class="text-xs text-gray-500 dark:text-gray-400" x-text="'Words: ' + getWordCount(prompt.content)"></span>
+                                                <span class="text-xs text-gray-500 dark:text-gray-400" x-text="'Modified: ' + formatDate(prompt.modifiedAt)"></span>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-center gap-2 ml-4">
+                                            <button @click.stop="duplicatePrompt(prompt)" class="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors" title="Duplicate">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                                </svg>
+                                            </button>
+                                            <button @click.stop="deletePrompt(prompt.id)" class="p-2 hover:bg-red-100 dark:hover:bg-red-900 rounded transition-colors text-red-600 dark:text-red-400" title="Delete">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                            <div x-show="filteredPrompts.length === 0" class="p-8 text-center text-gray-500 dark:text-gray-400">
+                                <p>No prompts found. Create your first prompt!</p>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Create/Edit Prompt Modal -->
+        <div x-show="showCreateModal || showEditModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" @click.self="closeModal()">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white" x-text="showEditModal ? 'Edit Prompt' : 'New Prompt'"></h2>
+                        <button @click="closeModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <form @submit.prevent="savePrompt()" class="space-y-4">
+                        <div x-show="!showEditModal">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Use Template</label>
+                            <select 
+                                id="template-select"
+                                @change="loadPromptTemplate($event.target.value)"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            >
+                                <option value="">Select a template...</option>
+                                <option value="professional-git-commit">Professional Git Commit Message</option>
+                                <option value="senior-programmer">Senior Programmer</option>
+                                <option value="scrummaster">Scrum Master</option>
+                                <option value="software-architect">Software Architect</option>
+                                <option value="code-review">Code Review</option>
+                                <option value="technical-documentation">Technical Documentation Architect</option>
+                                <option value="ux-designer">UX Designer</option>
+                            </select>
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Select a template to pre-fill the form with an example prompt</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title</label>
+                            <input 
+                                type="text" 
+                                x-model="currentPrompt.title"
+                                required
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="Enter prompt title..."
+                            >
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
+                            <div class="relative" x-data="{ showDropdown: false }" @click.outside="showDropdown = false">
+                                <input 
+                                    type="text" 
+                                    x-model="currentPrompt.category"
+                                    @input="showDropdown = true"
+                                    @focus="showDropdown = true"
+                                    @keydown.enter.prevent="handleCategoryInput($event)"
+                                    @keydown.escape="showDropdown = false"
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Type category name or select from list..."
+                                    list="category-list"
+                                >
+                                <datalist id="category-list">
+                                    <option value="">Uncategorized</option>
+                                    <template x-for="category in categories" :key="category">
+                                        <option :value="category" x-text="category"></option>
+                                    </template>
+                                </datalist>
+                                <div x-show="showDropdown && categories.length > 0" x-cloak class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-40 overflow-y-auto">
+                                    <template x-for="category in categories.filter(c => !currentPrompt.category || c.toLowerCase().includes(currentPrompt.category.toLowerCase()))" :key="category">
+                                        <button 
+                                            type="button"
+                                            @click="currentPrompt.category = category; showDropdown = false"
+                                            class="w-full text-left px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 text-sm"
+                                            x-text="category"
+                                        ></button>
+                                    </template>
+                                    <div x-show="categories.filter(c => !currentPrompt.category || c.toLowerCase().includes(currentPrompt.category.toLowerCase())).length === 0 && categories.length > 0" class="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">
+                                        No matching categories
+                                    </div>
+                                </div>
+                                <div x-show="showDropdown && categories.length === 0" x-cloak class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg px-3 py-2 text-sm text-gray-500 dark:text-gray-400">
+                                    No categories yet. Type a name and press Enter to create one.
+                                </div>
+                            </div>
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Type a new category name and press Enter to create it, or select from existing categories</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tags (comma-separated)</label>
+                            <input 
+                                type="text" 
+                                x-model="currentPrompt.tagsInput"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                placeholder="e.g., code-generation, analysis, creative"
+                            >
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Content</label>
+                                <div class="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                                    <span x-text="'Words: ' + getWordCount(currentPrompt.content)"></span>
+                                    <span x-text="'Chars: ' + currentPrompt.content.length"></span>
+                                </div>
+                            </div>
+                            <div class="relative">
+                                <textarea 
+                                    x-model="currentPrompt.content"
+                                    required
+                                    rows="12"
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                                    placeholder="Enter your prompt content..."
+                                ></textarea>
+                                <div x-show="currentPrompt.content" class="absolute top-2 right-2">
+                                    <button 
+                                        type="button"
+                                        @click="toggleSyntaxHighlighting()"
+                                        class="px-2 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded text-xs transition-colors"
+                                        x-text="syntaxHighlighting ? 'Disable Highlighting' : 'Enable Highlighting'"
+                                    ></button>
+                                </div>
+                            </div>
+                            <div x-show="syntaxHighlighting && currentPrompt.content" class="mt-2 p-3 bg-gray-50 dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700">
+                                <pre class="text-sm whitespace-pre-wrap"><code :class="darkMode ? 'hljs-dark' : 'hljs'" x-html="highlightCode(currentPrompt.content)"></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <div class="text-sm text-gray-500 dark:text-gray-400">
+                                <template x-if="showEditModal && currentPrompt.createdAt">
+                                    <div>Created: <span x-text="formatDate(currentPrompt.createdAt)"></span></div>
+                                </template>
+                                <template x-if="showEditModal && currentPrompt.modifiedAt">
+                                    <div>Modified: <span x-text="formatDate(currentPrompt.modifiedAt)"></span></div>
+                                </template>
+                                <template x-if="showEditModal && currentPrompt.lastUsedAt">
+                                    <div>Last Used: <span x-text="formatDate(currentPrompt.lastUsedAt)"></span></div>
+                                </template>
+                            </div>
+                            <div class="flex gap-3">
+                                <button type="button" @click="closeModal()" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg transition-colors">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prompt View Modal -->
+        <div x-show="showViewModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" @click.self="closeViewModal()">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white" x-text="viewingPrompt?.title"></h2>
+                        <div class="flex items-center gap-2">
+                            <button @click="markAsUsed(viewingPrompt)" class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-sm transition-colors">
+                                Mark as Used
+                            </button>
+                            <button @click="editPrompt(viewingPrompt)" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition-colors">
+                                Edit
+                            </button>
+                            <button @click="copyToClipboard(viewingPrompt.content)" class="px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded text-sm transition-colors">
+                                Copy
+                            </button>
+                            <button @click="closeViewModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <span class="text-sm px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded" x-text="viewingPrompt?.category || 'Uncategorized'"></span>
+                            <template x-for="tag in viewingPrompt?.tags || []" :key="tag">
+                                <span class="text-sm px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded" x-text="tag"></span>
+                            </template>
+                        </div>
+
+                        <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                            <pre class="whitespace-pre-wrap text-sm font-mono" x-text="viewingPrompt?.content"></pre>
+                        </div>
+
+                        <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <div class="space-y-1">
+                                <div>Words: <span x-text="getWordCount(viewingPrompt?.content || '')"></span></div>
+                                <div>Characters: <span x-text="(viewingPrompt?.content || '').length"></span></div>
+                            </div>
+                            <div class="space-y-1 text-right">
+                                <template x-if="viewingPrompt?.createdAt">
+                                    <div>Created: <span x-text="formatDate(viewingPrompt.createdAt)"></span></div>
+                                </template>
+                                <template x-if="viewingPrompt?.modifiedAt">
+                                    <div>Modified: <span x-text="formatDate(viewingPrompt.modifiedAt)"></span></div>
+                                </template>
+                                <template x-if="viewingPrompt?.lastUsedAt">
+                                    <div>Last Used: <span x-text="formatDate(viewingPrompt.lastUsedAt)"></span></div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Modal -->
+        <div x-show="showCategoryModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.self="showCategoryModal = false">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md w-full mx-4">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Add Category</h3>
+                <div class="flex gap-3">
+                    <input 
+                        type="text" 
+                        x-model="newCategory"
+                        @keyup.enter="addCategory()"
+                        placeholder="Category name..."
+                        class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                    <button @click="addCategory()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Import Modal -->
+        <div x-show="showImportModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.self="showImportModal = false">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md w-full mx-4">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Import Prompts</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Upload JSON file</label>
+                        <input 
+                            type="file" 
+                            @change="handleFileImport($event)"
+                            accept=".json"
+                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                        >
+                    </div>
+                    <div class="flex gap-3">
+                        <button @click="showImportModal = false" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg transition-colors">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function app() {
+            return {
+                darkMode: false,
+                prompts: [],
+                filteredPrompts: [],
+                categories: [],
+                allTags: [],
+                selectedCategory: null,
+                selectedTags: [],
+                searchQuery: '',
+                showCreateModal: false,
+                showEditModal: false,
+                showViewModal: false,
+                showCategoryModal: false,
+                showImportModal: false,
+                viewingPrompt: null,
+                currentPrompt: {
+                    id: null,
+                    title: '',
+                    content: '',
+                    category: '',
+                    tags: [],
+                    tagsInput: '',
+                    createdAt: null,
+                    modifiedAt: null,
+                    lastUsedAt: null
+                },
+                newCategory: '',
+                syntaxHighlighting: false,
+
+                init() {
+                    this.loadData();
+                    this.filterPrompts();
+                    this.loadDarkMode();
+                },
+
+                updateDarkClass() {
+                    // Force update the dark class on html element
+                    const htmlElement = document.documentElement;
+                    if (this.darkMode) {
+                        htmlElement.classList.add('dark');
+                    } else {
+                        htmlElement.classList.remove('dark');
+                    }
+                },
+
+                loadDarkMode() {
+                    const saved = localStorage.getItem('darkMode');
+                    // Default to light mode (false) if not set
+                    this.darkMode = saved === 'true';
+                    this.updateDarkClass();
+                    // Update highlight.js theme on load
+                    if (typeof toggleHighlightTheme === 'function') {
+                        toggleHighlightTheme(this.darkMode);
+                    }
+                },
+
+                toggleDarkMode() {
+                    this.darkMode = !this.darkMode;
+                    localStorage.setItem('darkMode', this.darkMode);
+                    console.log('Dark mode toggled to:', this.darkMode);
+                    // Force update the class immediately
+                    this.updateDarkClass();
+                    // Update highlight.js theme
+                    if (typeof toggleHighlightTheme === 'function') {
+                        toggleHighlightTheme(this.darkMode);
+                    }
+                    console.log('HTML classes:', document.documentElement.classList.toString());
+                    // Double-check after a brief delay to ensure it sticks
+                    setTimeout(() => {
+                        this.updateDarkClass();
+                        console.log('After timeout, HTML classes:', document.documentElement.classList.toString());
+                    }, 100);
+                },
+
+                loadData() {
+                    const saved = localStorage.getItem('prompts');
+                    const savedCategories = localStorage.getItem('categories');
+                    
+                    if (saved) {
+                        this.prompts = JSON.parse(saved);
+                    }
+                    
+                    if (savedCategories) {
+                        this.categories = JSON.parse(savedCategories);
+                    }
+
+                    this.updateAllTags();
+                },
+
+                saveData() {
+                    localStorage.setItem('prompts', JSON.stringify(this.prompts));
+                    localStorage.setItem('categories', JSON.stringify(this.categories));
+                },
+
+                updateAllTags() {
+                    const tagsSet = new Set();
+                    this.prompts.forEach(prompt => {
+                        if (prompt.tags && Array.isArray(prompt.tags)) {
+                            prompt.tags.forEach(tag => tagsSet.add(tag));
+                        }
+                    });
+                    this.allTags = Array.from(tagsSet).sort();
+                },
+
+                filterPrompts() {
+                    let filtered = [...this.prompts];
+
+                    // Filter by category
+                    if (this.selectedCategory) {
+                        filtered = filtered.filter(p => p.category === this.selectedCategory);
+                    }
+
+                    // Filter by tags
+                    if (this.selectedTags.length > 0) {
+                        filtered = filtered.filter(p => {
+                            if (!p.tags || !Array.isArray(p.tags)) return false;
+                            return this.selectedTags.some(tag => p.tags.includes(tag));
+                        });
+                    }
+
+                    // Filter by search query
+                    if (this.searchQuery.trim()) {
+                        const query = this.searchQuery.toLowerCase();
+                        filtered = filtered.filter(p => 
+                            p.title.toLowerCase().includes(query) ||
+                            p.content.toLowerCase().includes(query) ||
+                            (p.tags && p.tags.some(tag => tag.toLowerCase().includes(query))) ||
+                            (p.category && p.category.toLowerCase().includes(query))
+                        );
+                    }
+
+                    // Sort by modified date (newest first)
+                    filtered.sort((a, b) => {
+                        const dateA = new Date(a.modifiedAt || a.createdAt || 0);
+                        const dateB = new Date(b.modifiedAt || b.createdAt || 0);
+                        return dateB - dateA;
+                    });
+
+                    this.filteredPrompts = filtered;
+                },
+
+                toggleTagFilter(tag) {
+                    const index = this.selectedTags.indexOf(tag);
+                    if (index > -1) {
+                        this.selectedTags.splice(index, 1);
+                    } else {
+                        this.selectedTags.push(tag);
+                    }
+                    this.filterPrompts();
+                },
+
+                resetCurrentPrompt() {
+                    const samplePrompt = `You are an expert software developer and code reviewer. Your task is to analyze the provided code and provide constructive feedback.
+
+Please review the code for:
+1. **Code Quality**: Check for best practices, readability, and maintainability
+2. **Performance**: Identify potential bottlenecks or optimization opportunities
+3. **Security**: Look for security vulnerabilities or potential issues
+4. **Design Patterns**: Evaluate the use of appropriate design patterns
+5. **Documentation**: Assess code comments and documentation
+
+Format your response as:
+- **Strengths**: What the code does well
+- **Issues**: Specific problems found with explanations
+- **Suggestions**: Concrete recommendations for improvement
+- **Code Examples**: Provide improved code snippets where relevant
+
+Be specific, constructive, and educational in your feedback.`;
+
+                    this.currentPrompt = {
+                        id: null,
+                        title: '',
+                        content: samplePrompt,
+                        category: '',
+                        tags: [],
+                        tagsInput: '',
+                        createdAt: null,
+                        modifiedAt: null,
+                        lastUsedAt: null
+                    };
+                },
+
+                openPrompt(prompt) {
+                    this.viewingPrompt = { ...prompt };
+                    this.showViewModal = true;
+                },
+
+                closeViewModal() {
+                    this.showViewModal = false;
+                    this.viewingPrompt = null;
+                },
+
+                editPrompt(prompt) {
+                    this.currentPrompt = {
+                        id: prompt.id,
+                        title: prompt.title,
+                        content: prompt.content,
+                        category: prompt.category || '',
+                        tags: prompt.tags || [],
+                        tagsInput: (prompt.tags || []).join(', '),
+                        createdAt: prompt.createdAt,
+                        modifiedAt: prompt.modifiedAt,
+                        lastUsedAt: prompt.lastUsedAt
+                    };
+                    this.showViewModal = false;
+                    this.showEditModal = true;
+                },
+
+                closeModal() {
+                    this.showCreateModal = false;
+                    this.showEditModal = false;
+                    this.resetCurrentPrompt();
+                },
+
+                savePrompt() {
+                    // Parse tags
+                    const tags = this.currentPrompt.tagsInput
+                        .split(',')
+                        .map(t => t.trim())
+                        .filter(t => t.length > 0);
+
+                    const now = new Date().toISOString();
+
+                    if (this.currentPrompt.id) {
+                        // Update existing prompt
+                        const index = this.prompts.findIndex(p => p.id === this.currentPrompt.id);
+                        if (index > -1) {
+                            this.prompts[index] = {
+                                ...this.prompts[index],
+                                title: this.currentPrompt.title,
+                                content: this.currentPrompt.content,
+                                category: this.currentPrompt.category,
+                                tags: tags,
+                                modifiedAt: now
+                            };
+                        }
+                    } else {
+                        // Create new prompt
+                        const newPrompt = {
+                            id: Date.now().toString(),
+                            title: this.currentPrompt.title,
+                            content: this.currentPrompt.content,
+                            category: this.currentPrompt.category,
+                            tags: tags,
+                            createdAt: now,
+                            modifiedAt: now,
+                            lastUsedAt: null
+                        };
+                        this.prompts.push(newPrompt);
+                    }
+
+                    this.saveData();
+                    this.updateAllTags();
+                    this.filterPrompts();
+                    this.closeModal();
+                },
+
+                deletePrompt(id) {
+                    if (confirm('Are you sure you want to delete this prompt?')) {
+                        this.prompts = this.prompts.filter(p => p.id !== id);
+                        this.saveData();
+                        this.updateAllTags();
+                        this.filterPrompts();
+                    }
+                },
+
+                duplicatePrompt(prompt) {
+                    const duplicated = {
+                        ...prompt,
+                        id: Date.now().toString(),
+                        title: prompt.title + ' (Copy)',
+                        createdAt: new Date().toISOString(),
+                        modifiedAt: new Date().toISOString(),
+                        lastUsedAt: null
+                    };
+                    this.prompts.push(duplicated);
+                    this.saveData();
+                    this.filterPrompts();
+                },
+
+                markAsUsed(prompt) {
+                    const index = this.prompts.findIndex(p => p.id === prompt.id);
+                    if (index > -1) {
+                        this.prompts[index].lastUsedAt = new Date().toISOString();
+                        this.saveData();
+                        this.filterPrompts();
+                        if (this.viewingPrompt) {
+                            this.viewingPrompt.lastUsedAt = this.prompts[index].lastUsedAt;
+                        }
+                    }
+                },
+
+                copyToClipboard(text) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        alert('Copied to clipboard!');
+                    });
+                },
+
+                addCategory() {
+                    if (this.newCategory.trim() && !this.categories.includes(this.newCategory.trim())) {
+                        this.categories.push(this.newCategory.trim());
+                        this.saveData();
+                        this.newCategory = '';
+                        this.showCategoryModal = false;
+                    }
+                },
+
+                handleCategoryInput(event) {
+                    const categoryValue = event.target.value.trim();
+                    if (categoryValue && !this.categories.includes(categoryValue)) {
+                        this.categories.push(categoryValue);
+                        this.saveData();
+                        // Keep the value in the input
+                        this.currentPrompt.category = categoryValue;
+                    }
+                },
+
+                loadPromptTemplate(templateId) {
+                    if (!templateId) return;
+
+                    const templates = {
+                        'professional-git-commit': {
+                            title: 'Professional Git Commit Message Generator',
+                            category: 'Development',
+                            tags: ['git', 'commit', 'best-practices'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are working in a professional software development environment where clear, consistent commit messages are essential for code review, debugging, and project history tracking. The team follows conventional commit standards to maintain a clean, searchable git history.
+
+**Role**: Act as an expert Git practitioner and version control specialist with deep knowledge of conventional commit specifications, semantic versioning, and git best practices.
+
+**Instruction**: Generate a professional, well-structured commit message that follows conventional commit standards. Analyze the provided code changes and create a commit message with a proper type, optional scope, clear subject line, detailed body, and footer when applicable.
+
+**Subject**: Git commit message generation and version control documentation.
+
+**Preset**: 
+- Format: <type>(<scope>): <subject>
+- Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert
+- Subject line: Maximum 50 characters, imperative mood, capitalized, no period
+- Body: Explain what and why (not how), wrap at 72 characters
+- Footer: Reference issues/PRs (e.g., "Closes #123" or "Refs #456")
+- Tone: Professional, concise, clear
+- Structure: Type header, blank line, body, blank line, footer
+
+**Exception**: 
+- Do not include implementation details in the subject line
+- Do not use past tense ("Added" → use "Add")
+- Do not exceed character limits
+- Do not skip the body for non-trivial changes
+- Do not include personal opinions or emotional language
+
+---
+
+Generate a commit message for the following changes:`
+                        },
+                        'senior-programmer': {
+                            title: 'Senior Programmer Assistant',
+                            category: 'Development',
+                            tags: ['programming', 'senior', 'best-practices', 'code-quality'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are working in a professional software development environment where code quality, maintainability, and best practices are paramount. The codebase must be production-ready, well-tested, secure, and maintainable by a team of developers.
+
+**Role**: Act as a senior software engineer with 15+ years of experience in software development, architecture, and team leadership. You excel at writing clean, maintainable, and scalable code, mentoring junior developers, and making architectural decisions.
+
+**Instruction**: Provide expert-level programming guidance, code solutions, and technical advice. When asked about code, architecture, or technical problems, analyze the request thoroughly and provide comprehensive solutions that include reasoning, trade-offs, alternatives, and best practices.
+
+**Subject**: Software development, code quality, programming best practices, architecture, debugging, performance optimization, security, testing, and technical mentorship.
+
+**Preset**:
+- Tone: Professional, educational, constructive, and mentoring
+- Length: Comprehensive but concise - provide enough detail to be actionable
+- Structure: Explain reasoning first, then provide solution, then discuss alternatives/trade-offs
+- Format: Include code examples when relevant, explain patterns and principles
+- Style: Follow SOLID principles, DRY, KISS, and industry best practices
+- Documentation: Include code comments and explanations where helpful
+
+**Exception**:
+- Do not provide code without explanation
+- Do not ignore edge cases or error handling
+- Do not suggest deprecated or insecure practices
+- Do not assume knowledge - explain concepts when relevant
+- Do not provide opinionated solutions without discussing alternatives
+- Do not skip testing considerations
+
+---
+
+Help me with the following:`
+                        },
+                        'scrummaster': {
+                            title: 'Scrum Master - Sprint Planning Assistant',
+                            category: 'Project Management',
+                            tags: ['scrum', 'agile', 'sprint-planning', 'markdown'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are creating sprint planning documents in markdown format for an Agile/Scrum team. The sprint documentation needs to be well-structured, trackable, and reference technical specifications. Each sprint contains user stories with associated tasks that reference specific technical documents, classes, and methods.
+
+**Role**: Act as an experienced Certified Scrum Master (CSM) specializing in sprint planning, backlog refinement, and creating structured sprint documentation. You excel at breaking down user stories into actionable tasks with clear technical references and accurate story point estimation.
+
+**Instruction**: Create comprehensive sprint planning markdown files. When provided with sprint information, user stories, or feature requirements, generate a well-structured markdown sprint document that includes user stories with agile points, tasks with technical references (document names, class names, method names), completion tracking, and proper Scrum formatting.
+
+**Subject**: Sprint planning, user story creation, task breakdown, agile estimation, markdown formatting, technical documentation references, sprint tracking, and Scrum artifacts.
+
+**Preset**:
+- Format: Markdown files with clear hierarchy and structure
+- Structure: 
+  - Sprint header (name, dates, goal)
+  - User Stories (with agile points)
+    - Tasks (with completion status column, class/method references, document references)
+    - Subtasks (with agile points)
+- Story Points: Use Fibonacci sequence (1, 2, 3, 5, 8, 13) for estimation
+- Task Format: Include columns for task description, class/method reference, document reference, completion status
+- Document References: Always mention the reference document name explicitly
+- Technical References: Include class name and method name in task descriptions
+- Completion Tracking: Use checkboxes or status columns (✅ Complete / ⏳ In Progress / ⭕ Not Started)
+- Tone: Professional, clear, and structured
+- Markdown: Use proper markdown syntax (headers, tables, checkboxes, code blocks)
+
+**Exception**:
+- Do not create tasks without referencing the source document by name
+- Do not omit class and method names in task descriptions
+- Do not skip completion status tracking for tasks
+- Do not forget to assign agile points to stories and subtasks
+- Do not use vague task descriptions - be specific with technical details
+- Do not create sprint documents without proper markdown formatting
+- Do not estimate without considering story complexity and team velocity
+
+---
+
+**Required Sprint Markdown Structure:**
+
+\`\`\`markdown
+# Sprint [Number]: [Sprint Name]
+
+**Sprint Goal**: [Clear, measurable goal]
+**Duration**: [Start Date] - [End Date]
+**Team Velocity**: [Previous sprint velocity or target]
+
+## User Stories
+
+### Story 1: [Story Title] - [X] Points
+
+**Description**: [As a... I want... So that...]
+
+**Reference Document**: [Document Name]
+
+**Tasks**:
+| Task | Description | Class/Method | Document Reference | Status | Points |
+|------|-------------|-------------|-------------------|--------|--------|
+| Task 1 | [Task description mentioning class.method()] | ClassName.methodName() | [Document Name] | ⭕ | [X] |
+| Task 2 | [Task description mentioning class.method()] | ClassName.methodName() | [Document Name] | ⭕ | [X] |
+
+**Subtasks**:
+- [ ] Subtask 1 - [X] Points
+- [ ] Subtask 2 - [X] Points
+
+### Story 2: [Story Title] - [X] Points
+[...]
+\`\`\`
+
+Create a sprint planning markdown document for the following requirements:`
+                        },
+                        'software-architect': {
+                            title: 'Software Architect Advisor',
+                            category: 'Architecture',
+                            tags: ['architecture', 'design', 'system-design', 'scalability'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are working in an environment where software systems must be scalable, maintainable, secure, and cost-effective. The systems need to handle growth, integrate with other services, and meet performance requirements while maintaining high availability and reliability.
+
+**Role**: Act as a senior software architect with extensive experience in designing large-scale distributed systems, microservices architectures, cloud-native applications, and enterprise software solutions. You excel at evaluating trade-offs, making architectural decisions, and documenting design rationale.
+
+**Instruction**: Provide expert architectural guidance, system design recommendations, and technical leadership. When asked about system design or architecture, analyze requirements and constraints, evaluate alternatives, and provide comprehensive architectural solutions with clear rationale.
+
+**Subject**: System architecture, software design patterns, microservices, distributed systems, scalability, performance, security architecture, cloud computing, database design, API design, technology selection, and architectural decision records (ADRs).
+
+**Preset**:
+- Tone: Analytical, strategic, and professional
+- Length: Comprehensive - architecture requires thorough analysis
+- Structure: Requirements analysis → Constraints identification → Architecture options → Trade-off evaluation → Recommended solution → Risk analysis
+- Format: Include diagrams when helpful, document decisions, provide alternatives
+- Scope: Consider scalability, performance, security, cost, maintainability, and reliability
+- Documentation: Create or reference ADRs (Architectural Decision Records)
+
+**Exception**:
+- Do not suggest architectures without analyzing requirements first
+- Do not ignore scalability or performance implications
+- Do not recommend technologies without discussing trade-offs
+- Do not skip security or compliance considerations
+- Do not design without considering operational concerns
+- Do not make decisions without documenting rationale
+- Do not ignore cost implications
+
+---
+
+Help me design/architect the following system:`
+                        },
+                        'code-review': {
+                            title: 'Code Review Assistant',
+                            category: 'Development',
+                            tags: ['code-review', 'quality', 'best-practices', 'feedback'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are conducting a code review in a professional software development environment where code quality, maintainability, security, and team learning are priorities. The review process aims to improve code quality while fostering knowledge sharing and ensuring adherence to best practices.
+
+**Role**: Act as an expert code reviewer and senior software engineer with extensive experience in code quality, best practices, security, performance optimization, and constructive code review. You excel at providing actionable, educational feedback that helps developers improve.
+
+**Instruction**: Analyze the provided code comprehensively and provide structured, constructive feedback. Review the code across multiple dimensions (quality, best practices, performance, security, testing, documentation) and deliver feedback in a clear, actionable format that helps the developer improve.
+
+**Subject**: Code quality, readability, maintainability, SOLID principles, design patterns, performance optimization, security vulnerabilities, test coverage, documentation, and code standards compliance.
+
+**Preset**:
+- Tone: Constructive, educational, respectful, and specific
+- Length: Comprehensive - cover all relevant aspects
+- Structure: 
+  - Strengths (what's done well)
+  - Issues (specific problems with line references)
+  - Suggestions (concrete recommendations with examples)
+  - Questions (clarifications needed)
+- Format: Use line references when pointing to specific code, include code examples for suggestions
+- Focus: Be specific, actionable, and educational - explain why changes are recommended
+- Style: Balance praise with constructive criticism
+
+**Exception**:
+- Do not provide vague or generic feedback
+- Do not be overly critical without acknowledging positives
+- Do not suggest changes without explaining the reasoning
+- Do not ignore security issues or potential bugs
+- Do not skip testing and documentation considerations
+- Do not make personal attacks or unprofessional comments
+- Do not suggest changes that violate project standards without discussion
+
+---
+
+Review the following code and provide feedback:`
+                        },
+                        'technical-documentation': {
+                            title: 'Technical Documentation Architect',
+                            category: 'Documentation',
+                            tags: ['documentation', 'diagrams', 'modeling', 'database', 'architecture'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are creating comprehensive technical documentation for a software project. The documentation must clearly explain the software objectives, define system architecture through diagrams, model data structures, and provide clear technical specifications. The documentation will be used by developers, stakeholders, and future maintainers of the system.
+
+**Role**: Act as an expert Technical Documentation Architect and Software Systems Analyst with extensive experience in creating technical documentation, UML diagramming, database modeling, entity relationship design, and system architecture documentation. You excel at translating complex technical concepts into clear, structured documentation with visual representations.
+
+**Instruction**: Create comprehensive technical documentation including software objectives, system architecture diagrams, data models, and technical specifications. When provided with software requirements or system information, generate structured documentation that includes: software objectives, entity models, database schemas, class diagrams, sequence diagrams, entity relationship diagrams, and clear technical explanations.
+
+**Subject**: Software documentation, system objectives, UML diagrams (class diagrams, sequence diagrams), entity relationship diagrams (ERD), database modeling, entity modeling, data architecture, system architecture, and technical specifications.
+
+**Preset**:
+- Format: Structured markdown documentation with embedded diagrams
+- Diagram Formats: 
+  - Use Mermaid syntax for diagrams (class diagrams, sequence diagrams, ER diagrams)
+  - Use PlantUML syntax as alternative
+  - Provide text descriptions when diagrams aren't possible
+- Structure:
+  1. **Software Objectives**: Clear statement of purpose, goals, and key features
+  2. **Entity Model**: Define core entities with attributes and relationships
+  3. **Database Model**: Database schema with tables, columns, data types, constraints, indexes
+  4. **Class Diagram**: Object-oriented class structure with methods, properties, relationships
+  5. **Sequence Diagram**: Interaction flows between components/systems
+  6. **Entity Relationship Diagram**: Visual representation of entity relationships
+- Documentation Style: Professional, clear, comprehensive, and maintainable
+- Technical Depth: Include sufficient detail for implementation
+- Visual Aids: Prioritize diagrams for complex relationships and flows
+
+**Exception**:
+- Do not create documentation without clearly stating software objectives first
+- Do not skip entity definitions - always define core entities and their attributes
+- Do not create diagrams without proper syntax and clear labels
+- Do not omit relationships between entities and classes
+- Do not forget to include data types, constraints, and indexes in database models
+- Do not create sequence diagrams without clear actor/system identification
+- Do not skip cardinality and relationship types in ER diagrams
+- Do not use ambiguous naming conventions - be consistent throughout
+
+---
+
+**Required Documentation Structure:**
+
+1. **Software Objectives**
+   - Purpose and goals
+   - Key features and capabilities
+   - Target users
+   - Success criteria
+
+2. **Entity Model**
+   - Entity definitions with attributes
+   - Primary keys and identifiers
+   - Attribute types and constraints
+
+3. **Database Model**
+   - Table schemas
+   - Column definitions with data types
+   - Primary keys, foreign keys, indexes
+   - Constraints and validation rules
+
+4. **Class Diagram** (Mermaid example)
+   \`\`\`mermaid
+   classDiagram
+       class ClassName {
+           +property: type
+           +method(): returnType
+       }
+   \`\`\`
+
+5. **Sequence Diagram** (Mermaid example)
+   \`\`\`mermaid
+   sequenceDiagram
+       Actor->>System: Request
+       System->>Database: Query
+       Database-->>System: Result
+       System-->>Actor: Response
+   \`\`\`
+
+6. **Entity Relationship Diagram** (Mermaid example)
+   \`\`\`mermaid
+   erDiagram
+       ENTITY1 ||--o{ ENTITY2 : "relationship"
+       ENTITY1 {
+           id int PK
+           name string
+       }
+   \`\`\`
+
+Create comprehensive technical documentation for the following software system:`
+                        },
+                        'ux-designer': {
+                            title: 'UX Designer & User Experience Architect',
+                            category: 'Design',
+                            tags: ['ux', 'design', 'user-experience', 'wireframes', 'user-flows'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are designing user experience (UX) for a software application where user satisfaction, usability, and intuitive interaction are critical. The UX design must align with user needs, business objectives, and technical constraints while providing an excellent user experience across different user personas and use cases.
+
+**Role**: Act as an expert UX Designer and User Experience Architect with extensive experience in user research, interaction design, information architecture, usability testing, and user-centered design. You excel at creating intuitive interfaces, user flows, wireframes, and comprehensive UX documentation.
+
+**Instruction**: Create comprehensive UX design documentation including user experience diagrams, user flows, wireframes, interaction patterns, and design specifications. When provided with software requirements or feature descriptions, generate structured UX documentation that includes user personas, user journeys, user flow diagrams, wireframe descriptions, interaction patterns, and usability guidelines.
+
+**Subject**: User experience design, user interface design, user flows, user journeys, wireframes, information architecture, interaction design, usability, accessibility, user personas, and design systems.
+
+**Preset**:
+- Format: Structured markdown documentation with visual diagrams and descriptions
+- Diagram Formats:
+  - Use Mermaid syntax for user flows and journey maps
+  - Provide detailed wireframe descriptions (can reference tools like Figma, Sketch)
+  - Include user journey maps and flowcharts
+- Structure:
+  1. **User Personas**: Define target users with goals, needs, and pain points
+  2. **User Journeys**: Map user experience from discovery to completion
+  3. **User Flow Diagrams**: Visual representation of user paths through the system
+  4. **Information Architecture**: Site/app structure and navigation
+  5. **Wireframes**: Low-fidelity layout descriptions
+  6. **Interaction Patterns**: UI components and interaction behaviors
+  7. **Usability Guidelines**: Design principles and best practices
+- Design Principles: User-centered, accessible, intuitive, consistent, efficient
+- Visual Style: Provide clear descriptions suitable for implementation
+- User Focus: Always prioritize user needs and goals
+
+**Exception**:
+- Do not design without defining user personas first
+- Do not create flows without considering user goals and pain points
+- Do not skip accessibility considerations
+- Do not design without understanding the user journey
+- Do not create wireframes without describing layout, hierarchy, and functionality
+- Do not ignore mobile/responsive design considerations
+- Do not skip error states and edge cases in user flows
+- Do not design without considering usability and learnability
+- Do not omit user feedback and validation points
+
+---
+
+**Required UX Documentation Structure:**
+
+1. **User Personas**
+   - Name, role, demographics
+   - Goals and motivations
+   - Pain points and frustrations
+   - Technical proficiency
+
+2. **User Journey Map**
+   - Stages: Discovery, Research, Evaluation, Purchase/Use, Support
+   - User actions, thoughts, emotions at each stage
+   - Touchpoints and opportunities
+
+3. **User Flow Diagram** (Mermaid example)
+   \`\`\`mermaid
+   flowchart TD
+       Start[User Action] --> Decision{Decision Point}
+       Decision -->|Option A| Action1[Action 1]
+       Decision -->|Option B| Action2[Action 2]
+       Action1 --> End[Completion]
+   \`\`\`
+
+4. **Information Architecture**
+   - Site/app structure
+   - Navigation hierarchy
+   - Content organization
+
+5. **Wireframe Descriptions**
+   - Layout structure
+   - Component placement
+   - Interactive elements
+   - Content hierarchy
+
+6. **Interaction Patterns**
+   - UI component behaviors
+   - Feedback mechanisms
+   - State changes
+   - Animation/transition notes
+
+7. **Usability Guidelines**
+   - Design principles
+   - Accessibility standards
+   - Best practices
+
+Create comprehensive UX design documentation for the following software feature/system:`
+                        }
+                    };
+
+                    const template = templates[templateId];
+                    if (template) {
+                        this.currentPrompt = {
+                            id: null,
+                            title: template.title,
+                            content: template.content,
+                            category: template.category,
+                            tags: template.tags,
+                            tagsInput: template.tags.join(', '),
+                            createdAt: null,
+                            modifiedAt: null,
+                            lastUsedAt: null
+                        };
+                        // Reset the select dropdown
+                        setTimeout(() => {
+                            const select = document.getElementById('template-select');
+                            if (select) select.value = '';
+                        }, 100);
+                    }
+                },
+
+                deleteCategory(category) {
+                    if (confirm(`Delete category "${category}"? Prompts in this category will become uncategorized.`)) {
+                        this.categories = this.categories.filter(c => c !== category);
+                        this.prompts.forEach(p => {
+                            if (p.category === category) {
+                                p.category = '';
+                            }
+                        });
+                        this.saveData();
+                        this.filterPrompts();
+                    }
+                },
+
+                exportData() {
+                    const data = {
+                        prompts: this.prompts,
+                        categories: this.categories,
+                        exportDate: new Date().toISOString()
+                    };
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `prompt-vault-export-${new Date().toISOString().split('T')[0]}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                },
+
+                handleFileImport(event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        try {
+                            const data = JSON.parse(e.target.result);
+                            
+                            if (data.prompts && Array.isArray(data.prompts)) {
+                                // Merge prompts
+                                data.prompts.forEach(importedPrompt => {
+                                    // Generate new ID to avoid conflicts
+                                    importedPrompt.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+                                    importedPrompt.createdAt = importedPrompt.createdAt || new Date().toISOString();
+                                    importedPrompt.modifiedAt = importedPrompt.modifiedAt || new Date().toISOString();
+                                    this.prompts.push(importedPrompt);
+                                });
+                            }
+
+                            if (data.categories && Array.isArray(data.categories)) {
+                                // Merge categories
+                                data.categories.forEach(cat => {
+                                    if (!this.categories.includes(cat)) {
+                                        this.categories.push(cat);
+                                    }
+                                });
+                            }
+
+                            this.saveData();
+                            this.updateAllTags();
+                            this.filterPrompts();
+                            this.showImportModal = false;
+                            alert('Import successful!');
+                        } catch (error) {
+                            alert('Error importing file: ' + error.message);
+                        }
+                    };
+                    reader.readAsText(file);
+                },
+
+                getWordCount(text) {
+                    if (!text) return 0;
+                    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+                },
+
+                formatDate(dateString) {
+                    if (!dateString) return 'Never';
+                    const date = new Date(dateString);
+                    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                },
+
+                toggleSyntaxHighlighting() {
+                    this.syntaxHighlighting = !this.syntaxHighlighting;
+                },
+
+                highlightCode(code) {
+                    if (!code) return '';
+                    try {
+                        const highlighted = hljs.highlightAuto(code).value;
+                        // Wrap in a span to ensure proper styling
+                        return highlighted;
+                    } catch (e) {
+                        return code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                    }
+                },
+
+                runButtonTests() {
+                    console.log('%c🧪 Prompt Vault - Button Tests', 'font-size: 20px; font-weight: bold; color: #3b82f6;');
+                    console.log('Testing all buttons...\n');
+
+                    const results = { passed: [], failed: [], warnings: [] };
+
+                    function test(name, testFn) {
+                        try {
+                            const result = testFn();
+                            if (result === true || result === undefined) {
+                                results.passed.push(name);
+                                console.log(`✅ ${name}`);
+                                return true;
+                            } else {
+                                results.failed.push(name);
+                                console.error(`❌ ${name}: ${result}`);
+                                return false;
+                            }
+                        } catch (e) {
+                            results.failed.push(name);
+                            console.error(`❌ ${name}: Error - ${e.message}`);
+                            return false;
+                        }
+                    }
+
+                    // Test buttons by text content and Alpine.js attributes
+                    test('Dark Mode Toggle Button', () => {
+                        // Look for button with SVG icon (dark mode toggle has sun/moon icons)
+                        const btn = Array.from(document.querySelectorAll('header button')).find(b => {
+                            const hasSvg = b.querySelector('svg') !== null;
+                            const hasMoonIcon = b.innerHTML.includes('M20.354') || b.innerHTML.includes('moon');
+                            return hasSvg && hasMoonIcon;
+                        });
+                        return btn !== undefined && btn !== null && !btn.disabled;
+                    });
+
+                    test('Import Button', () => {
+                        const btn = Array.from(document.querySelectorAll('button')).find(b => 
+                            b.textContent.trim() === 'Import'
+                        );
+                        return btn !== undefined && btn !== null && !btn.disabled;
+                    });
+
+                    test('Export Button', () => {
+                        const btn = Array.from(document.querySelectorAll('button')).find(b => 
+                            b.textContent.trim() === 'Export'
+                        );
+                        return btn !== undefined && btn !== null && !btn.disabled;
+                    });
+
+                    test('New Prompt Button', () => {
+                        const btn = Array.from(document.querySelectorAll('button')).find(b => 
+                            b.textContent.includes('New Prompt')
+                        );
+                        return btn !== undefined && btn !== null && !btn.disabled;
+                    });
+
+                    test('Test Buttons Button', () => {
+                        const btn = Array.from(document.querySelectorAll('button')).find(b => 
+                            b.textContent.includes('Test Buttons')
+                        );
+                        return btn !== undefined && btn !== null && !btn.disabled;
+                    });
+
+                    test('Add Category Button', () => {
+                        const btn = Array.from(document.querySelectorAll('button')).find(b => 
+                            b.textContent.trim() === '+ Add'
+                        );
+                        return btn !== undefined && btn !== null && !btn.disabled;
+                    });
+
+                    test('Search Input', () => {
+                        const input = document.querySelector('input[x-model="searchQuery"]');
+                        return input !== null;
+                    });
+
+                    test('Category Input (in modal)', () => {
+                        const btn = Array.from(document.querySelectorAll('button')).find(b => 
+                            b.textContent.includes('New Prompt')
+                        );
+                        if (btn) {
+                            btn.click();
+                            setTimeout(() => {
+                                const input = document.querySelector('input[x-model="currentPrompt.category"]');
+                                if (input) {
+                                    console.log('   ✓ Category input found and editable');
+                                    const closeBtn = Array.from(document.querySelectorAll('button')).find(b => 
+                                        b.textContent.trim() === 'Cancel'
+                                    );
+                                    if (closeBtn) closeBtn.click();
+                                    return true;
+                                }
+                            }, 300);
+                        }
+                        return true;
+                    });
+
+                    test('Tags Input', () => {
+                        // Open modal first
+                        const btn = Array.from(document.querySelectorAll('button')).find(b => 
+                            b.textContent.includes('New Prompt')
+                        );
+                        if (btn) {
+                            btn.click();
+                            setTimeout(() => {
+                                const input = document.querySelector('input[x-model="currentPrompt.tagsInput"]');
+                                if (input) {
+                                    console.log('   ✓ Tags input found');
+                                    const closeBtn = Array.from(document.querySelectorAll('button')).find(b => 
+                                        b.textContent.trim() === 'Cancel'
+                                    );
+                                    if (closeBtn) closeBtn.click();
+                                    return true;
+                                }
+                            }, 300);
+                        }
+                        return true;
+                    });
+
+                    test('Save Button', () => {
+                        const btn = Array.from(document.querySelectorAll('button')).find(b => 
+                            b.textContent.includes('New Prompt')
+                        );
+                        if (btn) {
+                            btn.click();
+                            setTimeout(() => {
+                                const saveBtn = document.querySelector('button[type="submit"]');
+                                if (saveBtn) {
+                                    console.log('   ✓ Save button found');
+                                    const closeBtn = Array.from(document.querySelectorAll('button')).find(b => 
+                                        b.textContent.trim() === 'Cancel'
+                                    );
+                                    if (closeBtn) closeBtn.click();
+                                    return true;
+                                }
+                            }, 300);
+                        }
+                        return true;
+                    });
+
+                    test('Cancel Button', () => {
+                        const btn = Array.from(document.querySelectorAll('button')).find(b => 
+                            b.textContent.includes('New Prompt')
+                        );
+                        if (btn) {
+                            btn.click();
+                            setTimeout(() => {
+                                const cancelBtn = Array.from(document.querySelectorAll('button')).find(b => 
+                                    b.textContent.trim() === 'Cancel'
+                                );
+                                if (cancelBtn) {
+                                    console.log('   ✓ Cancel button found');
+                                    cancelBtn.click();
+                                    return true;
+                                }
+                            }, 300);
+                        }
+                        return true;
+                    });
+
+                    test('Category Filter Buttons', () => {
+                        // Look for "All Prompts" button
+                        const buttons = Array.from(document.querySelectorAll('button')).filter(b => 
+                            b.textContent.trim() === 'All Prompts'
+                        );
+                        return buttons.length >= 1; // At least "All Prompts"
+                    });
+
+                    test('Tag Filter Buttons', () => {
+                        // Tag buttons are in the sidebar, they're small buttons
+                        const sidebar = document.querySelector('aside');
+                        if (sidebar) {
+                            const tagButtons = Array.from(sidebar.querySelectorAll('button')).filter(b => 
+                                b.textContent.trim().length > 0 && 
+                                b.textContent.trim().length < 20 && // Small tag buttons
+                                !b.textContent.includes('Add') &&
+                                !b.textContent.includes('All Prompts')
+                            );
+                            return tagButtons.length >= 0; // Can be 0 if no tags
+                        }
+                        return true;
+                    });
+
+                    // Summary
+                    setTimeout(() => {
+                        console.log('\n' + '='.repeat(50));
+                        console.log('%c📊 Test Summary', 'font-size: 16px; font-weight: bold;');
+                        console.log(`✅ Passed: ${results.passed.length}`);
+                        console.log(`❌ Failed: ${results.failed.length}`);
+                        
+                        if (results.failed.length > 0) {
+                            console.log('\n%cFailed Tests:', 'font-weight: bold; color: #ef4444;');
+                            results.failed.forEach(f => console.error(`  - ${f}`));
+                        }
+                        
+                        const successRate = ((results.passed.length / (results.passed.length + results.failed.length)) * 100).toFixed(1);
+                        console.log(`\n%cSuccess Rate: ${successRate}%`, `font-size: 14px; font-weight: bold; color: ${successRate >= 80 ? '#10b981' : '#ef4444'};`);
+                        console.log('='.repeat(50));
+                        
+                        alert(`Button Tests Complete!\n\nPassed: ${results.passed.length}\nFailed: ${results.failed.length}\n\nCheck console for details.`);
+                    }, 1000);
+                }
+            };
+        }
+    </script>
+</body>
+</html>

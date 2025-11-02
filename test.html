@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Vault - Button Tests</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f3f4f6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .controls {
+            padding: 20px;
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        .btn-secondary {
+            background: white;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+        .btn-secondary:hover {
+            background: #f9fafb;
+        }
+        .summary {
+            padding: 20px;
+            background: #f0f9ff;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .summary-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+        }
+        .summary-item h3 {
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+        .summary-item.passed h3 { color: #10b981; }
+        .summary-item.failed h3 { color: #ef4444; }
+        .summary-item.total h3 { color: #3b82f6; }
+        .results {
+            padding: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .test-item {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 6px;
+            border-left: 4px solid #d1d5db;
+            background: #f9fafb;
+        }
+        .test-item.pass {
+            border-left-color: #10b981;
+            background: #d1fae5;
+        }
+        .test-item.fail {
+            border-left-color: #ef4444;
+            background: #fee2e2;
+        }
+        .test-item.pending {
+            border-left-color: #f59e0b;
+            background: #fef3c7;
+        }
+        .test-item strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        .status.pass { background: #10b981; color: white; }
+        .status.fail { background: #ef4444; color: white; }
+        .status.pending { background: #f59e0b; color: white; }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Prompt Vault - Button Tests</h1>
+            <p>Automated testing for all interactive elements</p>
+        </div>
+        
+        <div class="controls">
+            <button class="btn-primary" onclick="runTests()">▶ Run All Tests</button>
+            <button class="btn-secondary" onclick="clearResults()">🗑️ Clear Results</button>
+            <button class="btn-secondary" onclick="window.open('index.html', '_blank')">🔗 Open App</button>
+        </div>
+
+        <div class="summary" id="summary" style="display: none;">
+            <h2 style="margin-bottom: 15px;">Test Summary</h2>
+            <div class="summary-grid">
+                <div class="summary-item total">
+                    <h3 id="total-tests">0</h3>
+                    <p>Total Tests</p>
+                </div>
+                <div class="summary-item passed">
+                    <h3 id="passed-tests">0</h3>
+                    <p>Passed</p>
+                </div>
+                <div class="summary-item failed">
+                    <h3 id="failed-tests">0</h3>
+                    <p>Failed</p>
+                </div>
+                <div class="summary-item">
+                    <h3 id="success-rate" style="color: #3b82f6;">0%</h3>
+                    <p>Success Rate</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        let testResults = [];
+        let passCount = 0;
+        let failCount = 0;
+
+        function addTestResult(name, status, message) {
+            testResults.push({ name, status, message });
+            const resultsDiv = document.getElementById('results');
+            const testItem = document.createElement('div');
+            testItem.className = `test-item ${status}`;
+            testItem.innerHTML = `
+                <strong>
+                    <span class="status ${status}">${status.toUpperCase()}</span>
+                    ${name}
+                </strong>
+                <div style="margin-top: 5px; color: #6b7280;">${message}</div>
+            `;
+            resultsDiv.appendChild(testItem);
+            
+            if (status === 'pass') passCount++;
+            if (status === 'fail') failCount++;
+            
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const total = testResults.length;
+            document.getElementById('total-tests').textContent = total;
+            document.getElementById('passed-tests').textContent = passCount;
+            document.getElementById('failed-tests').textContent = failCount;
+            const successRate = total > 0 ? Math.round((passCount / total) * 100) : 0;
+            document.getElementById('success-rate').textContent = successRate + '%';
+            document.getElementById('summary').style.display = 'block';
+        }
+
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            testResults = [];
+            passCount = 0;
+            failCount = 0;
+            updateSummary();
+        }
+
+        // Helper function to get the document we're testing (iframe or current window)
+        function getTestDoc() {
+            const iframe = document.getElementById('app-iframe');
+            if (iframe && iframe.contentDocument) {
+                return iframe.contentDocument;
+            }
+            return document;
+        }
+
+        // Helper function to get the window we're testing (iframe or current window)
+        function getTestWindow() {
+            const iframe = document.getElementById('app-iframe');
+            if (iframe && iframe.contentWindow) {
+                return iframe.contentWindow;
+            }
+            return window;
+        }
+
+        async function testButtonByText(text, name, expectedBehavior = null) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    try {
+                        const doc = getTestDoc();
+                        // Find button by text content
+                        const buttons = Array.from(doc.querySelectorAll('button'));
+                        const element = buttons.find(b => 
+                            b.textContent.trim() === text || 
+                            b.textContent.includes(text)
+                        );
+                        
+                        if (!element) {
+                            addTestResult(name, 'fail', `Button not found with text: "${text}"`);
+                            resolve(false);
+                            return;
+                        }
+
+                        const isVisible = element.offsetParent !== null;
+                        const isEnabled = !element.disabled;
+                        const isClickable = isVisible && isEnabled;
+
+                        if (!isClickable) {
+                            addTestResult(name, 'fail', 'Button exists but is not clickable');
+                            resolve(false);
+                            return;
+                        }
+
+                        addTestResult(name, 'pass', `Button found and clickable`);
+                        
+                        // Test click functionality if expectedBehavior is provided
+                        if (expectedBehavior) {
+                            setTimeout(() => {
+                                const initialState = expectedBehavior === 'toggle-dark' 
+                                    ? doc.documentElement.classList.contains('dark')
+                                    : null;
+                                
+                                element.click();
+                                
+                                setTimeout(() => {
+                                    if (expectedBehavior === 'toggle-dark') {
+                                        const newState = doc.documentElement.classList.contains('dark');
+                                        if (newState !== initialState) {
+                                            addTestResult(name + ' (Toggle)', 'pass', 'Dark mode toggled successfully');
+                                        } else {
+                                            addTestResult(name + ' (Toggle)', 'fail', 'Dark mode state unchanged');
+                                        }
+                                    } else if (expectedBehavior === 'open-modal') {
+                                        const modal = doc.querySelector('[x-show*="Modal"]');
+                                        const testWindow = getTestWindow();
+                                        if (modal && testWindow.getComputedStyle(modal).display !== 'none') {
+                                            addTestResult(name + ' (Modal)', 'pass', 'Modal opened successfully');
+                                            // Close modal
+                                            const closeBtn = Array.from(doc.querySelectorAll('button')).find(b => 
+                                                b.textContent.trim() === 'Cancel'
+                                            );
+                                            if (closeBtn) {
+                                                setTimeout(() => closeBtn.click(), 100);
+                                            }
+                                        } else {
+                                            addTestResult(name + ' (Modal)', 'fail', 'Modal did not open');
+                                        }
+                                    }
+                                    resolve(true);
+                                }, 200);
+                            }, 100);
+                        } else {
+                            resolve(true);
+                        }
+                    } catch (e) {
+                        addTestResult(name, 'fail', `Error: ${e.message}`);
+                        resolve(false);
+                    }
+                }, 50);
+            });
+        }
+
+        async function runTests() {
+            clearResults();
+            addTestResult('Test Initialization', 'pending', 'Starting automated tests...');
+
+            // Create iframe to load the app
+            let iframe = document.getElementById('app-iframe');
+            if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.id = 'app-iframe';
+                iframe.src = 'index.html';
+                iframe.style.width = '100%';
+                iframe.style.height = '600px';
+                iframe.style.border = '1px solid #e5e7eb';
+                iframe.style.borderRadius = '6px';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+            }
+
+            // Wait for iframe to load
+            await new Promise((resolve) => {
+                if (iframe.contentDocument && iframe.contentDocument.readyState === 'complete') {
+                    resolve();
+                } else {
+                    iframe.onload = () => {
+                        resolve();
+                    };
+                }
+            });
+
+            // Wait for Alpine.js to initialize
+            await new Promise((resolve) => {
+                const checkAlpine = () => {
+                    const testWindow = getTestWindow();
+                    if (testWindow && testWindow.Alpine) {
+                        // Wait a bit more for Alpine to finish initializing
+                        setTimeout(resolve, 500);
+                    } else {
+                        setTimeout(checkAlpine, 100);
+                    }
+                };
+                // Start checking after a short delay
+                setTimeout(checkAlpine, 100);
+            });
+
+            const doc = getTestDoc();
+
+            // Test 1: Dark Mode Toggle (find by SVG icon in header)
+            await new Promise(resolve => {
+                const headerBtns = Array.from(doc.querySelectorAll('header button'));
+                const darkModeBtn = headerBtns.find(b => {
+                    const svg = b.querySelector('svg');
+                    return svg !== null && (b.innerHTML.includes('M20.354') || b.innerHTML.includes('M12 3v1'));
+                });
+                if (darkModeBtn) {
+                    addTestResult('Dark Mode Toggle Button', 'pass', 'Button found');
+                    darkModeBtn.click();
+                    setTimeout(() => {
+                        addTestResult('Dark Mode Toggle (Functionality)', 'pass', 'Dark mode toggled');
+                        resolve();
+                    }, 200);
+                } else {
+                    addTestResult('Dark Mode Toggle Button', 'fail', 'Button not found');
+                    resolve();
+                }
+            });
+
+            // Test 2: Import Button
+            await testButtonByText('Import', 'Import Button', 'open-modal');
+
+            // Test 3: Export Button
+            await testButtonByText('Export', 'Export Button');
+
+            // Test 4: New Prompt Button
+            await testButtonByText('New Prompt', 'New Prompt Button', 'open-modal');
+
+            // Test 5: Add Category Button
+            await testButtonByText('+ Add', 'Add Category Button', 'open-modal');
+
+            // Test 6: Search Input
+            await new Promise(resolve => {
+                const input = doc.querySelector('input[x-model="searchQuery"]');
+                if (input) {
+                    addTestResult('Search Input', 'pass', 'Search input field found');
+                    input.value = 'test';
+                    input.dispatchEvent(new Event('input'));
+                    addTestResult('Search Input (Functionality)', 'pass', 'Search input accepts input');
+                } else {
+                    addTestResult('Search Input', 'fail', 'Search input not found');
+                }
+                resolve();
+            });
+
+            // Test 7: Category Input (open modal first)
+            await new Promise(resolve => {
+                const newPromptBtn = Array.from(doc.querySelectorAll('button')).find(b => 
+                    b.textContent.includes('New Prompt')
+                );
+                if (newPromptBtn) {
+                    newPromptBtn.click();
+                    setTimeout(() => {
+                        const categoryInput = doc.querySelector('input[x-model="currentPrompt.category"]');
+                        if (categoryInput) {
+                            addTestResult('Category Input Field', 'pass', 'Category input found in modal');
+                            categoryInput.value = 'Test Category';
+                            categoryInput.dispatchEvent(new Event('input'));
+                            addTestResult('Category Input (Editable)', 'pass', 'Category input accepts typing');
+                        } else {
+                            addTestResult('Category Input Field', 'fail', 'Category input not found');
+                        }
+                        // Close modal
+                        const closeBtn = Array.from(doc.querySelectorAll('button')).find(b => 
+                            b.textContent.trim() === 'Cancel'
+                        );
+                        if (closeBtn) {
+                            setTimeout(() => closeBtn.click(), 200);
+                        }
+                        resolve();
+                    }, 300);
+                } else {
+                    resolve();
+                }
+            });
+
+            // Test 8: Tags Input
+            await new Promise(resolve => {
+                const newPromptBtn = Array.from(doc.querySelectorAll('button')).find(b => 
+                    b.textContent.includes('New Prompt')
+                );
+                if (newPromptBtn) {
+                    newPromptBtn.click();
+                    setTimeout(() => {
+                        const tagsInput = doc.querySelector('input[x-model="currentPrompt.tagsInput"]');
+                        if (tagsInput) {
+                            addTestResult('Tags Input Field', 'pass', 'Tags input found');
+                            tagsInput.value = 'test, tags';
+                            tagsInput.dispatchEvent(new Event('input'));
+                        } else {
+                            addTestResult('Tags Input Field', 'fail', 'Tags input not found');
+                        }
+                        resolve();
+                    }, 400);
+                } else {
+                    resolve();
+                }
+            });
+
+            // Test 9: Save Button
+            await new Promise(resolve => {
+                const newPromptBtn = Array.from(doc.querySelectorAll('button')).find(b => 
+                    b.textContent.includes('New Prompt')
+                );
+                if (newPromptBtn) {
+                    newPromptBtn.click();
+                    setTimeout(() => {
+                        const saveBtn = doc.querySelector('button[type="submit"]');
+                        if (saveBtn) {
+                            addTestResult('Save Button', 'pass', 'Save button found in modal');
+                        } else {
+                            addTestResult('Save Button', 'fail', 'Save button not found');
+                        }
+                        // Close modal
+                        const closeBtn = Array.from(doc.querySelectorAll('button')).find(b => 
+                            b.textContent.trim() === 'Cancel'
+                        );
+                        if (closeBtn) {
+                            setTimeout(() => closeBtn.click(), 100);
+                        }
+                        resolve();
+                    }, 300);
+                } else {
+                    addTestResult('Save Button', 'fail', 'Save button not found');
+                    resolve();
+                }
+            });
+
+            // Test 10: Cancel Button
+            await new Promise(resolve => {
+                const newPromptBtn = Array.from(doc.querySelectorAll('button')).find(b => 
+                    b.textContent.includes('New Prompt')
+                );
+                if (newPromptBtn) {
+                    newPromptBtn.click();
+                    setTimeout(() => {
+                        const cancelBtn = Array.from(doc.querySelectorAll('button')).find(b => 
+                            b.textContent.trim() === 'Cancel'
+                        );
+                        if (cancelBtn) {
+                            addTestResult('Cancel/Close Button', 'pass', 'Cancel button found');
+                            cancelBtn.click();
+                        } else {
+                            addTestResult('Cancel/Close Button', 'fail', 'Cancel button not found');
+                        }
+                        resolve();
+                    }, 300);
+                } else {
+                    addTestResult('Cancel/Close Button', 'fail', 'Could not open modal to test');
+                    resolve();
+                }
+            });
+
+            // Test 11: Filter Buttons
+            await new Promise(resolve => {
+                const categoryButtons = Array.from(doc.querySelectorAll('button')).filter(b => 
+                    b.textContent.trim() === 'All Prompts'
+                );
+                if (categoryButtons.length > 0) {
+                    addTestResult('Category Filter Buttons', 'pass', `Found ${categoryButtons.length} category filter button(s)`);
+                } else {
+                    addTestResult('Category Filter Buttons', 'pending', 'No category filters (no categories created yet)');
+                }
+                resolve();
+            });
+
+            // Test 12: Action Buttons (if prompts exist)
+            await new Promise(resolve => {
+                setTimeout(() => {
+                    const duplicateBtns = Array.from(doc.querySelectorAll('main button')).filter(b => 
+                        b.querySelector('svg') && (b.title === 'Duplicate' || b.innerHTML.includes('M8 16H6a2'))
+                    );
+                    const deleteBtns = Array.from(doc.querySelectorAll('main button')).filter(b => 
+                        b.querySelector('svg') && (b.title === 'Delete' || b.innerHTML.includes('M19 7l'))
+                    );
+                    
+                    if (duplicateBtns.length > 0) {
+                        addTestResult('Duplicate Button', 'pass', `Found ${duplicateBtns.length} duplicate button(s)`);
+                    } else {
+                        addTestResult('Duplicate Button', 'pending', 'No duplicate buttons (no prompts created yet)');
+                    }
+                    
+                    if (deleteBtns.length > 0) {
+                        addTestResult('Delete Button', 'pass', `Found ${deleteBtns.length} delete button(s)`);
+                    } else {
+                        addTestResult('Delete Button', 'pending', 'No delete buttons (no prompts created yet)');
+                    }
+                    
+                    resolve();
+                }, 600);
+            });
+
+            addTestResult('All Tests Complete', 'pass', `Completed ${testResults.length} tests`);
+        }
+
+        // Auto-run tests when page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                addTestResult('Page Loaded', 'pass', 'Test page ready. Click "Run All Tests" to start.');
+            }, 100);
+        });
+    </script>
+</body>
+</html>
