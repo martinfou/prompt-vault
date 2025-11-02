@@ -41,9 +41,10 @@
    - ✅ Combined filters work
 
 5. **Templates**
-   - ✅ 7 templates available
+   - ✅ 8 templates available (7 CRISPE framework, 1 Elavis Saravia framework)
    - ✅ Templates load correctly
    - ✅ Template data pre-fills form
+   - ✅ Template titles clearly indicate framework type
 
 6. **Additional Features**
    - ✅ Dark mode toggle

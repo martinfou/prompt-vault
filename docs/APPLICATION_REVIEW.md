@@ -116,15 +116,17 @@ Prompt Vault is a well-designed, single-page web application for managing LLM pr
    - ✅ Tag filtering uses OR logic (shows prompts with ANY selected tag)
 
 3. **Templates System**
-   - 7 pre-built templates covering common use cases:
-     - Professional Git Commit Message Generator
-     - Senior Programmer Assistant
-     - Scrum Master - Sprint Planning Assistant
-     - Software Architect Advisor
-     - Code Review Assistant
-     - Technical Documentation Architect
-     - UX Designer & User Experience Architect
-   - Well-structured CRISPE framework prompts
+   - 8 pre-built templates covering common use cases:
+     - Professional Git Commit Message Generator (CRISPE)
+     - Senior Programmer Assistant (CRISPE)
+     - Scrum Master - Sprint Planning Assistant (CRISPE)
+     - Software Architect Advisor (CRISPE)
+     - Code Review Assistant (CRISPE)
+     - Technical Documentation Architect (CRISPE)
+     - UX Designer & User Experience Architect (CRISPE)
+     - Content Generator (Elavis)
+   - Well-structured prompts using CRISPE and Elavis Saravia frameworks
+   - Template titles clearly indicate framework type (CRISPE vs Elavis)
    - Easy to extend with new templates
 
 4. **Additional Features**
