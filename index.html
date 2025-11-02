@@ -379,7 +379,7 @@
                             <button @click="editPrompt(viewingPrompt)" class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition-colors">
                                 Edit
                             </button>
-                            <button @click="copyToClipboard(viewingPrompt.content)" class="px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded text-sm transition-colors">
+                            <button @click="copyToClipboard(viewingPrompt.content, $event)" class="px-3 py-1 bg-gray-600 hover:bg-gray-700 text-white rounded text-sm transition-colors">
                                 Copy
                             </button>
                             <button @click="closeViewModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
@@ -528,18 +528,15 @@
                 toggleDarkMode() {
                     this.darkMode = !this.darkMode;
                     localStorage.setItem('darkMode', this.darkMode);
-                    console.log('Dark mode toggled to:', this.darkMode);
                     // Force update the class immediately
                     this.updateDarkClass();
                     // Update highlight.js theme
                     if (typeof toggleHighlightTheme === 'function') {
                         toggleHighlightTheme(this.darkMode);
                     }
-                    console.log('HTML classes:', document.documentElement.classList.toString());
                     // Double-check after a brief delay to ensure it sticks
                     setTimeout(() => {
                         this.updateDarkClass();
-                        console.log('After timeout, HTML classes:', document.documentElement.classList.toString());
                     }, 100);
                 },
 
@@ -761,9 +758,31 @@ Be specific, constructive, and educational in your feedback.`;
                     }
                 },
 
-                copyToClipboard(text) {
+                copyToClipboard(text, event) {
                     navigator.clipboard.writeText(text).then(() => {
-                        alert('Copied to clipboard!');
+                        // Show brief success feedback without alert
+                        const button = event?.target;
+                        if (button) {
+                            const originalText = button.textContent;
+                            button.textContent = 'Copied!';
+                            setTimeout(() => {
+                                button.textContent = originalText;
+                            }, 2000);
+                        }
+                    }).catch(() => {
+                        // Fallback for browsers that don't support clipboard API
+                        const textArea = document.createElement('textarea');
+                        textArea.value = text;
+                        textArea.style.position = 'fixed';
+                        textArea.style.opacity = '0';
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        try {
+                            document.execCommand('copy');
+                        } catch (err) {
+                            // Silent fail - clipboard access denied
+                        }
+                        document.body.removeChild(textArea);
                     });
                 },
 
