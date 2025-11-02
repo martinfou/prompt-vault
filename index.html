@@ -124,12 +124,17 @@
                         <!-- Categories -->
                         <div>
                             <div class="flex items-center justify-between mb-2">
-                                <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300">Categories</h3>
-                                <button @click="showCategoryModal = true" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs">
+                                <button @click="categoriesCollapsed = !categoriesCollapsed" class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+                                    <svg class="w-4 h-4 transition-transform" :class="{'rotate-90': !categoriesCollapsed}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                    Prompt Types
+                                </button>
+                                <button @click.stop="showCategoryModal = true" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs">
                                     + Add
                                 </button>
                             </div>
-                            <div class="space-y-1">
+                            <div x-show="!categoriesCollapsed" x-transition class="space-y-1">
                                 <button 
                                     @click="selectedCategory = null; filterPrompts()"
                                     :class="selectedCategory === null ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'"
@@ -138,27 +143,37 @@
                                     All Prompts
                                 </button>
                                 <template x-for="category in categories" :key="category">
-                                    <button 
-                                        @click="selectedCategory = category; filterPrompts()"
-                                        :class="selectedCategory === category ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'"
-                                        class="w-full text-left px-2 py-1 rounded text-sm transition-colors flex items-center justify-between group"
-                                    >
-                                        <span x-text="category"></span>
+                                    <div class="flex items-center justify-between group hover:bg-gray-50 dark:hover:bg-gray-700 rounded">
+                                        <button 
+                                            @click="selectedCategory = category; filterPrompts()"
+                                            :class="selectedCategory === category ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'"
+                                            class="flex-1 text-left px-2 py-1 rounded text-sm transition-colors"
+                                        >
+                                            <span x-text="category"></span>
+                                        </button>
                                         <button 
                                             @click.stop="deleteCategory(category)"
-                                            class="opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-700 text-xs"
+                                            class="opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-700 p-1 rounded transition-opacity"
+                                            title="Delete prompt type"
                                         >
-                                            ×
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            </svg>
                                         </button>
-                                    </button>
+                                    </div>
                                 </template>
                             </div>
                         </div>
 
                         <!-- Tags Filter -->
                         <div>
-                            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Tags</h3>
-                            <div class="flex flex-wrap gap-1">
+                            <button @click="tagsCollapsed = !tagsCollapsed" class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors mb-2">
+                                <svg class="w-4 h-4 transition-transform" :class="{'rotate-90': !tagsCollapsed}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                                Tags
+                            </button>
+                            <div x-show="!tagsCollapsed" x-transition class="flex flex-wrap gap-1">
                                 <template x-for="tag in allTags" :key="tag">
                                     <button 
                                         @click="toggleTagFilter(tag)"
@@ -184,7 +199,7 @@
                                             <h3 class="font-semibold text-gray-900 dark:text-white mb-1" x-text="prompt.title"></h3>
                                             <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-2" x-text="prompt.content.substring(0, 150) + (prompt.content.length > 150 ? '...' : '')"></p>
                                             <div class="flex items-center gap-3 flex-wrap">
-                                                <span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded" x-text="prompt.category || 'Uncategorized'"></span>
+                                                <span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded" x-text="prompt.category || 'No Type'"></span>
                                                 <template x-for="tag in prompt.tags" :key="tag">
                                                     <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded" x-text="tag"></span>
                                                 </template>
@@ -238,13 +253,14 @@
                                 class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="">Select a template...</option>
-                                <option value="professional-git-commit">Professional Git Commit Message</option>
-                                <option value="senior-programmer">Senior Programmer</option>
-                                <option value="scrummaster">Scrum Master</option>
-                                <option value="software-architect">Software Architect</option>
-                                <option value="code-review">Code Review</option>
-                                <option value="technical-documentation">Technical Documentation Architect</option>
-                                <option value="ux-designer">UX Designer</option>
+                                <option value="professional-git-commit">Professional Git Commit Message (CRISPE)</option>
+                                <option value="senior-programmer">Senior Programmer (CRISPE)</option>
+                                <option value="scrummaster">Scrum Master (CRISPE)</option>
+                                <option value="software-architect">Software Architect (CRISPE)</option>
+                                <option value="code-review">Code Review (CRISPE)</option>
+                                <option value="technical-documentation">Technical Documentation Architect (CRISPE)</option>
+                                <option value="ux-designer">UX Designer (CRISPE)</option>
+                                <option value="content-generator">Content Generator (Elavis)</option>
                             </select>
                             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Select a template to pre-fill the form with an example prompt</p>
                         </div>
@@ -261,7 +277,7 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Prompt Type</label>
                             <div class="relative" x-data="{ showDropdown: false }" @click.outside="showDropdown = false">
                                 <input 
                                     type="text" 
@@ -271,11 +287,11 @@
                                     @keydown.enter.prevent="handleCategoryInput($event)"
                                     @keydown.escape="showDropdown = false"
                                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="Type category name or select from list..."
+                                    placeholder="Type prompt type (e.g., Persona Prompt, Code Snippet Prompt)..."
                                     list="category-list"
                                 >
                                 <datalist id="category-list">
-                                    <option value="">Uncategorized</option>
+                                    <option value="">No Type</option>
                                     <template x-for="category in categories" :key="category">
                                         <option :value="category" x-text="category"></option>
                                     </template>
@@ -290,24 +306,50 @@
                                         ></button>
                                     </template>
                                     <div x-show="categories.filter(c => !currentPrompt.category || c.toLowerCase().includes(currentPrompt.category.toLowerCase())).length === 0 && categories.length > 0" class="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">
-                                        No matching categories
+                                        No matching prompt types
                                     </div>
                                 </div>
                                 <div x-show="showDropdown && categories.length === 0" x-cloak class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg px-3 py-2 text-sm text-gray-500 dark:text-gray-400">
-                                    No categories yet. Type a name and press Enter to create one.
+                                    No prompt types yet. Type a name and press Enter to create one.
                                 </div>
                             </div>
-                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Type a new category name and press Enter to create it, or select from existing categories</p>
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Type a new prompt type (e.g., "Persona Prompt", "Code Snippet Prompt") and press Enter to create it, or select from existing types</p>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tags (comma-separated)</label>
-                            <input 
-                                type="text" 
-                                x-model="currentPrompt.tagsInput"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="e.g., code-generation, analysis, creative"
-                            >
+                            <div class="relative" x-data="{ showTagDropdown: false, selectedTagIndex: -1 }" @click.outside="showTagDropdown = false">
+                                <input 
+                                    type="text" 
+                                    x-model="currentPrompt.tagsInput"
+                                    @input="showTagDropdown = true; selectedTagIndex = -1"
+                                    @focus="showTagDropdown = true; selectedTagIndex = -1"
+                                    @keydown.arrow-down.prevent="selectedTagIndex = Math.min(selectedTagIndex + 1, getFilteredTags().length - 1)"
+                                    @keydown.arrow-up.prevent="selectedTagIndex = Math.max(selectedTagIndex - 1, -1)"
+                                    @keydown.enter.prevent="handleTagEnter($event)"
+                                    @keydown.escape="showTagDropdown = false"
+                                    @keydown.comma.prevent="handleTagComma($event)"
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="e.g., code-generation, analysis, creative"
+                                    x-ref="tagsInput"
+                                >
+                                <div 
+                                    x-show="showTagDropdown && getFilteredTags().length > 0" 
+                                    x-cloak 
+                                    class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto"
+                                >
+                                    <template x-for="(tag, index) in getFilteredTags()" :key="tag">
+                                        <button 
+                                            type="button"
+                                            @click="handleTagSelect(tag); showTagDropdown = false; selectedTagIndex = -1"
+                                            :class="selectedTagIndex === index ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100'"
+                                            class="w-full text-left px-3 py-2 text-sm transition-colors"
+                                            x-text="tag"
+                                        ></button>
+                                    </template>
+                                </div>
+                            </div>
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Type to see suggestions, press Enter or comma to add tag</p>
                         </div>
 
                         <div>
@@ -392,7 +434,7 @@
                     
                     <div class="space-y-4">
                         <div class="flex items-center gap-3 flex-wrap">
-                            <span class="text-sm px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded" x-text="viewingPrompt?.category || 'Uncategorized'"></span>
+                            <span class="text-sm px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded" x-text="viewingPrompt?.category || 'No Type'"></span>
                             <template x-for="tag in viewingPrompt?.tags || []" :key="tag">
                                 <span class="text-sm px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded" x-text="tag"></span>
                             </template>
@@ -427,18 +469,24 @@
         <!-- Category Modal -->
         <div x-show="showCategoryModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.self="showCategoryModal = false">
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md w-full mx-4">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Add Category</h3>
-                <div class="flex gap-3">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Add Prompt Type</h3>
+                <div class="space-y-4">
                     <input 
                         type="text" 
                         x-model="newCategory"
                         @keyup.enter="addCategory()"
-                        placeholder="Category name..."
-                        class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        @keyup.escape="showCategoryModal = false; newCategory = ''"
+                        placeholder="Prompt type (e.g., Persona Prompt, Code Snippet Prompt)..."
+                        class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
-                    <button @click="addCategory()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
-                        Add
-                    </button>
+                    <div class="flex gap-3">
+                        <button @click="showCategoryModal = false; newCategory = ''" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg transition-colors">
+                            Cancel
+                        </button>
+                        <button @click="addCategory()" class="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+                            Add
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -483,6 +531,8 @@
                 showViewModal: false,
                 showCategoryModal: false,
                 showImportModal: false,
+                categoriesCollapsed: false,
+                tagsCollapsed: false,
                 viewingPrompt: null,
                 currentPrompt: {
                     id: null,
@@ -550,6 +600,31 @@
                     
                     if (savedCategories) {
                         this.categories = JSON.parse(savedCategories);
+                    } else {
+                        // Initialize with default prompt types
+                        this.categories = [
+                            'Persona Prompt',
+                            'Code Snippet Prompt',
+                            'Code Review Prompt',
+                            'Documentation Prompt',
+                            'Explanation Prompt',
+                            'Tutorial Prompt',
+                            'Analysis Prompt',
+                            'Refactoring Prompt',
+                            'Template Prompt',
+                            'Troubleshooting Prompt',
+                            'Design Prompt',
+                            'Writing Prompt',
+                            'Planning Prompt',
+                            'Testing Prompt',
+                            'Review Prompt',
+                            'Translation Prompt',
+                            'Summarization Prompt',
+                            'Question Prompt',
+                            'Instruction Prompt',
+                            'Conversation Prompt'
+                        ];
+                        this.saveData();
                     }
 
                     this.updateAllTags();
@@ -560,6 +635,66 @@
                     localStorage.setItem('categories', JSON.stringify(this.categories));
                 },
 
+                getDefaultTags() {
+                    return [
+                        'code-generation',
+                        'code-review',
+                        'refactoring',
+                        'debugging',
+                        'testing',
+                        'documentation',
+                        'architecture',
+                        'design-patterns',
+                        'best-practices',
+                        'optimization',
+                        'security',
+                        'performance',
+                        'api-design',
+                        'database',
+                        'frontend',
+                        'backend',
+                        'full-stack',
+                        'devops',
+                        'ci-cd',
+                        'deployment',
+                        'monitoring',
+                        'scalability',
+                        'user-experience',
+                        'accessibility',
+                        'responsive-design',
+                        'agile',
+                        'scrum',
+                        'project-management',
+                        'requirements',
+                        'analysis',
+                        'problem-solving',
+                        'troubleshooting',
+                        'learning',
+                        'onboarding',
+                        'technical-writing',
+                        'communication',
+                        'collaboration',
+                        'code-quality',
+                        'clean-code',
+                        'maintainability',
+                        'readability',
+                        'automation',
+                        'scripting',
+                        'data-analysis',
+                        'machine-learning',
+                        'ai',
+                        'prompt-engineering',
+                        'creative',
+                        'marketing',
+                        'business',
+                        'productivity',
+                        'workflow',
+                        'tooling',
+                        'git',
+                        'version-control'
+                    ];
+                },
+
                 updateAllTags() {
                     const tagsSet = new Set();
                     this.prompts.forEach(prompt => {
@@ -567,6 +702,9 @@
                             prompt.tags.forEach(tag => tagsSet.add(tag));
                         }
                     });
+                    
+                    // Merge with useful default tags
+                    this.getDefaultTags().forEach(tag => tagsSet.add(tag));
                     this.allTags = Array.from(tagsSet).sort();
                 },
 
@@ -805,13 +943,119 @@ Be specific, constructive, and educational in your feedback.`;
                     }
                 },
 
+                getCurrentTagInput() {
+                    // Extract the current tag being typed (after the last comma)
+                    const input = this.currentPrompt.tagsInput || '';
+                    const lastCommaIndex = input.lastIndexOf(',');
+                    return input.substring(lastCommaIndex + 1).trim();
+                },
+
+                getFilteredTags() {
+                    const currentTag = this.getCurrentTagInput().toLowerCase();
+                    const existingTags = (this.currentPrompt.tagsInput || '')
+                        .split(',')
+                        .map(t => t.trim().toLowerCase())
+                        .filter(t => t.length > 0);
+                    
+                    // Filter tags that:
+                    // 1. Match the current input (if any)
+                    // 2. Are not already in the tagsInput
+                    return this.allTags.filter(tag => {
+                        const tagLower = tag.toLowerCase();
+                        const isNotAlreadyAdded = !existingTags.includes(tagLower);
+                        const matchesInput = currentTag === '' || tagLower.includes(currentTag);
+                        return isNotAlreadyAdded && matchesInput;
+                    }).slice(0, 10); // Limit to 10 suggestions
+                },
+
+                handleTagSelect(tag, addComma = true) {
+                    if (!tag || !tag.trim()) return;
+                    
+                    const input = this.currentPrompt.tagsInput || '';
+                    const lastCommaIndex = input.lastIndexOf(',');
+                    const beforeLastComma = input.substring(0, lastCommaIndex + 1).trim();
+                    const newTag = tag.trim();
+                    
+                    // Add the tag, ensuring proper comma separation
+                    if (beforeLastComma) {
+                        this.currentPrompt.tagsInput = beforeLastComma + (beforeLastComma.endsWith(',') ? '' : ', ') + newTag;
+                    } else {
+                        // First tag or replacing existing content
+                        const existingTags = input.split(',').filter(t => t.trim()).map(t => t.trim());
+                        const existingTagsFiltered = existingTags.filter(t => t.toLowerCase() !== newTag.toLowerCase());
+                        if (existingTagsFiltered.length > 0) {
+                            this.currentPrompt.tagsInput = existingTagsFiltered.join(', ') + ', ' + newTag;
+                        } else {
+                            this.currentPrompt.tagsInput = newTag;
+                        }
+                    }
+                    
+                    // Add comma and space if requested (for dropdown selection)
+                    if (addComma) {
+                        this.currentPrompt.tagsInput += ', ';
+                    }
+                    
+                    // Focus back on input after a brief delay
+                    setTimeout(() => {
+                        const inputEl = document.querySelector('input[x-ref="tagsInput"]');
+                        if (inputEl) {
+                            inputEl.focus();
+                            // Move cursor to end
+                            inputEl.setSelectionRange(inputEl.value.length, inputEl.value.length);
+                        }
+                    }, 10);
+                },
+
+                handleTagEnter(event) {
+                    const filtered = this.getFilteredTags();
+                    const currentTag = this.getCurrentTagInput();
+                    
+                    // Try to get selected tag from dropdown, or use current input
+                    // Note: selectedTagIndex is in Alpine scope, so we'll use a workaround
+                    const dropdown = event.target.closest('[x-data]');
+                    let selectedIndex = -1;
+                    if (dropdown && dropdown.__x) {
+                        selectedIndex = dropdown.__x.$data.selectedTagIndex;
+                    }
+                    
+                    if (selectedIndex >= 0 && selectedIndex < filtered.length) {
+                        this.handleTagSelect(filtered[selectedIndex]);
+                        if (dropdown && dropdown.__x) {
+                            dropdown.__x.$data.showTagDropdown = false;
+                            dropdown.__x.$data.selectedTagIndex = -1;
+                        }
+                    } else if (currentTag && currentTag.length > 0) {
+                        // Add current input as tag
+                        this.handleTagSelect(currentTag);
+                        if (dropdown && dropdown.__x) {
+                            dropdown.__x.$data.showTagDropdown = false;
+                            dropdown.__x.$data.selectedTagIndex = -1;
+                        }
+                    }
+                    event.preventDefault();
+                },
+
+                handleTagComma(event) {
+                    const currentTag = this.getCurrentTagInput();
+                    if (currentTag && currentTag.length > 0) {
+                        event.preventDefault(); // Prevent adding comma twice
+                        this.handleTagSelect(currentTag, true); // Add comma since user pressed it
+                        const dropdown = event.target.closest('[x-data]');
+                        if (dropdown && dropdown.__x) {
+                            dropdown.__x.$data.showTagDropdown = false;
+                            dropdown.__x.$data.selectedTagIndex = -1;
+                        }
+                    }
+                    // If no current tag, let comma be added naturally (don't preventDefault)
+                },
+
                 loadPromptTemplate(templateId) {
                     if (!templateId) return;
 
                     const templates = {
                         'professional-git-commit': {
-                            title: 'Professional Git Commit Message Generator',
-                            category: 'Development',
+                            title: 'Professional Git Commit Message Generator (CRISPE)',
+                            category: 'Template Prompt',
                             tags: ['git', 'commit', 'best-practices'],
                             content: `**CRISPE Framework Prompt**
 
@@ -824,13 +1068,21 @@ Be specific, constructive, and educational in your feedback.`;
 **Subject**: Git commit message generation and version control documentation.
 
 **Preset**: 
+- Title: Must contain the task number or ID, followed by a short business description
+- First paragraph: Use business language that describes why the changes were made and how they will help users or improve the business value. Focus on the benefits and impact from a business perspective.
+- Second paragraph: Use technical language geared toward programmers and technical stakeholders. Use bullet points to list:
+  - Technical implementation details
+  - Code changes and architecture decisions
+  - Dependencies or system interactions
+  - Performance considerations or optimizations
+  - Any technical trade-offs or considerations
 - Format: <type>(<scope>): <subject>
 - Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert
 - Subject line: Maximum 50 characters, imperative mood, capitalized, no period
-- Body: Explain what and why (not how), wrap at 72 characters
+- Body: First paragraph (business-focused), blank line, second paragraph (technical bullets)
 - Footer: Reference issues/PRs (e.g., "Closes #123" or "Refs #456")
 - Tone: Professional, concise, clear
-- Structure: Type header, blank line, body, blank line, footer
+- Structure: Type header, blank line, business paragraph, blank line, technical paragraph (bullets), blank line, footer
 
 **Exception**: 
 - Do not include implementation details in the subject line
@@ -844,8 +1096,8 @@ Be specific, constructive, and educational in your feedback.`;
 Generate a commit message for the following changes:`
                         },
                         'senior-programmer': {
-                            title: 'Senior Programmer Assistant',
-                            category: 'Development',
+                            title: 'Senior Programmer Assistant (CRISPE)',
+                            category: 'Persona Prompt',
                             tags: ['programming', 'senior', 'best-practices', 'code-quality'],
                             content: `**CRISPE Framework Prompt**
 
@@ -878,8 +1130,8 @@ Generate a commit message for the following changes:`
 Help me with the following:`
                         },
                         'scrummaster': {
-                            title: 'Scrum Master - Sprint Planning Assistant',
-                            category: 'Project Management',
+                            title: 'Scrum Master - Sprint Planning Assistant (CRISPE)',
+                            category: 'Persona Prompt',
                             tags: ['scrum', 'agile', 'sprint-planning', 'markdown'],
                             content: `**CRISPE Framework Prompt**
 
@@ -951,8 +1203,8 @@ Help me with the following:`
 Create a sprint planning markdown document for the following requirements:`
                         },
                         'software-architect': {
-                            title: 'Software Architect Advisor',
-                            category: 'Architecture',
+                            title: 'Software Architect Advisor (CRISPE)',
+                            category: 'Persona Prompt',
                             tags: ['architecture', 'design', 'system-design', 'scalability'],
                             content: `**CRISPE Framework Prompt**
 
@@ -986,8 +1238,8 @@ Create a sprint planning markdown document for the following requirements:`
 Help me design/architect the following system:`
                         },
                         'code-review': {
-                            title: 'Code Review Assistant',
-                            category: 'Development',
+                            title: 'Code Review Assistant (CRISPE)',
+                            category: 'Code Review Prompt',
                             tags: ['code-review', 'quality', 'best-practices', 'feedback'],
                             content: `**CRISPE Framework Prompt**
 
@@ -1025,8 +1277,8 @@ Help me design/architect the following system:`
 Review the following code and provide feedback:`
                         },
                         'technical-documentation': {
-                            title: 'Technical Documentation Architect',
-                            category: 'Documentation',
+                            title: 'Technical Documentation Architect (CRISPE)',
+                            category: 'Documentation Prompt',
                             tags: ['documentation', 'diagrams', 'modeling', 'database', 'architecture'],
                             content: `**CRISPE Framework Prompt**
 
@@ -1117,8 +1369,8 @@ Review the following code and provide feedback:`
 Create comprehensive technical documentation for the following software system:`
                         },
                         'ux-designer': {
-                            title: 'UX Designer & User Experience Architect',
-                            category: 'Design',
+                            title: 'UX Designer & User Experience Architect (CRISPE)',
+                            category: 'Persona Prompt',
                             tags: ['ux', 'design', 'user-experience', 'wireframes', 'user-flows'],
                             content: `**CRISPE Framework Prompt**
 
@@ -1206,6 +1458,31 @@ Create comprehensive technical documentation for the following software system:`
    - Best practices
 
 Create comprehensive UX design documentation for the following software feature/system:`
+                        },
+                        'content-generator': {
+                            title: 'Content Generator (Elavis)',
+                            category: 'Template Prompt',
+                            tags: ['content', 'writing', 'generation', 'elavis'],
+                            content: `**Elavis Saravia Framework Prompt**
+
+**Instruction**: Generate high-quality, engaging content that meets specific requirements and serves a clear purpose. Create well-structured content that is informative, clear, and tailored to the target audience.
+
+**Context**: You are working in a professional content creation environment where quality, clarity, and audience engagement are essential. The content must align with business objectives, maintain consistent tone and style, and provide value to readers. Content may be used for marketing, documentation, communication, or educational purposes.
+
+**Input Data**: 
+[Provide the specific topic, requirements, or information you want the content to address here]
+
+**Output Indicator**: 
+- Format: Well-structured text with clear sections, headings, and formatting
+- Length: Appropriate length for the content type and purpose
+- Tone: Professional, engaging, and appropriate for the target audience
+- Style: Clear, concise, and easy to read
+- Structure: Organized with logical flow, headings, and paragraphs
+- Quality: Accurate, informative, and valuable to the reader
+
+---
+
+Generate content based on the following requirements:`
                         }
                     };
 
@@ -1231,8 +1508,12 @@ Create comprehensive UX design documentation for the following software feature/
                 },
 
                 deleteCategory(category) {
-                    if (confirm(`Delete category "${category}"? Prompts in this category will become uncategorized.`)) {
+                    if (confirm(`Delete prompt type "${category}"? Prompts with this type will have no type assigned.`)) {
                         this.categories = this.categories.filter(c => c !== category);
+                        // Clear selected category if it was deleted
+                        if (this.selectedCategory === category) {
+                            this.selectedCategory = null;
+                        }
                         this.prompts.forEach(p => {
                             if (p.category === category) {
                                 p.category = '';
