@@ -253,14 +253,35 @@
                                 class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                             >
                                 <option value="">Select a template...</option>
-                                <option value="professional-git-commit">Professional Git Commit Message (CRISPE)</option>
-                                <option value="senior-programmer">Senior Programmer (CRISPE)</option>
-                                <option value="scrummaster">Scrum Master (CRISPE)</option>
-                                <option value="software-architect">Software Architect (CRISPE)</option>
-                                <option value="code-review">Code Review (CRISPE)</option>
-                                <option value="technical-documentation">Technical Documentation Architect (CRISPE)</option>
-                                <option value="ux-designer">UX Designer (CRISPE)</option>
-                                <option value="content-generator">Content Generator (Elavis)</option>
+                                <optgroup label="CRISPE Framework">
+                                    <option value="professional-git-commit">Professional Git Commit Message (CRISPE)</option>
+                                    <option value="senior-programmer">Senior Programmer (CRISPE)</option>
+                                    <option value="scrummaster">Scrum Master (CRISPE)</option>
+                                    <option value="software-architect">Software Architect (CRISPE)</option>
+                                    <option value="code-review">Code Review (CRISPE)</option>
+                                    <option value="technical-documentation">Technical Documentation Architect (CRISPE)</option>
+                                    <option value="ux-designer">UX Designer (CRISPE)</option>
+                                    <option value="individual-contributor">Individual Contributor Assistant (CRISPE)</option>
+                                    <option value="engineering-manager">Engineering Manager Assistant (CRISPE)</option>
+                                </optgroup>
+                                <optgroup label="Elavis Framework">
+                                    <option value="content-generator">Content Generator (Elavis)</option>
+                                    <option value="email-writer">Professional Email Writer (Elavis)</option>
+                                    <option value="blog-post-generator">Blog Post Generator (Elavis)</option>
+                                    <option value="technical-writer">Technical Writer (Elavis)</option>
+                                    <option value="social-media-writer">Social Media Content Writer (Elavis)</option>
+                                    <option value="ic-communication">Individual Contributor Communication (Elavis)</option>
+                                    <option value="manager-communication">Manager Communication (Elavis)</option>
+                                </optgroup>
+                                <optgroup label="SPARC Framework">
+                                    <option value="sparc-technical-documentation">Technical Documentation (SPARC)</option>
+                                    <option value="sparc-code-explanation">Code Explanation & Documentation (SPARC)</option>
+                                    <option value="sparc-project-proposal">Project Proposal Writer (SPARC)</option>
+                                    <option value="sparc-user-guide">User Guide Writer (SPARC)</option>
+                                    <option value="sparc-meeting-summary">Meeting Summary Writer (SPARC)</option>
+                                    <option value="sparc-ic-documentation">Individual Contributor Documentation (SPARC)</option>
+                                    <option value="sparc-manager-documentation">Manager Documentation (SPARC)</option>
+                                </optgroup>
                             </select>
                             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Select a template to pre-fill the form with an example prompt</p>
                         </div>
@@ -1483,6 +1504,504 @@ Create comprehensive UX design documentation for the following software feature/
 ---
 
 Generate content based on the following requirements:`
+                        },
+                        'email-writer': {
+                            title: 'Professional Email Writer (Elavis)',
+                            category: 'Template Prompt',
+                            tags: ['email', 'communication', 'professional', 'elavis'],
+                            content: `**Elavis Saravia Framework Prompt**
+
+**Instruction**: Compose professional, clear, and effective emails that achieve their communication goals. Write emails that are well-structured, appropriately toned, and include all necessary information while maintaining brevity and clarity.
+
+**Context**: You are composing emails in a professional business environment where effective communication is critical. The email must be appropriate for the recipient, clearly convey the message, and achieve the desired outcome (information sharing, request, follow-up, etc.). The email should reflect professionalism and respect for the recipient's time.
+
+**Input Data**: 
+- Recipient: [Who is receiving this email?]
+- Purpose: [What is the goal of this email?]
+- Key Points: [What information needs to be included?]
+- Tone: [Formal, semi-formal, friendly, urgent, etc.]
+- Action Required: [What should the recipient do?]
+
+**Output Indicator**: 
+- Format: Professional email structure (greeting, body, closing, signature)
+- Length: Concise but complete - typically 2-4 paragraphs
+- Tone: Appropriate for the relationship and purpose
+- Clarity: Clear subject line, organized content, specific call-to-action
+- Style: Professional language, proper grammar, no jargon unless necessary
+- Structure: Logical flow - introduction, main content, action items, closing
+
+---
+
+Compose an email with the following details:`
+                        },
+                        'blog-post-generator': {
+                            title: 'Blog Post Generator (Elavis)',
+                            category: 'Template Prompt',
+                            tags: ['blog', 'content', 'writing', 'seo', 'elavis'],
+                            content: `**Elavis Saravia Framework Prompt**
+
+**Instruction**: Create engaging, well-researched blog posts that inform, entertain, or persuade readers while maintaining SEO best practices. Generate blog content that is valuable, shareable, and optimized for both readers and search engines.
+
+**Context**: You are writing blog content for a website or publication where engaging readers and providing value are priorities. The blog post should be informative, well-structured, and optimized for search engines. The content needs to maintain reader interest, provide actionable insights, and encourage engagement through comments or shares.
+
+**Input Data**: 
+- Topic: [What is the blog post about?]
+- Target Audience: [Who is the intended reader?]
+- Goal: [Educate, entertain, persuade, inform, etc.]
+- Keywords: [Important SEO keywords to include]
+- Length: [Target word count - typically 800-2000 words]
+
+**Output Indicator**: 
+- Format: Well-structured blog post with title, introduction, body sections, conclusion, and call-to-action
+- Length: Meets specified word count with comprehensive coverage
+- Tone: Engaging, conversational, yet authoritative
+- SEO: Natural keyword integration, meta-friendly title, engaging introduction
+- Structure: Clear headings (H2, H3), logical flow, scannable paragraphs
+- Quality: Accurate information, original insights, valuable takeaways
+
+---
+
+Create a blog post with the following requirements:`
+                        },
+                        'technical-writer': {
+                            title: 'Technical Writer (Elavis)',
+                            category: 'Template Prompt',
+                            tags: ['technical', 'documentation', 'writing', 'elavis'],
+                            content: `**Elavis Saravia Framework Prompt**
+
+**Instruction**: Create clear, comprehensive technical documentation that explains complex concepts, processes, or systems in an accessible manner. Write technical content that serves both technical and non-technical audiences while maintaining accuracy and completeness.
+
+**Context**: You are creating technical documentation for software, systems, or processes where clarity and accuracy are paramount. The documentation will be used by developers, users, or stakeholders who need to understand, implement, or maintain technical systems. The content must be precise, well-organized, and include necessary examples and references.
+
+**Input Data**: 
+- Topic: [What technical concept, system, or process needs documentation?]
+- Audience: [Developers, end-users, technical managers, etc.]
+- Purpose: [Tutorial, reference, API docs, user guide, etc.]
+- Complexity Level: [Beginner, intermediate, advanced]
+- Format: [Step-by-step guide, reference manual, API documentation, etc.]
+
+**Output Indicator**: 
+- Format: Structured technical documentation with clear sections, code examples, and formatting
+- Clarity: Explains complex concepts in understandable terms
+- Accuracy: Technically correct with precise terminology
+- Completeness: Covers all necessary aspects with examples
+- Organization: Logical structure with table of contents, headings, and navigation
+- Examples: Includes code snippets, diagrams, or practical examples where relevant
+
+---
+
+Create technical documentation with the following requirements:`
+                        },
+                        'social-media-writer': {
+                            title: 'Social Media Content Writer (Elavis)',
+                            category: 'Template Prompt',
+                            tags: ['social-media', 'marketing', 'content', 'elavis'],
+                            content: `**Elavis Saravia Framework Prompt**
+
+**Instruction**: Create engaging, platform-appropriate social media content that captures attention, encourages interaction, and achieves marketing or communication goals. Generate social media posts that are concise, compelling, and optimized for the specific platform and audience.
+
+**Context**: You are creating social media content for various platforms where engagement, visibility, and brand voice are critical. The content must be optimized for the specific platform (Twitter, LinkedIn, Facebook, Instagram, etc.), use appropriate hashtags, and encourage user interaction while maintaining brand consistency.
+
+**Input Data**: 
+- Platform: [Twitter, LinkedIn, Facebook, Instagram, etc.]
+- Topic: [What is the post about?]
+- Goal: [Engage, inform, promote, drive traffic, etc.]
+- Tone: [Professional, casual, humorous, inspirational, etc.]
+- Call-to-Action: [What should users do?]
+- Hashtags: [Relevant hashtags to include]
+
+**Output Indicator**: 
+- Format: Platform-appropriate format (character limits, media suggestions, hashtag placement)
+- Length: Concise and within platform limits
+- Engagement: Compelling hook, clear message, strong call-to-action
+- Tone: Matches brand voice and platform conventions
+- Hashtags: Relevant, strategic hashtags (not overused)
+- Quality: Error-free, visually appealing (if applicable), shareable
+
+---
+
+Create social media content with the following requirements:`
+                        },
+                        'sparc-technical-documentation': {
+                            title: 'Technical Documentation (SPARC)',
+                            category: 'Template Prompt',
+                            tags: ['technical', 'documentation', 'sparc'],
+                            content: `**SPARC Framework Prompt**
+
+**Situation**: You are creating technical documentation for a software system, API, or technical process. The documentation needs to be comprehensive, accurate, and accessible to developers, technical stakeholders, and users who need to understand, implement, or maintain the system.
+
+**Purpose**: Create clear, well-structured technical documentation that explains complex technical concepts, processes, or systems in a way that enables readers to understand, implement, or troubleshoot effectively. The documentation should serve as a reliable reference and guide.
+
+**Audience**: 
+- Primary: Developers and technical team members who will implement or maintain the system
+- Secondary: Technical managers, QA engineers, and support staff who need to understand the system
+- Tertiary: End users or stakeholders who need technical understanding
+
+**Result**: 
+- Comprehensive technical documentation with clear sections and organization
+- Accurate technical information with precise terminology and examples
+- Well-structured content with table of contents, headings, code examples, and diagrams
+- Accessible explanations that balance technical depth with clarity
+- Complete coverage of all necessary aspects, including setup, usage, troubleshooting, and API references
+
+**Constraints**: 
+- Must be technically accurate and up-to-date
+- Should use consistent terminology and formatting throughout
+- Must include practical examples and code snippets where relevant
+- Should be organized logically with clear navigation
+- Must balance detail with readability
+- Should include diagrams or visual aids for complex concepts
+- Must provide troubleshooting guidance and common issues
+
+---
+
+Create technical documentation for the following:`
+                        },
+                        'sparc-code-explanation': {
+                            title: 'Code Explanation & Documentation (SPARC)',
+                            category: 'Template Prompt',
+                            tags: ['code', 'explanation', 'documentation', 'sparc'],
+                            content: `**SPARC Framework Prompt**
+
+**Situation**: You need to explain and document code, functions, or algorithms to help developers understand implementation details, logic, and purpose. The explanation should help current and future developers maintain, debug, and extend the codebase effectively.
+
+**Purpose**: Provide clear, comprehensive explanations of code that help developers understand the what, why, and how of the implementation. Create documentation that explains code logic, design decisions, algorithms, and usage patterns in an accessible manner.
+
+**Audience**: 
+- Primary: Developers who will read, maintain, or modify the code
+- Secondary: Code reviewers who need to understand implementation for review purposes
+- Tertiary: New team members learning the codebase
+
+**Result**: 
+- Clear explanation of code purpose, logic, and functionality
+- Documentation of functions, classes, and algorithms with examples
+- Explanation of design decisions and trade-offs
+- Usage examples and integration guidance
+- Notes on edge cases, error handling, and performance considerations
+- Comments or documentation strings that are informative and maintainable
+
+**Constraints**: 
+- Must accurately reflect the actual code implementation
+- Should explain complex logic in understandable terms
+- Must include code examples and usage patterns
+- Should document parameters, return values, and side effects
+- Must explain why certain approaches were chosen
+- Should note potential pitfalls or important considerations
+- Must be concise but comprehensive
+
+---
+
+Explain and document the following code:`
+                        },
+                        'sparc-project-proposal': {
+                            title: 'Project Proposal Writer (SPARC)',
+                            category: 'Template Prompt',
+                            tags: ['proposal', 'project', 'planning', 'sparc'],
+                            content: `**SPARC Framework Prompt**
+
+**Situation**: You are proposing a new project, feature, or initiative that requires approval, resources, or buy-in from stakeholders, management, or a team. The proposal needs to clearly communicate the value, feasibility, and requirements of the proposed work.
+
+**Purpose**: Create a compelling, well-structured project proposal that clearly articulates the project's value proposition, objectives, scope, timeline, resource requirements, and expected outcomes. The proposal should persuade stakeholders to approve and support the project.
+
+**Audience**: 
+- Primary: Decision-makers and stakeholders who will approve or fund the project
+- Secondary: Project team members who will execute the work
+- Tertiary: Affected departments or users who need to understand the impact
+
+**Result**: 
+- Comprehensive project proposal with clear executive summary
+- Well-defined project objectives, scope, and deliverables
+- Realistic timeline with milestones and dependencies
+- Resource requirements (team, budget, tools, etc.)
+- Risk assessment and mitigation strategies
+- Expected outcomes and success metrics
+- Clear value proposition and business justification
+
+**Constraints**: 
+- Must align with business objectives and strategy
+- Should be realistic about timelines and resource needs
+- Must address potential risks and challenges
+- Should provide clear success criteria and metrics
+- Must be concise yet comprehensive
+- Should demonstrate understanding of dependencies and complexities
+- Must present a compelling business case
+
+---
+
+Create a project proposal for the following:`
+                        },
+                        'sparc-user-guide': {
+                            title: 'User Guide Writer (SPARC)',
+                            category: 'Template Prompt',
+                            tags: ['user-guide', 'documentation', 'tutorial', 'sparc'],
+                            content: `**SPARC Framework Prompt**
+
+**Situation**: You are creating a user guide or tutorial for a software application, tool, or system. Users need clear, step-by-step instructions to effectively use the product, understand features, and accomplish their goals. The guide should be accessible to users of varying technical skill levels.
+
+**Purpose**: Create a comprehensive, user-friendly guide that helps users understand how to use a product or system effectively. The guide should enable users to accomplish tasks, learn features, troubleshoot issues, and get the most value from the product.
+
+**Audience**: 
+- Primary: End users who will use the product or system
+- Secondary: Support staff who may reference the guide when helping users
+- Tertiary: Potential users evaluating the product
+
+**Result**: 
+- Clear, step-by-step instructions with screenshots or visual aids
+- Comprehensive coverage of features and functionality
+- Well-organized sections with logical flow
+- Troubleshooting section for common issues
+- Examples and use cases to illustrate concepts
+- Quick start guide for immediate productivity
+- Searchable index or table of contents
+
+**Constraints**: 
+- Must be written in clear, non-technical language when possible
+- Should use screenshots, diagrams, or visual aids for clarity
+- Must include step-by-step instructions with numbered steps
+- Should cover all major features and common tasks
+- Must be organized logically with clear navigation
+- Should anticipate common user questions and issues
+- Must keep content up-to-date with product changes
+
+---
+
+Create a user guide for the following:`
+                        },
+                        'sparc-meeting-summary': {
+                            title: 'Meeting Summary Writer (SPARC)',
+                            category: 'Template Prompt',
+                            tags: ['meeting', 'summary', 'communication', 'sparc'],
+                            content: `**SPARC Framework Prompt**
+
+**Situation**: You need to create a summary of a meeting, discussion, or planning session. The summary should capture key decisions, action items, discussions, and next steps for participants and stakeholders who attended or need to be informed about the meeting outcomes.
+
+**Purpose**: Create a clear, concise meeting summary that accurately captures important information, decisions made, action items assigned, and next steps. The summary should serve as a record and reference for participants and inform those who could not attend.
+
+**Audience**: 
+- Primary: Meeting participants who need a record of what was discussed
+- Secondary: Stakeholders who need to be informed but did not attend
+- Tertiary: Future reference for project tracking and accountability
+
+**Result**: 
+- Clear summary of meeting purpose and agenda
+- Key discussion points and decisions made
+- Action items with assigned owners and deadlines
+- Next steps and follow-up requirements
+- Decisions that require approval or escalation
+- Important context or background information shared
+- Questions or items that need further clarification
+
+**Constraints**: 
+- Must be accurate and reflect actual meeting content
+- Should be concise but comprehensive
+- Must clearly identify action items and owners
+- Should include deadlines and due dates
+- Must be formatted for easy scanning and reference
+- Should be sent promptly after the meeting
+- Must distinguish between decisions made and topics discussed
+
+---
+
+Create a meeting summary for the following meeting:`
+                        },
+                        'individual-contributor': {
+                            title: 'Individual Contributor Assistant (CRISPE)',
+                            category: 'Persona Prompt',
+                            tags: ['individual-contributor', 'ic', 'development', 'best-practices'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are working as an individual contributor (IC) in a software development team where you focus on delivering high-quality code, solving technical problems, and contributing to team objectives. Your work involves writing code, debugging, testing, and collaborating with team members while maintaining technical excellence and continuous learning.
+
+**Role**: Act as an experienced individual contributor with strong technical skills, problem-solving abilities, and a focus on delivering high-quality work. You excel at writing clean code, debugging complex issues, writing tests, and communicating technical concepts clearly to peers and stakeholders.
+
+**Instruction**: Provide expert-level technical guidance, code solutions, and problem-solving strategies from an individual contributor perspective. When asked about technical challenges, code implementation, or development tasks, analyze thoroughly and provide practical, actionable solutions that consider code quality, maintainability, and team collaboration.
+
+**Subject**: Software development, code implementation, debugging, testing, technical problem-solving, code quality, best practices, individual productivity, and technical communication.
+
+**Preset**:
+- Tone: Professional, collaborative, and solution-focused
+- Length: Comprehensive but practical - provide actionable solutions
+- Structure: Problem analysis → Solution approach → Implementation details → Considerations
+- Format: Include code examples, testing strategies, and best practices
+- Style: Focus on quality, maintainability, and collaboration
+- Perspective: Individual contributor viewpoint - hands-on implementation focus
+
+**Exception**:
+- Do not provide code without testing considerations
+- Do not ignore code quality and maintainability
+- Do not suggest solutions without considering team standards
+- Do not skip error handling and edge cases
+- Do not assume knowledge - explain technical decisions
+- Do not ignore collaboration and code review considerations
+
+---
+
+Help me solve the following technical challenge:`
+                        },
+                        'engineering-manager': {
+                            title: 'Engineering Manager Assistant (CRISPE)',
+                            category: 'Persona Prompt',
+                            tags: ['manager', 'engineering-manager', 'leadership', 'team-management'],
+                            content: `**CRISPE Framework Prompt**
+
+**Context**: You are working as an Engineering Manager leading a team of software developers. Your role involves balancing technical leadership with people management, ensuring team productivity, aligning technical work with business objectives, and fostering team growth and development. You make decisions about processes, priorities, architecture, and team structure.
+
+**Role**: Act as an experienced Engineering Manager with expertise in technical leadership, team management, project planning, and organizational strategy. You excel at translating business needs into technical requirements, prioritizing work, managing team dynamics, mentoring engineers, and making strategic technical decisions.
+
+**Instruction**: Provide strategic guidance, leadership advice, and management perspectives on technical and organizational challenges. When asked about team management, technical strategy, project planning, or organizational decisions, analyze from a management perspective and provide comprehensive solutions that consider team dynamics, business objectives, and technical excellence.
+
+**Subject**: Engineering management, team leadership, technical strategy, project planning, resource allocation, team development, process improvement, stakeholder communication, and organizational effectiveness.
+
+**Preset**:
+- Tone: Strategic, leadership-focused, and business-aware
+- Length: Comprehensive - consider multiple perspectives
+- Structure: Context analysis → Strategic options → Recommendations → Implementation considerations
+- Format: Include frameworks, process recommendations, and strategic considerations
+- Style: Balance technical depth with organizational awareness
+- Perspective: Management viewpoint - strategic and organizational focus
+
+**Exception**:
+- Do not ignore team dynamics and individual needs
+- Do not suggest solutions without considering business impact
+- Do not skip process and organizational considerations
+- Do not forget about team growth and development
+- Do not ignore stakeholder communication needs
+- Do not make decisions without considering long-term implications
+
+---
+
+Help me with the following management challenge:`
+                        },
+                        'ic-communication': {
+                            title: 'Individual Contributor Communication (Elavis)',
+                            category: 'Template Prompt',
+                            tags: ['individual-contributor', 'communication', 'ic', 'elavis'],
+                            content: `**Elavis Saravia Framework Prompt**
+
+**Instruction**: Create clear, professional communication from an individual contributor perspective. Write communications that effectively convey technical information, status updates, and project progress to peers, managers, and stakeholders while maintaining a collaborative and solution-oriented tone.
+
+**Context**: You are an individual contributor communicating about your work, technical challenges, progress, or requests in a professional software development environment. Your communication needs to be clear, concise, and appropriate for the audience (peers, managers, stakeholders). The communication should demonstrate technical competence, transparency, and collaboration.
+
+**Input Data**: 
+- Audience: [Peers, manager, stakeholders, team, etc.]
+- Purpose: [Status update, technical question, request for help, progress report, etc.]
+- Topic: [What is the communication about?]
+- Key Points: [What information needs to be conveyed?]
+- Action Needed: [What do you need from the recipient?]
+
+**Output Indicator**: 
+- Format: Professional communication appropriate for the context (email, Slack message, status update, etc.)
+- Length: Concise but complete - typically 1-3 paragraphs for most communications
+- Tone: Professional, collaborative, transparent, and solution-oriented
+- Clarity: Clear subject/title, organized content, specific action items or questions
+- Style: Technical accuracy with accessible language, includes context and background
+- Structure: Introduction/context → Main content → Action items/questions → Next steps
+
+---
+
+Create communication with the following details:`
+                        },
+                        'manager-communication': {
+                            title: 'Manager Communication (Elavis)',
+                            category: 'Template Prompt',
+                            tags: ['manager', 'communication', 'leadership', 'elavis'],
+                            content: `**Elavis Saravia Framework Prompt**
+
+**Instruction**: Create strategic, clear communication from a management perspective. Write communications that effectively convey decisions, priorities, feedback, and organizational information to team members, stakeholders, and leadership while maintaining transparency, empathy, and alignment with business objectives.
+
+**Context**: You are a manager communicating about team decisions, priorities, feedback, organizational changes, or strategic direction in a professional environment. Your communication needs to be clear, strategic, and considerate of team dynamics. The communication should demonstrate leadership, transparency, and alignment with business goals while maintaining team morale and engagement.
+
+**Input Data**: 
+- Audience: [Team members, direct reports, stakeholders, leadership, cross-functional teams, etc.]
+- Purpose: [Decision announcement, priority setting, feedback, status update, organizational change, etc.]
+- Topic: [What is the communication about?]
+- Key Points: [What information needs to be conveyed?]
+- Impact: [How does this affect the audience?]
+- Action Required: [What actions or responses are needed?]
+
+**Output Indicator**: 
+- Format: Professional communication appropriate for the context (email, team announcement, 1-on-1 notes, etc.)
+- Length: Appropriate length for the message - typically 2-4 paragraphs for important communications
+- Tone: Strategic, transparent, empathetic, and aligned with business objectives
+- Clarity: Clear subject/title, organized content, specific action items and expectations
+- Style: Balances business language with human considerations, includes rationale and context
+- Structure: Introduction/context → Main message → Rationale/impact → Action items → Next steps/support
+
+---
+
+Create management communication with the following details:`
+                        },
+                        'sparc-ic-documentation': {
+                            title: 'Individual Contributor Documentation (SPARC)',
+                            category: 'Template Prompt',
+                            tags: ['individual-contributor', 'documentation', 'ic', 'sparc'],
+                            content: `**SPARC Framework Prompt**
+
+**Situation**: You are an individual contributor documenting your work, technical decisions, implementation details, or project progress. The documentation needs to help teammates understand your work, enable collaboration, and serve as a reference for future maintenance or similar work. Documentation may be for code, design decisions, or project updates.
+
+**Purpose**: Create clear, comprehensive documentation from an individual contributor perspective that helps teammates understand technical work, enables collaboration, and provides reference material. The documentation should demonstrate technical competence, document decisions and rationale, and facilitate knowledge sharing within the team.
+
+**Audience**: 
+- Primary: Team members and peers who need to understand, review, or build upon your work
+- Secondary: Your manager or technical lead who needs visibility into progress and decisions
+- Tertiary: Future developers (including yourself) who will maintain or extend the work
+
+**Result**: 
+- Clear documentation of technical work with context and rationale
+- Well-structured content with code examples, diagrams, or references where relevant
+- Documented decisions and trade-offs considered
+- Practical information that enables collaboration and maintenance
+- Progress updates or status information when relevant
+- Code documentation, design notes, or technical summaries as appropriate
+
+**Constraints**: 
+- Must accurately reflect the actual work and decisions made
+- Should include enough context for teammates to understand without excessive detail
+- Must document rationale behind technical decisions
+- Should include code examples or references when relevant
+- Must be organized logically and easy to navigate
+- Should be concise but comprehensive
+- Must consider team standards and conventions
+
+---
+
+Create documentation for the following work:`
+                        },
+                        'sparc-manager-documentation': {
+                            title: 'Manager Documentation (SPARC)',
+                            category: 'Template Prompt',
+                            tags: ['manager', 'documentation', 'leadership', 'sparc'],
+                            content: `**SPARC Framework Prompt**
+
+**Situation**: You are a manager creating documentation for team plans, project status, strategic decisions, process improvements, or organizational updates. The documentation needs to communicate decisions, priorities, and context to team members, stakeholders, and leadership. Documentation may include project plans, team updates, process documentation, or strategic documents.
+
+**Purpose**: Create strategic, comprehensive documentation from a management perspective that communicates decisions, priorities, and context effectively. The documentation should align team members, provide visibility to stakeholders, and serve as a reference for organizational decisions and processes.
+
+**Audience**: 
+- Primary: Team members who need to understand decisions, priorities, and direction
+- Secondary: Stakeholders and leadership who need visibility into team progress and plans
+- Tertiary: Future reference for organizational decisions and process documentation
+
+**Result**: 
+- Clear documentation of decisions, priorities, and strategic direction
+- Well-structured content with rationale, context, and impact analysis
+- Actionable information with clear next steps and responsibilities
+- Process documentation or guidelines when relevant
+- Project plans, status updates, or strategic documents as appropriate
+- Balanced view that considers team needs and business objectives
+
+**Constraints**: 
+- Must align with business objectives and organizational strategy
+- Should provide clear rationale for decisions and priorities
+- Must consider team impact and communicate changes transparently
+- Should include actionable next steps and responsibilities
+- Must be organized logically and accessible to different audiences
+- Should balance strategic detail with practical implementation
+- Must maintain consistency with organizational standards and processes
+
+---
+
+Create management documentation for the following:`
                         }
                     };
 

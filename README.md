@@ -10,15 +10,33 @@ A modern, single-page web application for storing, organizing, and managing LLM 
 - ✅ **Tags**: Tag prompts with multiple tags for flexible organization
 - ✅ **Search**: Full-text search across titles, content, tags, and categories
 - ✅ **Filtering**: Filter prompts by category and tags
-- ✅ **Templates**: 8 pre-built prompt templates for common use cases:
-  - Professional Git Commit Message Generator (CRISPE)
-  - Senior Programmer Assistant (CRISPE)
-  - Scrum Master - Sprint Planning Assistant (CRISPE)
-  - Software Architect Advisor (CRISPE)
-  - Code Review Assistant (CRISPE)
-  - Technical Documentation Architect (CRISPE)
-  - UX Designer & User Experience Architect (CRISPE)
-  - Content Generator (Elavis)
+- ✅ **Templates**: 24 pre-built prompt templates organized by framework:
+  - **CRISPE Framework** (9 templates):
+    - Professional Git Commit Message Generator
+    - Senior Programmer Assistant
+    - Scrum Master - Sprint Planning Assistant
+    - Software Architect Advisor
+    - Code Review Assistant
+    - Technical Documentation Architect
+    - UX Designer & User Experience Architect
+    - Individual Contributor Assistant
+    - Engineering Manager Assistant
+  - **Elavis Framework** (7 templates):
+    - Content Generator
+    - Professional Email Writer
+    - Blog Post Generator
+    - Technical Writer
+    - Social Media Content Writer
+    - Individual Contributor Communication
+    - Manager Communication
+  - **SPARC Framework** (7 templates):
+    - Technical Documentation
+    - Code Explanation & Documentation
+    - Project Proposal Writer
+    - User Guide Writer
+    - Meeting Summary Writer
+    - Individual Contributor Documentation
+    - Manager Documentation
 
 ### Advanced Features
 - 🌙 **Dark Mode**: Toggle between light and dark themes
