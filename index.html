@@ -812,7 +812,7 @@
                                 </svg>
                                 Tags
                             </button>
-                            <div x-show="!tagsCollapsed" x-transition class="flex flex-wrap gap-1">
+                            <div x-show="!tagsCollapsed" x-transition class="flex flex-wrap gap-1 max-h-64 overflow-y-auto overflow-x-hidden pr-1">
                                 <template x-for="tag in allTags" :key="tag">
                                     <button 
                                         @click="toggleTagFilter(tag); closeSidebarOnMobile()"
@@ -847,6 +847,7 @@
                                 <div @click="frameworkBodyCollapsed.crispe = !frameworkBodyCollapsed.crispe" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('CRISPE')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.crispe}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -876,6 +877,7 @@
                                 <div @click="frameworkBodyCollapsed.elavis = !frameworkBodyCollapsed.elavis" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('ELAVIS')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.elavis}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -903,6 +905,7 @@
                                 <div @click="frameworkBodyCollapsed.sparc = !frameworkBodyCollapsed.sparc" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('SPARC')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.sparc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -931,6 +934,7 @@
                                 <div @click="frameworkBodyCollapsed.risen = !frameworkBodyCollapsed.risen" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('RISEN')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.risen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -959,6 +963,7 @@
                                 <div @click="frameworkBodyCollapsed.pgtc = !frameworkBodyCollapsed.pgtc" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('PGTC')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.pgtc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -986,6 +991,7 @@
                                 <div @click="frameworkBodyCollapsed.rtf = !frameworkBodyCollapsed.rtf" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('RTF')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.rtf}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1012,6 +1018,7 @@
                                 <div @click="frameworkBodyCollapsed.race = !frameworkBodyCollapsed.race" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('RACE')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.race}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1039,6 +1046,7 @@
                                 <div @click="frameworkBodyCollapsed.tag = !frameworkBodyCollapsed.tag" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('TAG')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.tag}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1065,6 +1073,7 @@
                                 <div @click="frameworkBodyCollapsed.star = !frameworkBodyCollapsed.star" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('STAR')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.star}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1092,6 +1101,7 @@
                                 <div @click="frameworkBodyCollapsed.clear = !frameworkBodyCollapsed.clear" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('CLEAR')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.clear}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1120,6 +1130,7 @@
                                 <div @click="frameworkBodyCollapsed.smart = !frameworkBodyCollapsed.smart" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('SMART')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.smart}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1148,6 +1159,7 @@
                                 <div @click="frameworkBodyCollapsed.ride = !frameworkBodyCollapsed.ride" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('RIDE')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.ride}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1175,6 +1187,7 @@
                                 <div @click="frameworkBodyCollapsed.prompt = !frameworkBodyCollapsed.prompt" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('PROMPT')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.prompt}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1204,6 +1217,7 @@
                                 <div @click="frameworkBodyCollapsed.tap = !frameworkBodyCollapsed.tap" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('TAP')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.tap}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1230,6 +1244,7 @@
                                 <div @click="frameworkBodyCollapsed.care = !frameworkBodyCollapsed.care" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('CARE')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.care}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1257,6 +1272,7 @@
                                 <div @click="frameworkBodyCollapsed.costar = !frameworkBodyCollapsed.costar" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('COSTAR')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.costar}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1297,6 +1313,7 @@
                                 <div @click="frameworkBodyCollapsed.chainOfThought = !frameworkBodyCollapsed.chainOfThought" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('Chain-of-Thought')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.chainOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1323,6 +1340,7 @@ Let's think step by step:
                                 <div @click="frameworkBodyCollapsed.fiveC = !frameworkBodyCollapsed.fiveC" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('5C Framework')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.fiveC}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1351,6 +1369,7 @@ Let's think step by step:
                                 <div @click="frameworkBodyCollapsed.treeOfThought = !frameworkBodyCollapsed.treeOfThought" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('Tree-of-Thought')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.treeOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1378,6 +1397,7 @@ Evaluate each one and choose the best</div>
                                 <div @click="frameworkBodyCollapsed.zeroShot = !frameworkBodyCollapsed.zeroShot" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('Zero-Shot/Few-Shot')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.zeroShot}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1403,6 +1423,7 @@ Now write one for: [Current case]</div>
                                 <div @click="frameworkBodyCollapsed.clinicalReasoning = !frameworkBodyCollapsed.clinicalReasoning" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('AI-Aided Clinical Reasoning')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.clinicalReasoning}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1426,6 +1447,7 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                 <div @click="frameworkBodyCollapsed.gold = !frameworkBodyCollapsed.gold" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('GOLD')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.gold}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1464,6 +1486,7 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                 <div @click="frameworkBodyCollapsed.peace = !frameworkBodyCollapsed.peace" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('PEACE')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.peace}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
@@ -1492,6 +1515,7 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                 <div @click="frameworkBodyCollapsed.reflective = !frameworkBodyCollapsed.reflective" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <div class="flex-shrink-0" x-html="getFrameworkIcon('Reflective Writing')"></div>
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.reflective}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
