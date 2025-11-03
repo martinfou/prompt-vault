@@ -203,6 +203,17 @@
                                                 <template x-for="tag in prompt.tags" :key="tag">
                                                     <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded" x-text="tag"></span>
                                                 </template>
+                                                <!-- Rating Display -->
+                                                <template x-if="prompt.rating">
+                                                    <div class="flex items-center gap-1" :title="'Rating: ' + prompt.rating + '/5'">
+                                                        <span class="text-yellow-400 text-sm" x-text="'★'.repeat(prompt.rating)"></span>
+                                                        <span class="text-xs text-gray-500 dark:text-gray-400" x-text="prompt.rating"></span>
+                                                    </div>
+                                                </template>
+                                                <!-- Model Display -->
+                                                <template x-if="prompt.model">
+                                                    <span class="text-xs px-2 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded" x-text="prompt.model"></span>
+                                                </template>
                                                 <span class="text-xs text-gray-500 dark:text-gray-400" x-text="'Words: ' + getWordCount(prompt.content)"></span>
                                                 <span class="text-xs text-gray-500 dark:text-gray-400" x-text="'Modified: ' + formatDate(prompt.modifiedAt)"></span>
                                             </div>
@@ -406,6 +417,156 @@
                             </div>
                         </div>
 
+                        <!-- Rating Section -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Rating (1-5)</label>
+                            <div class="flex items-center gap-2">
+                                <template x-for="i in 5" :key="i">
+                                    <button
+                                        type="button"
+                                        @click="setRating(i)"
+                                        class="text-2xl focus:outline-none transition-transform hover:scale-110"
+                                        :class="currentPrompt.rating >= i ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'"
+                                    >
+                                        ★
+                                    </button>
+                                </template>
+                                <span class="ml-2 text-sm text-gray-500 dark:text-gray-400" x-text="currentPrompt.rating ? currentPrompt.rating + '/5' : 'Not rated'"></span>
+                                <button
+                                    type="button"
+                                    @click="setRating(null)"
+                                    x-show="currentPrompt.rating"
+                                    class="ml-2 text-xs text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 underline"
+                                >
+                                    Clear
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Model Selection -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Model Used</label>
+                            <div class="relative" x-data="{ showModelDropdown: false }" @click.outside="showModelDropdown = false">
+                                <input 
+                                    type="text" 
+                                    x-model="currentPrompt.model"
+                                    @focus="showModelDropdown = true"
+                                    @input="showModelDropdown = true"
+                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    placeholder="Select or enter model name..."
+                                    list="model-list"
+                                >
+                                <datalist id="model-list">
+                                    <template x-for="model in getCommonModels()" :key="model">
+                                        <option :value="model" x-text="model"></option>
+                                    </template>
+                                </datalist>
+                                <div x-show="showModelDropdown && getCommonModels().length > 0" x-cloak class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-40 overflow-y-auto">
+                                    <template x-for="model in getCommonModels().filter(m => !currentPrompt.model || m.toLowerCase().includes(currentPrompt.model.toLowerCase()))" :key="model">
+                                        <button 
+                                            type="button"
+                                            @click="currentPrompt.model = model; showModelDropdown = false"
+                                            class="w-full text-left px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 text-sm"
+                                            x-text="model"
+                                        ></button>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Model Response -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Model Response</label>
+                            <textarea 
+                                x-model="currentPrompt.response"
+                                rows="8"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
+                                placeholder="Paste the model's response here..."
+                            ></textarea>
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Store the response from the model for reference</p>
+                        </div>
+
+                        <!-- Comments -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Comments & Notes</label>
+                            <textarea 
+                                x-model="currentPrompt.comments"
+                                rows="4"
+                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                placeholder="Add your observations, improvements, or notes about this prompt..."
+                            ></textarea>
+                        </div>
+
+                        <!-- Metadata Section (Collapsible) -->
+                        <div x-data="{ metadataExpanded: false }" class="border border-gray-200 dark:border-gray-700 rounded-lg">
+                            <button 
+                                type="button"
+                                @click="metadataExpanded = !metadataExpanded"
+                                class="w-full px-4 py-2 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-t-lg"
+                            >
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Metadata (Optional)</span>
+                                <svg class="w-5 h-5 transition-transform" :class="{'rotate-180': metadataExpanded}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div x-show="metadataExpanded" x-transition class="p-4 space-y-3 grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Input Tokens</label>
+                                    <input 
+                                        type="number" 
+                                        x-model="currentPrompt.metadata.inputTokens"
+                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        placeholder="—"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Output Tokens</label>
+                                    <input 
+                                        type="number" 
+                                        x-model="currentPrompt.metadata.outputTokens"
+                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        placeholder="—"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Total Tokens</label>
+                                    <input 
+                                        type="number" 
+                                        x-model="currentPrompt.metadata.totalTokens"
+                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        placeholder="—"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Cost ($)</label>
+                                    <input 
+                                        type="number" 
+                                        step="0.00001"
+                                        x-model="currentPrompt.metadata.cost"
+                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        placeholder="—"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Response Time (ms)</label>
+                                    <input 
+                                        type="number" 
+                                        x-model="currentPrompt.metadata.responseTime"
+                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        placeholder="—"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">Tested At</label>
+                                    <input 
+                                        type="datetime-local" 
+                                        x-model="currentPrompt.metadata.testedAt"
+                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
                             <div class="text-sm text-gray-500 dark:text-gray-400">
                                 <template x-if="showEditModal && currentPrompt.createdAt">
@@ -462,11 +623,92 @@
                             <template x-for="tag in viewingPrompt?.tags || []" :key="tag">
                                 <span class="text-sm px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded" x-text="tag"></span>
                             </template>
+                            <!-- Rating Display -->
+                            <template x-if="viewingPrompt?.rating">
+                                <div class="flex items-center gap-1">
+                                    <span class="text-yellow-400 text-lg" x-text="'★'.repeat(viewingPrompt.rating)"></span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400" x-text="viewingPrompt.rating + '/5'"></span>
+                                </div>
+                            </template>
+                            <!-- Model Display -->
+                            <template x-if="viewingPrompt?.model">
+                                <span class="text-sm px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded" x-text="viewingPrompt.model"></span>
+                            </template>
                         </div>
 
                         <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
                             <pre class="whitespace-pre-wrap text-sm font-mono" x-text="viewingPrompt?.content"></pre>
                         </div>
+
+                        <!-- Model Response Section -->
+                        <template x-if="viewingPrompt?.response">
+                            <div class="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                                <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Model Response</h3>
+                                <div class="whitespace-pre-wrap text-sm text-gray-900 dark:text-gray-100" x-text="viewingPrompt.response"></div>
+                            </div>
+                        </template>
+
+                        <!-- Comments Section -->
+                        <template x-if="viewingPrompt?.comments">
+                            <div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-200 dark:border-blue-800">
+                                <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Comments & Notes</h3>
+                                <div class="whitespace-pre-wrap text-sm text-gray-900 dark:text-gray-100" x-text="viewingPrompt.comments"></div>
+                            </div>
+                        </template>
+
+                        <!-- Metadata Section (Collapsible) -->
+                        <template x-if="viewingPrompt?.metadata && (viewingPrompt.metadata.inputTokens || viewingPrompt.metadata.outputTokens || viewingPrompt.metadata.totalTokens || viewingPrompt.metadata.cost || viewingPrompt.metadata.responseTime || viewingPrompt.metadata.testedAt)">
+                            <div x-data="{ metadataExpanded: false }" class="border border-gray-200 dark:border-gray-700 rounded-lg">
+                                <button 
+                                    type="button"
+                                    @click="metadataExpanded = !metadataExpanded"
+                                    class="w-full px-4 py-2 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-t-lg"
+                                >
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Metadata</span>
+                                    <svg class="w-5 h-5 transition-transform" :class="{'rotate-180': metadataExpanded}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </button>
+                                <div x-show="metadataExpanded" x-transition class="p-4 grid grid-cols-2 gap-4 text-sm">
+                                    <template x-if="viewingPrompt?.metadata?.inputTokens">
+                                        <div>
+                                            <span class="text-gray-600 dark:text-gray-400">Input Tokens:</span>
+                                            <span class="ml-2 text-gray-900 dark:text-gray-100" x-text="viewingPrompt.metadata.inputTokens.toLocaleString()"></span>
+                                        </div>
+                                    </template>
+                                    <template x-if="viewingPrompt?.metadata?.outputTokens">
+                                        <div>
+                                            <span class="text-gray-600 dark:text-gray-400">Output Tokens:</span>
+                                            <span class="ml-2 text-gray-900 dark:text-gray-100" x-text="viewingPrompt.metadata.outputTokens.toLocaleString()"></span>
+                                        </div>
+                                    </template>
+                                    <template x-if="viewingPrompt?.metadata?.totalTokens">
+                                        <div>
+                                            <span class="text-gray-600 dark:text-gray-400">Total Tokens:</span>
+                                            <span class="ml-2 text-gray-900 dark:text-gray-100" x-text="viewingPrompt.metadata.totalTokens.toLocaleString()"></span>
+                                        </div>
+                                    </template>
+                                    <template x-if="viewingPrompt?.metadata?.cost">
+                                        <div>
+                                            <span class="text-gray-600 dark:text-gray-400">Cost:</span>
+                                            <span class="ml-2 text-gray-900 dark:text-gray-100" x-text="'$' + parseFloat(viewingPrompt.metadata.cost).toFixed(5)"></span>
+                                        </div>
+                                    </template>
+                                    <template x-if="viewingPrompt?.metadata?.responseTime">
+                                        <div>
+                                            <span class="text-gray-600 dark:text-gray-400">Response Time:</span>
+                                            <span class="ml-2 text-gray-900 dark:text-gray-100" x-text="viewingPrompt.metadata.responseTime + ' ms'"></span>
+                                        </div>
+                                    </template>
+                                    <template x-if="viewingPrompt?.metadata?.testedAt">
+                                        <div>
+                                            <span class="text-gray-600 dark:text-gray-400">Tested At:</span>
+                                            <span class="ml-2 text-gray-900 dark:text-gray-100" x-text="formatDate(viewingPrompt.metadata.testedAt)"></span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
 
                         <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 pt-4 border-t border-gray-200 dark:border-gray-700">
                             <div class="space-y-1">
@@ -567,7 +809,19 @@
                     tagsInput: '',
                     createdAt: null,
                     modifiedAt: null,
-                    lastUsedAt: null
+                    lastUsedAt: null,
+                    rating: null,
+                    model: '',
+                    response: '',
+                    comments: '',
+                    metadata: {
+                        inputTokens: null,
+                        outputTokens: null,
+                        totalTokens: null,
+                        cost: null,
+                        responseTime: null,
+                        testedAt: null
+                    }
                 },
                 newCategory: '',
                 syntaxHighlighting: false,
@@ -806,7 +1060,19 @@ Be specific, constructive, and educational in your feedback.`;
                         tagsInput: '',
                         createdAt: null,
                         modifiedAt: null,
-                        lastUsedAt: null
+                        lastUsedAt: null,
+                        rating: null,
+                        model: '',
+                        response: '',
+                        comments: '',
+                        metadata: {
+                            inputTokens: null,
+                            outputTokens: null,
+                            totalTokens: null,
+                            cost: null,
+                            responseTime: null,
+                            testedAt: null
+                        }
                     };
                 },
 
@@ -821,6 +1087,13 @@ Be specific, constructive, and educational in your feedback.`;
                 },
 
                 editPrompt(prompt) {
+                    // Convert ISO date to datetime-local format if needed
+                    let testedAt = prompt.metadata?.testedAt || null;
+                    if (testedAt && testedAt.includes('T')) {
+                        // Convert ISO format to datetime-local format (remove milliseconds and timezone)
+                        testedAt = testedAt.substring(0, 16);
+                    }
+
                     this.currentPrompt = {
                         id: prompt.id,
                         title: prompt.title,
@@ -830,7 +1103,19 @@ Be specific, constructive, and educational in your feedback.`;
                         tagsInput: (prompt.tags || []).join(', '),
                         createdAt: prompt.createdAt,
                         modifiedAt: prompt.modifiedAt,
-                        lastUsedAt: prompt.lastUsedAt
+                        lastUsedAt: prompt.lastUsedAt,
+                        rating: prompt.rating || null,
+                        model: prompt.model || '',
+                        response: prompt.response || '',
+                        comments: prompt.comments || '',
+                        metadata: {
+                            inputTokens: prompt.metadata?.inputTokens || null,
+                            outputTokens: prompt.metadata?.outputTokens || null,
+                            totalTokens: prompt.metadata?.totalTokens || null,
+                            cost: prompt.metadata?.cost || null,
+                            responseTime: prompt.metadata?.responseTime || null,
+                            testedAt: testedAt
+                        }
                     };
                     this.showViewModal = false;
                     this.showEditModal = true;
@@ -851,6 +1136,13 @@ Be specific, constructive, and educational in your feedback.`;
 
                     const now = new Date().toISOString();
 
+                    // Convert datetime-local to ISO format for testedAt
+                    let testedAt = this.currentPrompt.metadata?.testedAt || null;
+                    if (testedAt && testedAt.length === 16) {
+                        // Convert datetime-local format (YYYY-MM-DDTHH:mm) to ISO format
+                        testedAt = testedAt + ':00';
+                    }
+
                     if (this.currentPrompt.id) {
                         // Update existing prompt
                         const index = this.prompts.findIndex(p => p.id === this.currentPrompt.id);
@@ -861,7 +1153,19 @@ Be specific, constructive, and educational in your feedback.`;
                                 content: this.currentPrompt.content,
                                 category: this.currentPrompt.category,
                                 tags: tags,
-                                modifiedAt: now
+                                modifiedAt: now,
+                                rating: this.currentPrompt.rating || null,
+                                model: this.currentPrompt.model || '',
+                                response: this.currentPrompt.response || '',
+                                comments: this.currentPrompt.comments || '',
+                                metadata: {
+                                    inputTokens: this.currentPrompt.metadata?.inputTokens || null,
+                                    outputTokens: this.currentPrompt.metadata?.outputTokens || null,
+                                    totalTokens: this.currentPrompt.metadata?.totalTokens || null,
+                                    cost: this.currentPrompt.metadata?.cost || null,
+                                    responseTime: this.currentPrompt.metadata?.responseTime || null,
+                                    testedAt: testedAt
+                                }
                             };
                         }
                     } else {
@@ -874,7 +1178,19 @@ Be specific, constructive, and educational in your feedback.`;
                             tags: tags,
                             createdAt: now,
                             modifiedAt: now,
-                            lastUsedAt: null
+                            lastUsedAt: null,
+                            rating: this.currentPrompt.rating || null,
+                            model: this.currentPrompt.model || '',
+                            response: this.currentPrompt.response || '',
+                            comments: this.currentPrompt.comments || '',
+                            metadata: {
+                                inputTokens: this.currentPrompt.metadata?.inputTokens || null,
+                                outputTokens: this.currentPrompt.metadata?.outputTokens || null,
+                                totalTokens: this.currentPrompt.metadata?.totalTokens || null,
+                                cost: this.currentPrompt.metadata?.cost || null,
+                                responseTime: this.currentPrompt.metadata?.responseTime || null,
+                                testedAt: testedAt
+                            }
                         };
                         this.prompts.push(newPrompt);
                     }
@@ -2400,7 +2716,19 @@ Provide a professional unit test implementation for the following class/method:`
                             tagsInput: template.tags.join(', '),
                             createdAt: null,
                             modifiedAt: null,
-                            lastUsedAt: null
+                            lastUsedAt: null,
+                            rating: null,
+                            model: '',
+                            response: '',
+                            comments: '',
+                            metadata: {
+                                inputTokens: null,
+                                outputTokens: null,
+                                totalTokens: null,
+                                cost: null,
+                                responseTime: null,
+                                testedAt: null
+                            }
                         };
                         // Reset the select dropdown
                         setTimeout(() => {
@@ -2492,6 +2820,36 @@ Provide a professional unit test implementation for the following class/method:`
                     if (!dateString) return 'Never';
                     const date = new Date(dateString);
                     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                },
+
+                setRating(rating) {
+                    this.currentPrompt.rating = rating;
+                },
+
+                getRatingStars(rating) {
+                    if (!rating) return 'Not rated';
+                    return '★'.repeat(rating) + '☆'.repeat(5 - rating);
+                },
+
+                getCommonModels() {
+                    return [
+                        'GPT-4',
+                        'GPT-4 Turbo',
+                        'GPT-4o',
+                        'GPT-3.5 Turbo',
+                        'GPT-3.5',
+                        'Claude 3 Opus',
+                        'Claude 3 Sonnet',
+                        'Claude 3 Haiku',
+                        'Claude 2',
+                        'Gemini Pro',
+                        'Gemini Ultra',
+                        'Llama 2',
+                        'Llama 3',
+                        'Mixtral',
+                        'Mistral',
+                        'Other'
+                    ];
                 },
 
                 toggleSyntaxHighlighting() {
