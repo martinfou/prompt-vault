@@ -192,19 +192,19 @@
                                 </div>
                                 <div x-show="!generalPurposeCollapsed" x-transition class="space-y-3">
                                 <!-- CRISPE Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.crispe = !frameworkBodyCollapsed.crispe" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.crispe = !frameworkBodyCollapsed.crispe" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.crispe}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             CRISPE
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Multi-step technical tasks, code generation, architectural decisions.</p>
                                     <div x-show="!frameworkBodyCollapsed.crispe" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Capacity/Role, Insight, Statement, Personality, Experiment</p>
-                                        <button @click="frameworkExamples.crispe = !frameworkExamples.crispe" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.crispe = !frameworkExamples.crispe" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.crispe}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -221,19 +221,19 @@
                                 </div>
 
                                 <!-- ELAVIS Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.elavis = !frameworkBodyCollapsed.elavis" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.elavis = !frameworkBodyCollapsed.elavis" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.elavis}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             ELAVIS
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Blog posts, emails, social media, marketing copy.</p>
                                     <div x-show="!frameworkBodyCollapsed.elavis" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Instruction, Context, Input Data, Output Indicator</p>
-                                        <button @click="frameworkExamples.elavis = !frameworkExamples.elavis" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.elavis = !frameworkExamples.elavis" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.elavis}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -248,19 +248,19 @@
                                 </div>
 
                                 <!-- SPARC Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.sparc = !frameworkBodyCollapsed.sparc" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.sparc = !frameworkBodyCollapsed.sparc" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.sparc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             SPARC
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Technical documentation, user guides, API docs, project proposals.</p>
                                     <div x-show="!frameworkBodyCollapsed.sparc" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Situation, Purpose, Audience, Result, Constraints</p>
-                                        <button @click="frameworkExamples.sparc = !frameworkExamples.sparc" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.sparc = !frameworkExamples.sparc" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.sparc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -276,19 +276,19 @@
                                 </div>
 
                                 <!-- RISEN Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.risen = !frameworkBodyCollapsed.risen" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.risen = !frameworkBodyCollapsed.risen" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.risen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             RISEN
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Data analysis, structured problem-solving, analytical tasks.</p>
                                     <div x-show="!frameworkBodyCollapsed.risen" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Role, Input, Steps, Expectation, Narrowing</p>
-                                        <button @click="frameworkExamples.risen = !frameworkExamples.risen" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.risen = !frameworkExamples.risen" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.risen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -304,19 +304,19 @@
                                 </div>
 
                                 <!-- PGTC Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.pgtc = !frameworkBodyCollapsed.pgtc" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.pgtc = !frameworkBodyCollapsed.pgtc" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.pgtc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             PGTC
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Quick content creation, copywriting, simple structured outputs.</p>
                                     <div x-show="!frameworkBodyCollapsed.pgtc" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Persona, Goal, Task, Context</p>
-                                        <button @click="frameworkExamples.pgtc = !frameworkExamples.pgtc" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.pgtc = !frameworkExamples.pgtc" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.pgtc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -331,19 +331,19 @@
                                 </div>
 
                                 <!-- RTF Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.rtf = !frameworkBodyCollapsed.rtf" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.rtf = !frameworkBodyCollapsed.rtf" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.rtf}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             RTF
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Data conversion, formatting tasks, quick transformations.</p>
                                     <div x-show="!frameworkBodyCollapsed.rtf" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Request, Task, Format</p>
-                                        <button @click="frameworkExamples.rtf = !frameworkExamples.rtf" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.rtf = !frameworkExamples.rtf" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.rtf}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -357,19 +357,19 @@
                                 </div>
 
                                 <!-- RACE Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.race = !frameworkBodyCollapsed.race" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.race = !frameworkBodyCollapsed.race" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.race}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             RACE
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Emails, summaries, reports, daily communication tasks.</p>
                                     <div x-show="!frameworkBodyCollapsed.race" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Role, Action, Context, Execute</p>
-                                        <button @click="frameworkExamples.race = !frameworkExamples.race" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.race = !frameworkExamples.race" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.race}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -384,19 +384,19 @@
                                 </div>
 
                                 <!-- TAG Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.tag = !frameworkBodyCollapsed.tag" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.tag = !frameworkBodyCollapsed.tag" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.tag}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             TAG
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Process documentation, workflow definition, task breakdown.</p>
                                     <div x-show="!frameworkBodyCollapsed.tag" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Task, Action, Goal</p>
-                                        <button @click="frameworkExamples.tag = !frameworkExamples.tag" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.tag = !frameworkExamples.tag" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.tag}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -410,19 +410,19 @@
                                 </div>
 
                                 <!-- STAR Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.star = !frameworkBodyCollapsed.star" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.star = !frameworkBodyCollapsed.star" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.star}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             STAR
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Interview responses, case studies, problem-solving narratives.</p>
                                     <div x-show="!frameworkBodyCollapsed.star" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Situation, Task, Action, Result</p>
-                                        <button @click="frameworkExamples.star = !frameworkExamples.star" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.star = !frameworkExamples.star" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.star}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -437,19 +437,19 @@
                                 </div>
 
                                 <!-- CLEAR Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.clear = !frameworkBodyCollapsed.clear" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.clear = !frameworkBodyCollapsed.clear" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.clear}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             CLEAR
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Clear communication, adaptable prompts, iterative refinement.</p>
                                     <div x-show="!frameworkBodyCollapsed.clear" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Concise, Logical, Explicit, Adaptive, Reflective</p>
-                                        <button @click="frameworkExamples.clear = !frameworkExamples.clear" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.clear = !frameworkExamples.clear" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.clear}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -465,19 +465,19 @@
                                 </div>
 
                                 <!-- SMART Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.smart = !frameworkBodyCollapsed.smart" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.smart = !frameworkBodyCollapsed.smart" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.smart}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             SMART
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Goal setting, project planning, measurable objectives.</p>
                                     <div x-show="!frameworkBodyCollapsed.smart" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Specific, Measurable, Achievable, Relevant, Time-bound</p>
-                                        <button @click="frameworkExamples.smart = !frameworkExamples.smart" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.smart = !frameworkExamples.smart" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.smart}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -493,19 +493,19 @@
                                 </div>
 
                                 <!-- RIDE Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.ride = !frameworkBodyCollapsed.ride" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.ride = !frameworkBodyCollapsed.ride" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.ride}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             RIDE
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Medical education, tutoring, educational scenarios with examples.</p>
                                     <div x-show="!frameworkBodyCollapsed.ride" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Role, Input, Directive, Examples</p>
-                                        <button @click="frameworkExamples.ride = !frameworkExamples.ride" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.ride = !frameworkExamples.ride" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.ride}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -520,19 +520,19 @@
                                 </div>
 
                                 <!-- PROMPT Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.prompt = !frameworkBodyCollapsed.prompt" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.prompt = !frameworkBodyCollapsed.prompt" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.prompt}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             PROMPT
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Complex projects, thorough planning, comprehensive prompts.</p>
                                     <div x-show="!frameworkBodyCollapsed.prompt" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Purpose, Role, Output, Mechanics, Parameters, Testing</p>
-                                        <button @click="frameworkExamples.prompt = !frameworkExamples.prompt" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.prompt = !frameworkExamples.prompt" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.prompt}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -549,19 +549,19 @@
                                 </div>
 
                                 <!-- TAP Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.tap = !frameworkBodyCollapsed.tap" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.tap = !frameworkBodyCollapsed.tap" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.tap}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             TAP
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Tutorials, educational content, instructional materials.</p>
                                     <div x-show="!frameworkBodyCollapsed.tap" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Task, Audience, Purpose</p>
-                                        <button @click="frameworkExamples.tap = !frameworkExamples.tap" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.tap = !frameworkExamples.tap" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.tap}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -575,19 +575,19 @@
                                 </div>
 
                                 <!-- CARE Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.care = !frameworkBodyCollapsed.care" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.care = !frameworkBodyCollapsed.care" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.care}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             CARE
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Format-specific outputs, JSON/XML generation, structured data.</p>
                                     <div x-show="!frameworkBodyCollapsed.care" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Context, Action, Result, Example</p>
-                                        <button @click="frameworkExamples.care = !frameworkExamples.care" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.care = !frameworkExamples.care" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.care}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -602,19 +602,19 @@
                                 </div>
 
                                 <!-- COSTAR Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.costar = !frameworkBodyCollapsed.costar" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.costar = !frameworkBodyCollapsed.costar" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.costar}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             COSTAR
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Marketing copy, brand-aligned content, audience-specific writing.</p>
                                     <div x-show="!frameworkBodyCollapsed.costar" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Context, Objective, Style, Tone, Audience, Response</p>
-                                        <button @click="frameworkExamples.costar = !frameworkExamples.costar" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.costar = !frameworkExamples.costar" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.costar}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -642,18 +642,18 @@
                                 </div>
                                 <div x-show="!aiReasoningCollapsed" x-transition class="space-y-3">
                                 <!-- Chain-of-Thought Prompting -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.chainOfThought = !frameworkBodyCollapsed.chainOfThought" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.chainOfThought = !frameworkBodyCollapsed.chainOfThought" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.chainOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             Chain-of-Thought
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Complex problem-solving, step-by-step analysis, logical reasoning tasks</p>
                                     <div x-show="!frameworkBodyCollapsed.chainOfThought" x-transition class="mt-2 space-y-2">
-                                        <button @click="frameworkExamples.chainOfThought = !frameworkExamples.chainOfThought" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.chainOfThought = !frameworkExamples.chainOfThought" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.chainOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -668,19 +668,19 @@ Let's think step by step:
                                 </div>
 
                                 <!-- 5C Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.fiveC = !frameworkBodyCollapsed.fiveC" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.fiveC = !frameworkBodyCollapsed.fiveC" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.fiveC}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             5C Framework
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Iterative prompt improvement, refining outputs, continuous optimization.</p>
                                     <div x-show="!frameworkBodyCollapsed.fiveC" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Clarity, Contextualization, Command, Chaining, Continuous Refinement</p>
-                                        <button @click="frameworkExamples.fiveC = !frameworkExamples.fiveC" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.fiveC = !frameworkExamples.fiveC" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.fiveC}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -696,18 +696,18 @@ Let's think step by step:
                                 </div>
 
                                 <!-- Tree-of-Thought Prompting -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.treeOfThought = !frameworkBodyCollapsed.treeOfThought" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.treeOfThought = !frameworkBodyCollapsed.treeOfThought" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.treeOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             Tree-of-Thought
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Exploring multiple solutions, comparing options, diagnostic reasoning</p>
                                     <div x-show="!frameworkBodyCollapsed.treeOfThought" x-transition class="mt-2 space-y-2">
-                                        <button @click="frameworkExamples.treeOfThought = !frameworkExamples.treeOfThought" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.treeOfThought = !frameworkExamples.treeOfThought" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.treeOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -723,18 +723,18 @@ Evaluate each one and choose the best</div>
                                 </div>
 
                                 <!-- Zero-Shot/Few-Shot Prompting -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.zeroShot = !frameworkBodyCollapsed.zeroShot" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.zeroShot = !frameworkBodyCollapsed.zeroShot" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.zeroShot}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             Zero-Shot/Few-Shot
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Format learning, pattern recognition, example-based training</p>
                                     <div x-show="!frameworkBodyCollapsed.zeroShot" x-transition class="mt-2 space-y-2">
-                                        <button @click="frameworkExamples.zeroShot = !frameworkExamples.zeroShot" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.zeroShot = !frameworkExamples.zeroShot" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.zeroShot}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -748,18 +748,18 @@ Now write one for: [Current case]</div>
                                 </div>
 
                                 <!-- AI-Aided Clinical Reasoning -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.clinicalReasoning = !frameworkBodyCollapsed.clinicalReasoning" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.clinicalReasoning = !frameworkBodyCollapsed.clinicalReasoning" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.clinicalReasoning}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             AI-Aided Clinical Reasoning
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Medical training, clinical scenarios, educational simulations</p>
                                     <div x-show="!frameworkBodyCollapsed.clinicalReasoning" x-transition class="mt-2 space-y-2">
-                                        <button @click="frameworkExamples.clinicalReasoning = !frameworkExamples.clinicalReasoning" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.clinicalReasoning = !frameworkExamples.clinicalReasoning" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.clinicalReasoning}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -771,19 +771,19 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                 </div>
 
                                 <!-- GOLD Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.gold = !frameworkBodyCollapsed.gold" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.gold = !frameworkBodyCollapsed.gold" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.gold}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             GOLD
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Problem analysis, strategic planning, obstacle identification.</p>
                                     <div x-show="!frameworkBodyCollapsed.gold" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Goal, Obstacles, Logic, Data</p>
-                                        <button @click="frameworkExamples.gold = !frameworkExamples.gold" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.gold = !frameworkExamples.gold" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.gold}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -809,19 +809,19 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                 </div>
                                 <div x-show="!specializedPromptsCollapsed" x-transition class="space-y-3">
                                 <!-- PEACE Framework -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.peace = !frameworkBodyCollapsed.peace" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.peace = !frameworkBodyCollapsed.peace" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.peace}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             PEACE
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Self-reflection, decision analysis, learning journals.</p>
                                     <div x-show="!frameworkBodyCollapsed.peace" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Present, Explore, Analyze, Choose, Evaluate</p>
-                                        <button @click="frameworkExamples.peace = !frameworkExamples.peace" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.peace = !frameworkExamples.peace" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.peace}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
@@ -837,18 +837,18 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                 </div>
 
                                 <!-- Reflective Prompting -->
-                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                    <button @click="frameworkBodyCollapsed.reflective = !frameworkBodyCollapsed.reflective" class="w-full text-left">
+                                <div @click="frameworkBodyCollapsed.reflective = !frameworkBodyCollapsed.reflective" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                    <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.reflective}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                             </svg>
                                             Reflective Prompting
                                         </h4>
-                                    </button>
+                                    </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Learning reflection, educational journals, experience analysis</p>
                                     <div x-show="!frameworkBodyCollapsed.reflective" x-transition class="mt-2 space-y-2">
-                                        <button @click="frameworkExamples.reflective = !frameworkExamples.reflective" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.reflective = !frameworkExamples.reflective" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.reflective}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
