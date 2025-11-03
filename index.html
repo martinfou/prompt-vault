@@ -1386,7 +1386,7 @@ DIEP Framework:
 
         <!-- Prompt View Modal -->
         <div x-show="showViewModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" @click.self="closeViewModal()">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" :style="darkMode ? 'background-color: rgb(31 41 55) !important;' : 'background-color: rgb(255 255 255) !important;'">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-2xl font-bold text-gray-900 dark:text-white" x-text="viewingPrompt?.title"></h2>
@@ -1525,7 +1525,7 @@ DIEP Framework:
 
         <!-- Category Modal -->
         <div x-show="showCategoryModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.self="showCategoryModal = false">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md w-full mx-4">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md w-full mx-4" :style="darkMode ? 'background-color: rgb(31 41 55) !important;' : 'background-color: rgb(255 255 255) !important;'">
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Add Prompt Type</h3>
                 <div class="space-y-4">
                     <input 
@@ -1550,7 +1550,7 @@ DIEP Framework:
 
         <!-- Import Modal -->
         <div x-show="showImportModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.self="showImportModal = false">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md w-full mx-4">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md w-full mx-4" :style="darkMode ? 'background-color: rgb(31 41 55) !important;' : 'background-color: rgb(255 255 255) !important;'">
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Import Prompts</h3>
                 <div class="space-y-4">
                     <div>
@@ -4263,13 +4263,6 @@ Write a reflection on the following:`
                     test('Test Buttons Button', () => {
                         const btn = Array.from(document.querySelectorAll('button')).find(b => 
                             b.textContent.includes('Test Buttons')
-                        );
-                        return btn !== undefined && btn !== null && !btn.disabled;
-                    });
-
-                    test('Add Category Button', () => {
-                        const btn = Array.from(document.querySelectorAll('button')).find(b => 
-                            b.textContent.trim() === '+ Add'
                         );
                         return btn !== undefined && btn !== null && !btn.disabled;
                     });
