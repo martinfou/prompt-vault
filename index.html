@@ -79,21 +79,65 @@
         html.dark .dark\:border-gray-700 { border-color: rgb(55 65 81) !important; }
         html.dark .dark\:border-gray-600 { border-color: rgb(75 85 99) !important; }
         
-        /* Ensure modal backgrounds are fully opaque in light mode */
-        html:not(.dark) [class*="bg-white"] {
-            background-color: rgb(255 255 255) !important;
+        /* Enhanced light theme - light gray palette */
+        html:not(.dark) [class*="bg-white"]:not([class*="dark"]):not([style*="background-color"]) {
+            background-color: #F5F5F5 !important; /* Very light gray */
+        }
+        
+        /* Light gray gradient background for light mode body */
+        html:not(.dark) body {
+            background: linear-gradient(to bottom right, #F9FAFB 0%, #F5F5F5 50%, #E5E5E5 100%) !important;
+        }
+        
+        /* Ensure dark mode body has proper background */
+        html.dark body {
+            background-color: rgb(17 24 39) !important;
+            background-image: none !important;
+        }
+        
+        /* Remove gradient from header in dark mode */
+        html.dark header {
+            background-image: none !important;
+            background-color: rgb(31 41 55) !important;
         }
     </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
-    <div class="min-h-screen">
+<body class="bg-gradient-to-br from-gray-50 via-gray-100 to-gray-200 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 relative">
+    <!-- Subtle Background Logo -->
+    <svg class="fixed inset-0 w-full h-full opacity-[0.03] dark:opacity-[0.02] pointer-events-none z-0" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet">
+        <defs>
+            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#6B7280;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#9CA3AF;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <!-- Vault/Lock Icon -->
+        <g transform="translate(600, 400)">
+            <!-- Vault body -->
+            <rect x="-120" y="-60" width="240" height="160" rx="8" fill="none" stroke="url(#logoGradient)" stroke-width="3"/>
+            <!-- Vault door -->
+            <rect x="-100" y="-40" width="200" height="140" rx="6" fill="none" stroke="url(#logoGradient)" stroke-width="2.5"/>
+            <!-- Lock mechanism -->
+            <circle cx="0" cy="30" r="20" fill="none" stroke="url(#logoGradient)" stroke-width="2.5"/>
+            <circle cx="0" cy="30" r="12" fill="none" stroke="url(#logoGradient)" stroke-width="2"/>
+            <!-- Keyhole -->
+            <path d="M 0 15 L 0 25 M -8 25 L 8 25" stroke="url(#logoGradient)" stroke-width="2" stroke-linecap="round"/>
+            <!-- PV Text -->
+            <text x="0" y="90" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="url(#logoGradient)" text-anchor="middle" opacity="0.6">PV</text>
+            <!-- Subtle rays/radial pattern -->
+            <circle cx="0" cy="0" r="300" fill="none" stroke="url(#logoGradient)" stroke-width="1" opacity="0.3"/>
+            <circle cx="0" cy="0" r="250" fill="none" stroke="url(#logoGradient)" stroke-width="1" opacity="0.2"/>
+            <circle cx="0" cy="0" r="200" fill="none" stroke="url(#logoGradient)" stroke-width="1" opacity="0.15"/>
+        </g>
+    </svg>
+    <div class="min-h-screen relative z-10">
         <!-- Header -->
-        <header class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
+        <header class="bg-gradient-to-r from-[#F5F5F5] to-[#E5E5E5] dark:bg-gray-800 shadow-sm border-b border-[#E5E5E5] dark:border-gray-700 backdrop-blur-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <div class="flex items-center justify-between">
                     <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Prompt Vault</h1>
                     <div class="flex items-center gap-4">
-                        <button @click="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <button @click="toggleDarkMode()" class="p-2 rounded-lg hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors">
                             <svg x-show="!darkMode" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                             </svg>
@@ -104,13 +148,13 @@
                         <button @click="runButtonTests()" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors text-sm font-medium" title="Test all buttons">
                             🧪 Test Buttons
                         </button>
-                        <button @click="showImportModal = true" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg transition-colors text-sm font-medium">
+                        <button @click="showImportModal = true" class="px-4 py-2 bg-[#E5E5E5] dark:bg-gray-700 hover:bg-[#F5F5F5] dark:hover:bg-gray-600 rounded-lg transition-colors text-sm font-medium">
                             Import
                         </button>
-                        <button @click="exportData()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors text-sm font-medium">
+                        <button @click="exportData()" class="px-4 py-2 bg-[#6B7280] hover:bg-[#4B5563] text-white rounded-lg transition-colors text-sm font-medium">
                             Export
                         </button>
-                        <button @click="showCreateModal = true; resetCurrentPrompt()" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors text-sm font-medium">
+                        <button @click="showCreateModal = true; resetCurrentPrompt()" class="px-4 py-2 bg-[#198754] hover:bg-[#146C43] text-white rounded-lg transition-colors text-sm font-medium">
                             + New Prompt
                         </button>
                     </div>
@@ -122,7 +166,7 @@
             <div class="flex gap-6">
                 <!-- Sidebar -->
                 <aside class="w-64 flex-shrink-0">
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 space-y-4">
+                    <div class="bg-[#F5F5F5] dark:bg-gray-800 rounded-lg shadow-lg border border-[#E5E5E5] dark:border-gray-700 p-4 space-y-4 backdrop-blur-sm">
                         <!-- Search -->
                         <div>
                             <input 
@@ -130,7 +174,7 @@
                                 x-model="searchQuery"
                                 @input="filterPrompts()"
                                 placeholder="Search prompts..." 
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                class="w-full px-3 py-2 border border-[#E5E5E5] dark:border-gray-600 rounded-lg bg-gray-50/90 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-[#6B7280] focus:border-[#6B7280] shadow-sm"
                             >
                         </div>
 
@@ -147,7 +191,7 @@
                             <div x-show="!categoriesCollapsed" x-transition class="space-y-1 max-h-96 overflow-y-auto pr-1">
                                 <button 
                                     @click="selectedCategory = null; filterPrompts()"
-                                    :class="selectedCategory === null ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'"
+                                    :class="selectedCategory === null ? 'bg-[#E5E5E5] dark:bg-blue-900 text-[#374151] dark:text-blue-300 shadow-sm' : 'hover:bg-[#F5F5F5] dark:hover:bg-gray-700'"
                                     class="w-full text-left px-2 py-1 rounded text-sm transition-colors"
                                 >
                                     All Prompts
@@ -155,8 +199,8 @@
                                 <template x-for="framework in frameworks" :key="framework.name">
                                     <button 
                                         @click="selectedCategory = framework.name; filterPrompts()"
-                                        :class="selectedCategory === framework.name ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'"
-                                        class="w-full text-left px-2 py-1.5 rounded text-sm transition-colors border border-transparent hover:border-gray-200 dark:hover:border-gray-600"
+                                        :class="selectedCategory === framework.name ? 'bg-[#E5E5E5] dark:bg-blue-900 text-[#374151] dark:text-blue-300 shadow-sm' : 'hover:bg-[#F5F5F5] dark:hover:bg-gray-700'"
+                                        class="w-full text-left px-2 py-1.5 rounded text-sm transition-colors border border-transparent hover:border-[#E5E5E5] dark:hover:border-gray-600"
                                     >
                                         <div class="font-semibold text-gray-900 dark:text-white mb-0.5" x-text="framework.name"></div>
                                         <div class="text-xs text-gray-500 dark:text-gray-400 leading-tight" x-text="framework.description"></div>
@@ -177,7 +221,7 @@
                                 <template x-for="tag in allTags" :key="tag">
                                     <button 
                                         @click="toggleTagFilter(tag)"
-                                        :class="selectedTags.includes(tag) ? 'bg-blue-600 text-white' : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600'"
+                                        :class="selectedTags.includes(tag) ? 'bg-[#6B7280] text-white' : 'bg-[#E5E5E5] dark:bg-gray-700 hover:bg-[#F5F5F5] dark:hover:bg-gray-600'"
                                         class="px-2 py-1 rounded text-xs transition-colors"
                                         x-text="tag"
                                     ></button>
@@ -195,7 +239,7 @@
                             </button>
                             <div x-show="!frameworksCollapsed" x-transition class="space-y-3 text-sm max-h-[80vh] overflow-y-auto">
                                 <!-- General Purpose Frameworks -->
-                                <div class="border-t border-gray-200 dark:border-gray-700 pt-2">
+                                <div class="border-t border-[#E5E5E5] dark:border-gray-700 pt-2">
                                     <button @click="generalPurposeCollapsed = !generalPurposeCollapsed" class="w-full text-left flex items-center gap-2 mb-2">
                                         <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !generalPurposeCollapsed}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -205,7 +249,7 @@
                                 </div>
                                 <div x-show="!generalPurposeCollapsed" x-transition class="space-y-3">
                                 <!-- CRISPE Framework -->
-                                <div @click="frameworkBodyCollapsed.crispe = !frameworkBodyCollapsed.crispe" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.crispe = !frameworkBodyCollapsed.crispe" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.crispe}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -217,13 +261,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Multi-step technical tasks, code generation, architectural decisions.</p>
                                     <div x-show="!frameworkBodyCollapsed.crispe" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Capacity/Role, Insight, Statement, Personality, Experiment</p>
-                                        <button @click.stop="frameworkExamples.crispe = !frameworkExamples.crispe" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.crispe = !frameworkExamples.crispe" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.crispe}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.crispe" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.crispe" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Capacity:</strong> Act as a senior software architect
 <strong>Role:</strong> Technical documentation expert
 <strong>Insight:</strong> Our team needs clear API documentation for a REST service
@@ -234,7 +278,7 @@
                                 </div>
 
                                 <!-- ELAVIS Framework -->
-                                <div @click="frameworkBodyCollapsed.elavis = !frameworkBodyCollapsed.elavis" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.elavis = !frameworkBodyCollapsed.elavis" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.elavis}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -246,13 +290,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Blog posts, emails, social media, marketing copy.</p>
                                     <div x-show="!frameworkBodyCollapsed.elavis" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Instruction, Context, Input Data, Output Indicator</p>
-                                        <button @click.stop="frameworkExamples.elavis = !frameworkExamples.elavis" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.elavis = !frameworkExamples.elavis" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.elavis}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.elavis" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.elavis" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Instruction:</strong> Generate a professional blog post
 <strong>Context:</strong> Writing for a tech company blog
 <strong>Input Data:</strong> Topic: "AI in Healthcare"
@@ -261,7 +305,7 @@
                                 </div>
 
                                 <!-- SPARC Framework -->
-                                <div @click="frameworkBodyCollapsed.sparc = !frameworkBodyCollapsed.sparc" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.sparc = !frameworkBodyCollapsed.sparc" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.sparc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -273,13 +317,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Technical documentation, user guides, API docs, project proposals.</p>
                                     <div x-show="!frameworkBodyCollapsed.sparc" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Situation, Purpose, Audience, Result, Constraints</p>
-                                        <button @click.stop="frameworkExamples.sparc = !frameworkExamples.sparc" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.sparc = !frameworkExamples.sparc" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.sparc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.sparc" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.sparc" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Situation:</strong> Need technical documentation for API
 <strong>Purpose:</strong> Help developers integrate the API
 <strong>Audience:</strong> Software developers with mid-level experience
@@ -289,7 +333,7 @@
                                 </div>
 
                                 <!-- RISEN Framework -->
-                                <div @click="frameworkBodyCollapsed.risen = !frameworkBodyCollapsed.risen" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.risen = !frameworkBodyCollapsed.risen" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.risen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -301,13 +345,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Data analysis, structured problem-solving, analytical tasks.</p>
                                     <div x-show="!frameworkBodyCollapsed.risen" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Role, Input, Steps, Expectation, Narrowing</p>
-                                        <button @click.stop="frameworkExamples.risen = !frameworkExamples.risen" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.risen = !frameworkExamples.risen" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.risen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.risen" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.risen" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Role:</strong> Act as a data analyst
 <strong>Input:</strong> Sales data for Q1 2024
 <strong>Steps:</strong> Analyze trends, identify patterns, create summary
@@ -317,7 +361,7 @@
                                 </div>
 
                                 <!-- PGTC Framework -->
-                                <div @click="frameworkBodyCollapsed.pgtc = !frameworkBodyCollapsed.pgtc" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.pgtc = !frameworkBodyCollapsed.pgtc" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.pgtc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -329,13 +373,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Quick content creation, copywriting, simple structured outputs.</p>
                                     <div x-show="!frameworkBodyCollapsed.pgtc" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Persona, Goal, Task, Context</p>
-                                        <button @click.stop="frameworkExamples.pgtc = !frameworkExamples.pgtc" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.pgtc = !frameworkExamples.pgtc" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.pgtc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.pgtc" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.pgtc" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Persona:</strong> You are a professional copywriter
 <strong>Goal:</strong> Create compelling marketing copy
 <strong>Task:</strong> Write a product description
@@ -344,7 +388,7 @@
                                 </div>
 
                                 <!-- RTF Framework -->
-                                <div @click="frameworkBodyCollapsed.rtf = !frameworkBodyCollapsed.rtf" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.rtf = !frameworkBodyCollapsed.rtf" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.rtf}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -356,13 +400,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Data conversion, formatting tasks, quick transformations.</p>
                                     <div x-show="!frameworkBodyCollapsed.rtf" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Request, Task, Format</p>
-                                        <button @click.stop="frameworkExamples.rtf = !frameworkExamples.rtf" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.rtf = !frameworkExamples.rtf" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.rtf}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.rtf" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.rtf" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Request:</strong> Convert this list to JSON
 <strong>Task:</strong> Transform the following notes into structured data
 <strong>Format:</strong> JSON with keys: title, date, priority</div>
@@ -370,7 +414,7 @@
                                 </div>
 
                                 <!-- RACE Framework -->
-                                <div @click="frameworkBodyCollapsed.race = !frameworkBodyCollapsed.race" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.race = !frameworkBodyCollapsed.race" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.race}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -382,13 +426,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Emails, summaries, reports, daily communication tasks.</p>
                                     <div x-show="!frameworkBodyCollapsed.race" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Role, Action, Context, Execute</p>
-                                        <button @click.stop="frameworkExamples.race = !frameworkExamples.race" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.race = !frameworkExamples.race" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.race}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.race" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.race" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Role:</strong> You are a professional email writer
 <strong>Action:</strong> Draft a meeting follow-up email
 <strong>Context:</strong> Meeting with client about project timeline
@@ -397,7 +441,7 @@
                                 </div>
 
                                 <!-- TAG Framework -->
-                                <div @click="frameworkBodyCollapsed.tag = !frameworkBodyCollapsed.tag" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.tag = !frameworkBodyCollapsed.tag" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.tag}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -409,13 +453,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Process documentation, workflow definition, task breakdown.</p>
                                     <div x-show="!frameworkBodyCollapsed.tag" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Task, Action, Goal</p>
-                                        <button @click.stop="frameworkExamples.tag = !frameworkExamples.tag" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.tag = !frameworkExamples.tag" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.tag}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.tag" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.tag" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Task:</strong> Review code for security vulnerabilities
 <strong>Action:</strong> Analyze codebase and identify issues
 <strong>Goal:</strong> Produce a security audit report</div>
@@ -423,7 +467,7 @@
                                 </div>
 
                                 <!-- STAR Framework -->
-                                <div @click="frameworkBodyCollapsed.star = !frameworkBodyCollapsed.star" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.star = !frameworkBodyCollapsed.star" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.star}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -435,13 +479,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Interview responses, case studies, problem-solving narratives.</p>
                                     <div x-show="!frameworkBodyCollapsed.star" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Situation, Task, Action, Result</p>
-                                        <button @click.stop="frameworkExamples.star = !frameworkExamples.star" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.star = !frameworkExamples.star" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.star}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.star" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.star" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Situation:</strong> Customer complaints about slow response times
 <strong>Task:</strong> Improve system performance
 <strong>Action:</strong> Implemented caching and optimized queries
@@ -450,7 +494,7 @@
                                 </div>
 
                                 <!-- CLEAR Framework -->
-                                <div @click="frameworkBodyCollapsed.clear = !frameworkBodyCollapsed.clear" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.clear = !frameworkBodyCollapsed.clear" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.clear}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -462,13 +506,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Clear communication, adaptable prompts, iterative refinement.</p>
                                     <div x-show="!frameworkBodyCollapsed.clear" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Concise, Logical, Explicit, Adaptive, Reflective</p>
-                                        <button @click.stop="frameworkExamples.clear = !frameworkExamples.clear" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.clear = !frameworkExamples.clear" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.clear}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.clear" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.clear" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Concise:</strong> Brief and to the point
 <strong>Logical:</strong> Follows clear reasoning
 <strong>Explicit:</strong> Clear instructions
@@ -478,7 +522,7 @@
                                 </div>
 
                                 <!-- SMART Framework -->
-                                <div @click="frameworkBodyCollapsed.smart = !frameworkBodyCollapsed.smart" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.smart = !frameworkBodyCollapsed.smart" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.smart}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -490,13 +534,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Goal setting, project planning, measurable objectives.</p>
                                     <div x-show="!frameworkBodyCollapsed.smart" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Specific, Measurable, Achievable, Relevant, Time-bound</p>
-                                        <button @click.stop="frameworkExamples.smart = !frameworkExamples.smart" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.smart = !frameworkExamples.smart" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.smart}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.smart" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.smart" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Specific:</strong> Increase user engagement by 25%
 <strong>Measurable:</strong> Track via analytics dashboard
 <strong>Achievable:</strong> With current resources
@@ -506,7 +550,7 @@
                                 </div>
 
                                 <!-- RIDE Framework -->
-                                <div @click="frameworkBodyCollapsed.ride = !frameworkBodyCollapsed.ride" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.ride = !frameworkBodyCollapsed.ride" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.ride}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -518,13 +562,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Medical education, tutoring, educational scenarios with examples.</p>
                                     <div x-show="!frameworkBodyCollapsed.ride" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Role, Input, Directive, Examples</p>
-                                        <button @click.stop="frameworkExamples.ride = !frameworkExamples.ride" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.ride = !frameworkExamples.ride" class="text-xs text-[#6B7280] dark:text-blue-400 hover:text-[#4B5563] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.ride}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.ride" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.ride" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Role:</strong> Act as a medical tutor
 <strong>Input:</strong> Patient case with symptoms
 <strong>Directive:</strong> Help identify differential diagnosis
@@ -533,7 +577,7 @@
                                 </div>
 
                                 <!-- PROMPT Framework -->
-                                <div @click="frameworkBodyCollapsed.prompt = !frameworkBodyCollapsed.prompt" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.prompt = !frameworkBodyCollapsed.prompt" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.prompt}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -545,13 +589,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Complex projects, thorough planning, comprehensive prompts.</p>
                                     <div x-show="!frameworkBodyCollapsed.prompt" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Purpose, Role, Output, Mechanics, Parameters, Testing</p>
-                                        <button @click.stop="frameworkExamples.prompt = !frameworkExamples.prompt" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.prompt = !frameworkExamples.prompt" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.prompt}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.prompt" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.prompt" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Purpose:</strong> Generate marketing copy
 <strong>Role:</strong> Professional copywriter
 <strong>Output:</strong> 500-word article
@@ -562,7 +606,7 @@
                                 </div>
 
                                 <!-- TAP Framework -->
-                                <div @click="frameworkBodyCollapsed.tap = !frameworkBodyCollapsed.tap" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.tap = !frameworkBodyCollapsed.tap" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.tap}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -574,13 +618,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Tutorials, educational content, instructional materials.</p>
                                     <div x-show="!frameworkBodyCollapsed.tap" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Task, Audience, Purpose</p>
-                                        <button @click.stop="frameworkExamples.tap = !frameworkExamples.tap" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.tap = !frameworkExamples.tap" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.tap}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.tap" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.tap" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Task:</strong> Create a tutorial
 <strong>Audience:</strong> Beginner developers
 <strong>Purpose:</strong> Teach basic Python concepts</div>
@@ -588,7 +632,7 @@
                                 </div>
 
                                 <!-- CARE Framework -->
-                                <div @click="frameworkBodyCollapsed.care = !frameworkBodyCollapsed.care" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.care = !frameworkBodyCollapsed.care" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.care}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -600,13 +644,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Format-specific outputs, JSON/XML generation, structured data.</p>
                                     <div x-show="!frameworkBodyCollapsed.care" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Context, Action, Result, Example</p>
-                                        <button @click.stop="frameworkExamples.care = !frameworkExamples.care" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.care = !frameworkExamples.care" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.care}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.care" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.care" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Context:</strong> Need formatted JSON response
 <strong>Action:</strong> Convert user data to JSON
 <strong>Result:</strong> Properly formatted JSON object
@@ -615,7 +659,7 @@
                                 </div>
 
                                 <!-- COSTAR Framework -->
-                                <div @click="frameworkBodyCollapsed.costar = !frameworkBodyCollapsed.costar" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.costar = !frameworkBodyCollapsed.costar" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.costar}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -627,13 +671,13 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Marketing copy, brand-aligned content, audience-specific writing.</p>
                                     <div x-show="!frameworkBodyCollapsed.costar" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Context, Objective, Style, Tone, Audience, Response</p>
-                                        <button @click.stop="frameworkExamples.costar = !frameworkExamples.costar" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.costar = !frameworkExamples.costar" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.costar}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.costar" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.costar" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Context:</strong> Marketing campaign for new product
 <strong>Objective:</strong> Increase brand awareness
 <strong>Style:</strong> Engaging and modern
@@ -645,7 +689,7 @@
                                 </div>
 
                                 <!-- AI Reasoning & Chain-of-Thought -->
-                                <div class="border-t border-gray-200 dark:border-gray-700 pt-2 mt-3">
+                                <div class="border-t border-[#B3D8FF] dark:border-gray-700 pt-2 mt-3">
                                     <button @click="aiReasoningCollapsed = !aiReasoningCollapsed" class="w-full text-left flex items-center gap-2 mb-2">
                                         <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !aiReasoningCollapsed}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -655,7 +699,7 @@
                                 </div>
                                 <div x-show="!aiReasoningCollapsed" x-transition class="space-y-3">
                                 <!-- Chain-of-Thought Prompting -->
-                                <div @click="frameworkBodyCollapsed.chainOfThought = !frameworkBodyCollapsed.chainOfThought" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.chainOfThought = !frameworkBodyCollapsed.chainOfThought" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.chainOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -666,13 +710,13 @@
                                     </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Complex problem-solving, step-by-step analysis, logical reasoning tasks</p>
                                     <div x-show="!frameworkBodyCollapsed.chainOfThought" x-transition class="mt-2 space-y-2">
-                                        <button @click.stop="frameworkExamples.chainOfThought = !frameworkExamples.chainOfThought" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.chainOfThought = !frameworkExamples.chainOfThought" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.chainOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.chainOfThought" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.chainOfThought" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 Let's think step by step:
 1. First, identify all relevant symptoms
 2. Then, narrow down possible diagnoses
@@ -681,7 +725,7 @@ Let's think step by step:
                                 </div>
 
                                 <!-- 5C Framework -->
-                                <div @click="frameworkBodyCollapsed.fiveC = !frameworkBodyCollapsed.fiveC" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.fiveC = !frameworkBodyCollapsed.fiveC" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.fiveC}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -693,13 +737,13 @@ Let's think step by step:
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Iterative prompt improvement, refining outputs, continuous optimization.</p>
                                     <div x-show="!frameworkBodyCollapsed.fiveC" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Clarity, Contextualization, Command, Chaining, Continuous Refinement</p>
-                                        <button @click.stop="frameworkExamples.fiveC = !frameworkExamples.fiveC" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.fiveC = !frameworkExamples.fiveC" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.fiveC}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.fiveC" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.fiveC" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Clarity:</strong> Clear instructions
 <strong>Contextualization:</strong> Provide background info
 <strong>Command:</strong> Use imperative language
@@ -709,7 +753,7 @@ Let's think step by step:
                                 </div>
 
                                 <!-- Tree-of-Thought Prompting -->
-                                <div @click="frameworkBodyCollapsed.treeOfThought = !frameworkBodyCollapsed.treeOfThought" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.treeOfThought = !frameworkBodyCollapsed.treeOfThought" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.treeOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -720,13 +764,13 @@ Let's think step by step:
                                     </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Exploring multiple solutions, comparing options, diagnostic reasoning</p>
                                     <div x-show="!frameworkBodyCollapsed.treeOfThought" x-transition class="mt-2 space-y-2">
-                                        <button @click.stop="frameworkExamples.treeOfThought = !frameworkExamples.treeOfThought" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.treeOfThought = !frameworkExamples.treeOfThought" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.treeOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.treeOfThought" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.treeOfThought" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 List multiple approaches:
 1. Approach A: [description]
 2. Approach B: [description]
@@ -736,7 +780,7 @@ Evaluate each one and choose the best</div>
                                 </div>
 
                                 <!-- Zero-Shot/Few-Shot Prompting -->
-                                <div @click="frameworkBodyCollapsed.zeroShot = !frameworkBodyCollapsed.zeroShot" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.zeroShot = !frameworkBodyCollapsed.zeroShot" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.zeroShot}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -747,13 +791,13 @@ Evaluate each one and choose the best</div>
                                     </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Format learning, pattern recognition, example-based training</p>
                                     <div x-show="!frameworkBodyCollapsed.zeroShot" x-transition class="mt-2 space-y-2">
-                                        <button @click.stop="frameworkExamples.zeroShot = !frameworkExamples.zeroShot" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.zeroShot = !frameworkExamples.zeroShot" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.zeroShot}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.zeroShot" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.zeroShot" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 Example 1: [Sample patient note]
 Example 2: [Sample patient note]
 Now write one for: [Current case]</div>
@@ -761,7 +805,7 @@ Now write one for: [Current case]</div>
                                 </div>
 
                                 <!-- AI-Aided Clinical Reasoning -->
-                                <div @click="frameworkBodyCollapsed.clinicalReasoning = !frameworkBodyCollapsed.clinicalReasoning" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.clinicalReasoning = !frameworkBodyCollapsed.clinicalReasoning" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.clinicalReasoning}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -772,19 +816,19 @@ Now write one for: [Current case]</div>
                                     </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Medical training, clinical scenarios, educational simulations</p>
                                     <div x-show="!frameworkBodyCollapsed.clinicalReasoning" x-transition class="mt-2 space-y-2">
-                                        <button @click.stop="frameworkExamples.clinicalReasoning = !frameworkExamples.clinicalReasoning" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.clinicalReasoning = !frameworkExamples.clinicalReasoning" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.clinicalReasoning}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.clinicalReasoning" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.clinicalReasoning" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 You are a virtual standardized patient presenting with chest pain. Answer questions based on typical symptoms of myocardial infarction, and ask the learner to explain their diagnosis at the end.</div>
                                     </div>
                                 </div>
 
                                 <!-- GOLD Framework -->
-                                <div @click="frameworkBodyCollapsed.gold = !frameworkBodyCollapsed.gold" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.gold = !frameworkBodyCollapsed.gold" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.gold}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -796,13 +840,13 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Problem analysis, strategic planning, obstacle identification.</p>
                                     <div x-show="!frameworkBodyCollapsed.gold" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Goal, Obstacles, Logic, Data</p>
-                                        <button @click.stop="frameworkExamples.gold = !frameworkExamples.gold" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.gold = !frameworkExamples.gold" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.gold}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.gold" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.gold" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Goal:</strong> Optimize database performance
 <strong>Obstacles:</strong> Limited budget, existing infrastructure
 <strong>Logic:</strong> Use indexing and query optimization
@@ -812,7 +856,7 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                 </div>
 
                                 <!-- Specialized Prompts -->
-                                <div class="border-t border-gray-200 dark:border-gray-700 pt-2 mt-3">
+                                <div class="border-t border-[#B3D8FF] dark:border-gray-700 pt-2 mt-3">
                                     <button @click="specializedPromptsCollapsed = !specializedPromptsCollapsed" class="w-full text-left flex items-center gap-2 mb-2">
                                         <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !specializedPromptsCollapsed}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -822,7 +866,7 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                 </div>
                                 <div x-show="!specializedPromptsCollapsed" x-transition class="space-y-3">
                                 <!-- PEACE Framework -->
-                                <div @click="frameworkBodyCollapsed.peace = !frameworkBodyCollapsed.peace" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.peace = !frameworkBodyCollapsed.peace" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.peace}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -834,13 +878,13 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Self-reflection, decision analysis, learning journals.</p>
                                     <div x-show="!frameworkBodyCollapsed.peace" x-transition class="mt-2 space-y-2">
                                         <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Present, Explore, Analyze, Choose, Evaluate</p>
-                                        <button @click.stop="frameworkExamples.peace = !frameworkExamples.peace" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.peace = !frameworkExamples.peace" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.peace}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.peace" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.peace" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 <strong>Present:</strong> Describe the current situation
 <strong>Explore:</strong> Identify thoughts and feelings
 <strong>Analyze:</strong> Consider alternatives
@@ -850,7 +894,7 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                 </div>
 
                                 <!-- Reflective Prompting -->
-                                <div @click="frameworkBodyCollapsed.reflective = !frameworkBodyCollapsed.reflective" class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                                <div @click="frameworkBodyCollapsed.reflective = !frameworkBodyCollapsed.reflective" class="border border-[#E5E5E5] dark:border-gray-700 rounded p-3 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer shadow-sm">
                                     <div class="w-full text-left">
                                         <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.reflective}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -861,13 +905,13 @@ You are a virtual standardized patient presenting with chest pain. Answer questi
                                     </div>
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Learning reflection, educational journals, experience analysis</p>
                                     <div x-show="!frameworkBodyCollapsed.reflective" x-transition class="mt-2 space-y-2">
-                                        <button @click.stop="frameworkExamples.reflective = !frameworkExamples.reflective" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                        <button @click.stop="frameworkExamples.reflective = !frameworkExamples.reflective" class="text-xs text-[#007BFF] dark:text-blue-400 hover:text-[#0069D9] dark:hover:text-blue-300 mb-1 flex items-center gap-1">
                                             <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.reflective}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                             Example
                                         </button>
-                                        <div x-show="!frameworkExamples.reflective" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+                                        <div x-show="!frameworkExamples.reflective" x-transition class="mt-2 p-2 bg-[#F5F5F5] dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
 DIEP Framework:
 <strong>Describe:</strong> What happened?
 <strong>Interpret:</strong> What did you learn?
@@ -883,19 +927,19 @@ DIEP Framework:
 
                 <!-- Main Content -->
                 <main class="flex-1">
-                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow">
+                    <div class="bg-[#F5F5F5] dark:bg-gray-800 rounded-lg shadow-lg border border-[#E5E5E5] dark:border-gray-700 backdrop-blur-sm">
                         <!-- Prompts List -->
-                        <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                        <div class="divide-y divide-[#B3D8FF] dark:divide-gray-700">
                             <template x-for="prompt in filteredPrompts" :key="prompt.id">
-                                <div class="p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer" @click="openPrompt(prompt)">
+                                <div class="p-4 hover:bg-[#E5E5E5] dark:hover:bg-gray-700 transition-colors cursor-pointer" @click="openPrompt(prompt)">
                                     <div class="flex items-start justify-between">
                                         <div class="flex-1">
                                             <h3 class="font-semibold text-gray-900 dark:text-white mb-1" x-text="prompt.title"></h3>
                                             <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-2" x-text="prompt.content.substring(0, 150) + (prompt.content.length > 150 ? '...' : '')"></p>
                                             <div class="flex items-center gap-3 flex-wrap">
-                                                <span class="text-xs px-2 py-1 bg-gray-200 dark:bg-gray-700 rounded" x-text="prompt.category || 'No Type'"></span>
+                                                <span class="text-xs px-2 py-1 bg-blue-200 dark:bg-gray-700 rounded" x-text="prompt.category || 'No Type'"></span>
                                                 <template x-for="tag in prompt.tags" :key="tag">
-                                                    <span class="text-xs px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded" x-text="tag"></span>
+                                                    <span class="text-xs px-2 py-1 bg-[#E5E5E5] dark:bg-blue-900 text-[#374151] dark:text-blue-300 rounded" x-text="tag"></span>
                                                 </template>
                                                 <!-- Rating Display -->
                                                 <template x-if="prompt.rating">
@@ -913,7 +957,7 @@ DIEP Framework:
                                             </div>
                                         </div>
                                         <div class="flex items-center gap-2 ml-4">
-                                            <button @click.stop="duplicatePrompt(prompt)" class="p-2 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors" title="Duplicate">
+                                            <button @click.stop="duplicatePrompt(prompt)" class="p-2 hover:bg-[#E5E5E5] dark:hover:bg-gray-600 rounded transition-colors" title="Duplicate">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                                 </svg>
@@ -938,7 +982,7 @@ DIEP Framework:
 
         <!-- Create/Edit Prompt Modal -->
         <div x-show="showCreateModal || showEditModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" @click.self="closeModal()">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" :style="darkMode ? 'background-color: rgb(31 41 55);' : 'background-color: rgb(255 255 255);'">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-[#E5E5E5] dark:border-gray-700 max-w-4xl w-full max-h-[90vh] overflow-y-auto" :style="darkMode ? 'background-color: rgb(31 41 55) !important;' : 'background-color: rgb(255 255 255) !important;'">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-2xl font-bold text-gray-900 dark:text-white" x-text="showEditModal ? 'Edit Prompt' : 'New Prompt'"></h2>
@@ -955,7 +999,7 @@ DIEP Framework:
                             <select 
                                 id="template-select"
                                 @change="loadPromptTemplate($event.target.value)"
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                class="w-full px-3 py-2 border border-[#E5E5E5] dark:border-gray-600 rounded-lg bg-gray-50/90 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-[#6B7280] focus:border-[#6B7280] shadow-sm"
                             >
                                 <option value="">Select a template...</option>
                                 <optgroup label="CRISPE Framework">
@@ -1063,7 +1107,7 @@ DIEP Framework:
                                 type="text" 
                                 x-model="currentPrompt.title"
                                 required
-                                class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                class="w-full px-3 py-2 border border-[#E5E5E5] dark:border-gray-600 rounded-lg bg-gray-50/90 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-[#6B7280] focus:border-[#6B7280] shadow-sm"
                                 placeholder="Enter prompt title..."
                             >
                         </div>
@@ -1077,17 +1121,17 @@ DIEP Framework:
                                     @input="showDropdown = true"
                                     @focus="showDropdown = true"
                                     @keydown.escape="showDropdown = false"
-                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    class="w-full px-3 py-2 border border-[#E5E5E5] dark:border-gray-600 rounded-lg bg-gray-50/90 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-[#6B7280] focus:border-[#6B7280] shadow-sm"
                                     placeholder="Select a prompt framework..."
                                     readonly
                                     @click="showDropdown = !showDropdown"
                                 >
-                                <div x-show="showDropdown" x-cloak class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-96 overflow-y-auto">
+                                <div x-show="showDropdown" x-cloak class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-[#E5E5E5] dark:border-gray-600 rounded-lg shadow-lg max-h-96 overflow-y-auto">
                                     <template x-for="framework in frameworks" :key="framework.name">
                                         <button 
                                             type="button"
                                             @click="currentPrompt.category = framework.name; showDropdown = false"
-                                            class="w-full text-left px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 text-sm border-b border-gray-200 dark:border-gray-600 last:border-b-0"
+                                            class="w-full text-left px-3 py-2 hover:bg-[#E5E5E5] dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 text-sm border-b border-[#E5E5E5] dark:border-gray-600 last:border-b-0"
                                         >
                                             <div class="font-semibold" x-text="framework.name"></div>
                                             <div class="text-xs text-gray-500 dark:text-gray-400 mt-0.5" x-text="framework.description"></div>
@@ -1111,20 +1155,20 @@ DIEP Framework:
                                     @keydown.enter.prevent="handleTagEnter($event)"
                                     @keydown.escape="showTagDropdown = false"
                                     @keydown.comma.prevent="handleTagComma($event)"
-                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    class="w-full px-3 py-2 border border-[#E5E5E5] dark:border-gray-600 rounded-lg bg-gray-50/90 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-[#6B7280] focus:border-[#6B7280] shadow-sm"
                                     placeholder="e.g., code-generation, analysis, creative"
                                     x-ref="tagsInput"
                                 >
                                 <div 
                                     x-show="showTagDropdown && getFilteredTags().length > 0" 
                                     x-cloak 
-                                    class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto"
+                                    class="absolute z-10 w-full mt-1 bg-gray-100/95 dark:bg-gray-700 border border-[#B3D8FF] dark:border-gray-600 rounded-lg shadow-lg max-h-60 overflow-y-auto backdrop-blur-sm"
                                 >
                                     <template x-for="(tag, index) in getFilteredTags()" :key="tag">
                                         <button 
                                             type="button"
                                             @click="handleTagSelect(tag); showTagDropdown = false; selectedTagIndex = -1"
-                                            :class="selectedTagIndex === index ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100'"
+                                            :class="selectedTagIndex === index ? 'bg-[#E5E5E5] dark:bg-blue-900 text-[#374151] dark:text-blue-300' : 'hover:bg-[#E5E5E5] dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100'"
                                             class="w-full text-left px-3 py-2 text-sm transition-colors"
                                             x-text="tag"
                                         ></button>
@@ -1159,7 +1203,7 @@ DIEP Framework:
                                     ></button>
                                 </div>
                             </div>
-                            <div x-show="syntaxHighlighting && currentPrompt.content" class="mt-2 p-3 bg-gray-50 dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700">
+                            <div x-show="syntaxHighlighting && currentPrompt.content" class="mt-2 p-3 bg-[#F5F5F5] dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700">
                                 <pre class="text-sm whitespace-pre-wrap"><code :class="darkMode ? 'hljs-dark' : 'hljs'" x-html="highlightCode(currentPrompt.content)"></code></pre>
                             </div>
                         </div>
@@ -1199,7 +1243,7 @@ DIEP Framework:
                                     x-model="currentPrompt.model"
                                     @focus="showModelDropdown = true"
                                     @input="showModelDropdown = true"
-                                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    class="w-full px-3 py-2 border border-[#E5E5E5] dark:border-gray-600 rounded-lg bg-gray-50/90 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-[#6B7280] focus:border-[#6B7280] shadow-sm"
                                     placeholder="Select or enter model name..."
                                     list="model-list"
                                 >
@@ -1208,12 +1252,12 @@ DIEP Framework:
                                         <option :value="model" x-text="model"></option>
                                     </template>
                                 </datalist>
-                                <div x-show="showModelDropdown && getCommonModels().length > 0" x-cloak class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-40 overflow-y-auto">
+                                <div x-show="showModelDropdown && getCommonModels().length > 0" x-cloak class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-[#E5E5E5] dark:border-gray-600 rounded-lg shadow-lg max-h-40 overflow-y-auto">
                                     <template x-for="model in getCommonModels().filter(m => !currentPrompt.model || m.toLowerCase().includes(currentPrompt.model.toLowerCase()))" :key="model">
                                         <button 
                                             type="button"
                                             @click="currentPrompt.model = model; showModelDropdown = false"
-                                            class="w-full text-left px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 text-sm"
+                                            class="w-full text-left px-3 py-2 hover:bg-[#E5E5E5] dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 text-sm"
                                             x-text="model"
                                         ></button>
                                     </template>
@@ -1262,7 +1306,7 @@ DIEP Framework:
                                     <input 
                                         type="number" 
                                         x-model="currentPrompt.metadata.inputTokens"
-                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        class="w-full px-2 py-1 text-sm border border-[#E5E5E5] dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
                                         placeholder="—"
                                     >
                                 </div>
@@ -1271,7 +1315,7 @@ DIEP Framework:
                                     <input 
                                         type="number" 
                                         x-model="currentPrompt.metadata.outputTokens"
-                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        class="w-full px-2 py-1 text-sm border border-[#E5E5E5] dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
                                         placeholder="—"
                                     >
                                 </div>
@@ -1280,7 +1324,7 @@ DIEP Framework:
                                     <input 
                                         type="number" 
                                         x-model="currentPrompt.metadata.totalTokens"
-                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        class="w-full px-2 py-1 text-sm border border-[#E5E5E5] dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
                                         placeholder="—"
                                     >
                                 </div>
@@ -1290,7 +1334,7 @@ DIEP Framework:
                                         type="number" 
                                         step="0.00001"
                                         x-model="currentPrompt.metadata.cost"
-                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        class="w-full px-2 py-1 text-sm border border-[#E5E5E5] dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
                                         placeholder="—"
                                     >
                                 </div>
@@ -1299,7 +1343,7 @@ DIEP Framework:
                                     <input 
                                         type="number" 
                                         x-model="currentPrompt.metadata.responseTime"
-                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        class="w-full px-2 py-1 text-sm border border-[#E5E5E5] dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
                                         placeholder="—"
                                     >
                                 </div>
@@ -1308,13 +1352,13 @@ DIEP Framework:
                                     <input 
                                         type="datetime-local" 
                                         x-model="currentPrompt.metadata.testedAt"
-                                        class="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                                        class="w-full px-2 py-1 text-sm border border-[#E5E5E5] dark:border-gray-600 rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
                                     >
                                 </div>
                             </div>
                         </div>
 
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center justify-between pt-4 border-t border-[#B3D8FF] dark:border-gray-700">
                             <div class="text-sm text-gray-500 dark:text-gray-400">
                                 <template x-if="showEditModal && currentPrompt.createdAt">
                                     <div>Created: <span x-text="formatDate(currentPrompt.createdAt)"></span></div>
@@ -1368,7 +1412,7 @@ DIEP Framework:
                         <div class="flex items-center gap-3 flex-wrap">
                             <span class="text-sm px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded" x-text="viewingPrompt?.category || 'No Type'"></span>
                             <template x-for="tag in viewingPrompt?.tags || []" :key="tag">
-                                <span class="text-sm px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded" x-text="tag"></span>
+                                <span class="text-sm px-3 py-1 bg-[#E5E5E5] dark:bg-blue-900 text-[#374151] dark:text-blue-300 rounded" x-text="tag"></span>
                             </template>
                             <!-- Rating Display -->
                             <template x-if="viewingPrompt?.rating">
@@ -1383,7 +1427,7 @@ DIEP Framework:
                             </template>
                         </div>
 
-                        <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                        <div class="bg-[#F5F5F5] dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
                             <pre class="whitespace-pre-wrap text-sm font-mono" x-text="viewingPrompt?.content"></pre>
                         </div>
 
@@ -1457,7 +1501,7 @@ DIEP Framework:
                             </div>
                         </template>
 
-                        <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 pt-4 border-t border-[#B3D8FF] dark:border-gray-700">
                             <div class="space-y-1">
                                 <div>Words: <span x-text="getWordCount(viewingPrompt?.content || '')"></span></div>
                                 <div>Characters: <span x-text="(viewingPrompt?.content || '').length"></span></div>
