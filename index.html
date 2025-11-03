@@ -15,7 +15,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <!-- Highlight.js for syntax highlighting -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" id="hljs-light-theme">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark-theme" media="(prefers-color-scheme: dark)" disabled>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" id="hljs-dark-theme" disabled>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script>
         // Initialize highlight.js
@@ -33,6 +33,14 @@
                 darkTheme.disabled = true;
             }
         }
+        
+        // Set initial theme based on saved preference or default to light
+        // This ensures the correct theme is applied immediately, even before Alpine.js loads
+        (function() {
+            const savedDarkMode = localStorage.getItem('darkMode');
+            const isDark = savedDarkMode === 'true';
+            toggleHighlightTheme(isDark);
+        })();
     </script>
     <style>
         [x-cloak] { display: none !important; }
@@ -70,6 +78,11 @@
         html.dark .dark\:text-gray-400 { color: rgb(156 163 175) !important; }
         html.dark .dark\:border-gray-700 { border-color: rgb(55 65 81) !important; }
         html.dark .dark\:border-gray-600 { border-color: rgb(75 85 99) !important; }
+        
+        /* Ensure modal backgrounds are fully opaque in light mode */
+        html:not(.dark) [class*="bg-white"] {
+            background-color: rgb(255 255 255) !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
@@ -925,7 +938,7 @@ DIEP Framework:
 
         <!-- Create/Edit Prompt Modal -->
         <div x-show="showCreateModal || showEditModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" @click.self="closeModal()">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto" :style="darkMode ? 'background-color: rgb(31 41 55);' : 'background-color: rgb(255 255 255);'">
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-2xl font-bold text-gray-900 dark:text-white" x-text="showEditModal ? 'Edit Prompt' : 'New Prompt'"></h2>
