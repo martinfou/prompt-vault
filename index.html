@@ -121,7 +121,7 @@
                             >
                         </div>
 
-                        <!-- Categories -->
+                        <!-- Prompt Types (Frameworks) -->
                         <div>
                             <div class="flex items-center justify-between mb-2">
                                 <button @click="categoriesCollapsed = !categoriesCollapsed" class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
@@ -130,11 +130,8 @@
                                     </svg>
                                     Prompt Types
                                 </button>
-                                <button @click.stop="showCategoryModal = true" class="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-xs">
-                                    + Add
-                                </button>
                             </div>
-                            <div x-show="!categoriesCollapsed" x-transition class="space-y-1">
+                            <div x-show="!categoriesCollapsed" x-transition class="space-y-1 max-h-96 overflow-y-auto pr-1">
                                 <button 
                                     @click="selectedCategory = null; filterPrompts()"
                                     :class="selectedCategory === null ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'"
@@ -142,25 +139,15 @@
                                 >
                                     All Prompts
                                 </button>
-                                <template x-for="category in categories" :key="category">
-                                    <div class="flex items-center justify-between group hover:bg-gray-50 dark:hover:bg-gray-700 rounded">
-                                        <button 
-                                            @click="selectedCategory = category; filterPrompts()"
-                                            :class="selectedCategory === category ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'"
-                                            class="flex-1 text-left px-2 py-1 rounded text-sm transition-colors"
-                                        >
-                                            <span x-text="category"></span>
-                                        </button>
-                                        <button 
-                                            @click.stop="deleteCategory(category)"
-                                            class="opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-700 p-1 rounded transition-opacity"
-                                            title="Delete prompt type"
-                                        >
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                            </svg>
-                                        </button>
-                                    </div>
+                                <template x-for="framework in frameworks" :key="framework.name">
+                                    <button 
+                                        @click="selectedCategory = framework.name; filterPrompts()"
+                                        :class="selectedCategory === framework.name ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300' : 'hover:bg-gray-100 dark:hover:bg-gray-700'"
+                                        class="w-full text-left px-2 py-1.5 rounded text-sm transition-colors border border-transparent hover:border-gray-200 dark:hover:border-gray-600"
+                                    >
+                                        <div class="font-semibold text-gray-900 dark:text-white mb-0.5" x-text="framework.name"></div>
+                                        <div class="text-xs text-gray-500 dark:text-gray-400 leading-tight" x-text="framework.description"></div>
+                                    </button>
                                 </template>
                             </div>
                         </div>
@@ -173,7 +160,7 @@
                                 </svg>
                                 Tags
                             </button>
-                            <div x-show="!tagsCollapsed" x-transition class="flex flex-wrap gap-1">
+                            <div x-show="!tagsCollapsed" x-transition class="flex flex-wrap gap-1 max-h-96 overflow-y-auto pr-1">
                                 <template x-for="tag in allTags" :key="tag">
                                     <button 
                                         @click="toggleTagFilter(tag)"
@@ -1013,36 +1000,26 @@ DIEP Framework:
                                     x-model="currentPrompt.category"
                                     @input="showDropdown = true"
                                     @focus="showDropdown = true"
-                                    @keydown.enter.prevent="handleCategoryInput($event)"
                                     @keydown.escape="showDropdown = false"
                                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                    placeholder="Type prompt type (e.g., Persona Prompt, Code Snippet Prompt)..."
-                                    list="category-list"
+                                    placeholder="Select a prompt framework..."
+                                    readonly
+                                    @click="showDropdown = !showDropdown"
                                 >
-                                <datalist id="category-list">
-                                    <option value="">No Type</option>
-                                    <template x-for="category in categories" :key="category">
-                                        <option :value="category" x-text="category"></option>
-                                    </template>
-                                </datalist>
-                                <div x-show="showDropdown && categories.length > 0" x-cloak class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-40 overflow-y-auto">
-                                    <template x-for="category in categories.filter(c => !currentPrompt.category || c.toLowerCase().includes(currentPrompt.category.toLowerCase()))" :key="category">
+                                <div x-show="showDropdown" x-cloak class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-h-96 overflow-y-auto">
+                                    <template x-for="framework in frameworks" :key="framework.name">
                                         <button 
                                             type="button"
-                                            @click="currentPrompt.category = category; showDropdown = false"
-                                            class="w-full text-left px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 text-sm"
-                                            x-text="category"
-                                        ></button>
+                                            @click="currentPrompt.category = framework.name; showDropdown = false"
+                                            class="w-full text-left px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 text-sm border-b border-gray-200 dark:border-gray-600 last:border-b-0"
+                                        >
+                                            <div class="font-semibold" x-text="framework.name"></div>
+                                            <div class="text-xs text-gray-500 dark:text-gray-400 mt-0.5" x-text="framework.description"></div>
+                                        </button>
                                     </template>
-                                    <div x-show="categories.filter(c => !currentPrompt.category || c.toLowerCase().includes(currentPrompt.category.toLowerCase())).length === 0 && categories.length > 0" class="px-3 py-2 text-sm text-gray-500 dark:text-gray-400">
-                                        No matching prompt types
-                                    </div>
-                                </div>
-                                <div x-show="showDropdown && categories.length === 0" x-cloak class="absolute z-10 w-full mt-1 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg px-3 py-2 text-sm text-gray-500 dark:text-gray-400">
-                                    No prompt types yet. Type a name and press Enter to create one.
                                 </div>
                             </div>
-                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Type a new prompt type (e.g., "Persona Prompt", "Code Snippet Prompt") and press Enter to create it, or select from existing types</p>
+                            <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Select a prompt type from the list</p>
                         </div>
 
                         <div>
@@ -1436,7 +1413,7 @@ DIEP Framework:
                         x-model="newCategory"
                         @keyup.enter="addCategory()"
                         @keyup.escape="showCategoryModal = false; newCategory = ''"
-                        placeholder="Prompt type (e.g., Persona Prompt, Code Snippet Prompt)..."
+                        placeholder="Prompt type (e.g., CRISPE, ELAVIS, SPARC)..."
                         class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                     <div class="flex gap-3">
@@ -1491,6 +1468,32 @@ DIEP Framework:
                 showViewModal: false,
                 showCategoryModal: false,
                 showImportModal: false,
+                frameworks: [
+                    { name: 'CRISPE', description: 'Multi-step technical tasks, code generation, architectural decisions' },
+                    { name: 'ELAVIS', description: 'Blog posts, emails, social media, marketing copy' },
+                    { name: 'SPARC', description: 'Technical documentation, user guides, API docs, project proposals' },
+                    { name: 'RISEN', description: 'Data analysis, structured problem-solving, analytical tasks' },
+                    { name: 'PGTC', description: 'Quick content creation, copywriting, simple structured outputs' },
+                    { name: 'RTF', description: 'Data conversion, formatting tasks, quick transformations' },
+                    { name: 'RACE', description: 'Emails, summaries, reports, daily communication tasks' },
+                    { name: 'TAG', description: 'Process documentation, workflow definition, task breakdown' },
+                    { name: 'STAR', description: 'Interview responses, case studies, problem-solving narratives' },
+                    { name: 'CLEAR', description: 'Clear communication, adaptable prompts, iterative refinement' },
+                    { name: 'SMART', description: 'Goal setting, project planning, measurable objectives' },
+                    { name: 'RIDE', description: 'Medical education, tutoring, educational scenarios with examples' },
+                    { name: 'PROMPT', description: 'Complex projects, thorough planning, comprehensive prompts' },
+                    { name: 'TAP', description: 'Tutorials, educational content, instructional materials' },
+                    { name: 'CARE', description: 'Format-specific outputs, JSON/XML generation, structured data' },
+                    { name: 'COSTAR', description: 'Marketing copy, brand-aligned content, audience-specific writing' },
+                    { name: 'Chain-of-Thought', description: 'Complex problem-solving, step-by-step analysis, logical reasoning tasks' },
+                    { name: '5C Framework', description: 'Iterative prompt improvement, refining outputs, continuous optimization' },
+                    { name: 'Tree-of-Thought', description: 'Complex reasoning, multi-branch problem solving, decision trees' },
+                    { name: 'Zero-Shot/Few-Shot', description: 'Format learning, pattern recognition, example-based training' },
+                    { name: 'AI-Aided Clinical Reasoning', description: 'Medical training, clinical scenarios, educational simulations' },
+                    { name: 'GOLD', description: 'Optimized Language for Decision - Decision-making, structured analysis, logical reasoning' },
+                    { name: 'PEACE', description: 'Self-reflection, decision analysis, learning journals' },
+                    { name: 'Reflective Writing', description: 'Learning journals, reflection, personal growth' }
+                ],
                 categoriesCollapsed: true,
                 tagsCollapsed: true,
                 frameworksCollapsed: true,
@@ -2145,7 +2148,7 @@ Be specific, constructive, and educational in your feedback.`;
                     const templates = {
                         'professional-git-commit': {
                             title: 'Professional Git Commit Message Generator (CRISPE)',
-                            category: 'Template Prompt',
+                            category: 'CRISPE',
                             tags: ['git', 'commit', 'best-practices'],
                             content: `**CRISPE Framework Prompt**
 
@@ -2187,7 +2190,7 @@ Generate a commit message for the following changes:`
                         },
                         'senior-programmer': {
                             title: 'Senior Programmer Assistant (CRISPE)',
-                            category: 'Persona Prompt',
+                            category: 'CRISPE',
                             tags: ['programming', 'senior', 'best-practices', 'code-quality'],
                             content: `**CRISPE Framework Prompt**
 
@@ -2221,7 +2224,7 @@ Help me with the following:`
                         },
                         'scrummaster': {
                             title: 'Scrum Master - Sprint Planning Assistant (CRISPE)',
-                            category: 'Persona Prompt',
+                            category: 'CRISPE',
                             tags: ['scrum', 'agile', 'sprint-planning', 'markdown'],
                             content: `**CRISPE Framework Prompt**
 
@@ -2294,7 +2297,7 @@ Create a sprint planning markdown document for the following requirements:`
                         },
                         'software-architect': {
                             title: 'Software Architect Advisor (CRISPE)',
-                            category: 'Persona Prompt',
+                            category: 'CRISPE',
                             tags: ['architecture', 'design', 'system-design', 'scalability'],
                             content: `**CRISPE Framework Prompt**
 
@@ -2329,7 +2332,7 @@ Help me design/architect the following system:`
                         },
                         'code-review': {
                             title: 'Code Review Assistant (CRISPE)',
-                            category: 'Code Review Prompt',
+                            category: 'CRISPE',
                             tags: ['code-review', 'quality', 'best-practices', 'feedback'],
                             content: `**CRISPE Framework Prompt**
 
@@ -2368,7 +2371,7 @@ Review the following code and provide feedback:`
                         },
                         'technical-documentation': {
                             title: 'Technical Documentation Architect (CRISPE)',
-                            category: 'Documentation Prompt',
+                            category: 'SPARC',
                             tags: ['documentation', 'diagrams', 'modeling', 'database', 'architecture'],
                             content: `**CRISPE Framework Prompt**
 
@@ -2460,7 +2463,7 @@ Create comprehensive technical documentation for the following software system:`
                         },
                         'ux-designer': {
                             title: 'UX Designer & User Experience Architect (CRISPE)',
-                            category: 'Persona Prompt',
+                            category: 'CRISPE',
                             tags: ['ux', 'design', 'user-experience', 'wireframes', 'user-flows'],
                             content: `**CRISPE Framework Prompt**
 
@@ -2551,7 +2554,7 @@ Create comprehensive UX design documentation for the following software feature/
                         },
                         'content-generator': {
                             title: 'Content Generator (Elavis)',
-                            category: 'Template Prompt',
+                            category: 'ELAVIS',
                             tags: ['content', 'writing', 'generation', 'elavis'],
                             content: `**Elavis Saravia Framework Prompt**
 
@@ -2576,7 +2579,7 @@ Generate content based on the following requirements:`
                         },
                         'email-writer': {
                             title: 'Professional Email Writer (Elavis)',
-                            category: 'Template Prompt',
+                            category: 'ELAVIS',
                             tags: ['email', 'communication', 'professional', 'elavis'],
                             content: `**Elavis Saravia Framework Prompt**
 
@@ -2605,7 +2608,7 @@ Compose an email with the following details:`
                         },
                         'blog-post-generator': {
                             title: 'Blog Post Generator (Elavis)',
-                            category: 'Template Prompt',
+                            category: 'ELAVIS',
                             tags: ['blog', 'content', 'writing', 'seo', 'elavis'],
                             content: `**Elavis Saravia Framework Prompt**
 
@@ -2634,7 +2637,7 @@ Create a blog post with the following requirements:`
                         },
                         'technical-writer': {
                             title: 'Technical Writer (Elavis)',
-                            category: 'Template Prompt',
+                            category: 'ELAVIS',
                             tags: ['technical', 'documentation', 'writing', 'elavis'],
                             content: `**Elavis Saravia Framework Prompt**
 
@@ -2663,7 +2666,7 @@ Create technical documentation with the following requirements:`
                         },
                         'social-media-writer': {
                             title: 'Social Media Content Writer (Elavis)',
-                            category: 'Template Prompt',
+                            category: 'ELAVIS',
                             tags: ['social-media', 'marketing', 'content', 'elavis'],
                             content: `**Elavis Saravia Framework Prompt**
 
@@ -2693,7 +2696,7 @@ Create social media content with the following requirements:`
                         },
                         'sparc-technical-documentation': {
                             title: 'Technical Documentation (SPARC)',
-                            category: 'Template Prompt',
+                            category: 'SPARC',
                             tags: ['technical', 'documentation', 'sparc'],
                             content: `**SPARC Framework Prompt**
 
@@ -2728,7 +2731,7 @@ Create technical documentation for the following:`
                         },
                         'sparc-code-explanation': {
                             title: 'Code Explanation & Documentation (SPARC)',
-                            category: 'Template Prompt',
+                            category: 'SPARC',
                             tags: ['code', 'explanation', 'documentation', 'sparc'],
                             content: `**SPARC Framework Prompt**
 
@@ -2764,7 +2767,7 @@ Explain and document the following code:`
                         },
                         'sparc-project-proposal': {
                             title: 'Project Proposal Writer (SPARC)',
-                            category: 'Template Prompt',
+                            category: 'SPARC',
                             tags: ['proposal', 'project', 'planning', 'sparc'],
                             content: `**SPARC Framework Prompt**
 
@@ -2801,7 +2804,7 @@ Create a project proposal for the following:`
                         },
                         'sparc-user-guide': {
                             title: 'User Guide Writer (SPARC)',
-                            category: 'Template Prompt',
+                            category: 'SPARC',
                             tags: ['user-guide', 'documentation', 'tutorial', 'sparc'],
                             content: `**SPARC Framework Prompt**
 
@@ -2838,7 +2841,7 @@ Create a user guide for the following:`
                         },
                         'sparc-meeting-summary': {
                             title: 'Meeting Summary Writer (SPARC)',
-                            category: 'Template Prompt',
+                            category: 'SPARC',
                             tags: ['meeting', 'summary', 'communication', 'sparc'],
                             content: `**SPARC Framework Prompt**
 
@@ -2875,7 +2878,7 @@ Create a meeting summary for the following meeting:`
                         },
                         'individual-contributor': {
                             title: 'Individual Contributor Assistant (CRISPE)',
-                            category: 'Persona Prompt',
+                            category: 'CRISPE',
                             tags: ['individual-contributor', 'ic', 'development', 'best-practices'],
                             content: `**CRISPE Framework Prompt**
 
@@ -2909,7 +2912,7 @@ Help me solve the following technical challenge:`
                         },
                         'engineering-manager': {
                             title: 'Engineering Manager Assistant (CRISPE)',
-                            category: 'Persona Prompt',
+                            category: 'CRISPE',
                             tags: ['manager', 'engineering-manager', 'leadership', 'team-management'],
                             content: `**CRISPE Framework Prompt**
 
@@ -2943,7 +2946,7 @@ Help me with the following management challenge:`
                         },
                         'ic-communication': {
                             title: 'Individual Contributor Communication (Elavis)',
-                            category: 'Template Prompt',
+                            category: 'ELAVIS',
                             tags: ['individual-contributor', 'communication', 'ic', 'elavis'],
                             content: `**Elavis Saravia Framework Prompt**
 
@@ -2972,7 +2975,7 @@ Create communication with the following details:`
                         },
                         'manager-communication': {
                             title: 'Manager Communication (Elavis)',
-                            category: 'Template Prompt',
+                            category: 'ELAVIS',
                             tags: ['manager', 'communication', 'leadership', 'elavis'],
                             content: `**Elavis Saravia Framework Prompt**
 
@@ -3002,7 +3005,7 @@ Create management communication with the following details:`
                         },
                         'sparc-ic-documentation': {
                             title: 'Individual Contributor Documentation (SPARC)',
-                            category: 'Template Prompt',
+                            category: 'SPARC',
                             tags: ['individual-contributor', 'documentation', 'ic', 'sparc'],
                             content: `**SPARC Framework Prompt**
 
@@ -3038,7 +3041,7 @@ Create documentation for the following work:`
                         },
                         'sparc-manager-documentation': {
                             title: 'Manager Documentation (SPARC)',
-                            category: 'Template Prompt',
+                            category: 'SPARC',
                             tags: ['manager', 'documentation', 'leadership', 'sparc'],
                             content: `**SPARC Framework Prompt**
 
@@ -3074,7 +3077,7 @@ Create management documentation for the following:`
                         },
                         'springboot-mapstruct': {
                             title: 'Spring Boot MapStruct Mapper Example (CRISPE)',
-                            category: 'Code Example Prompt',
+                            category: 'CRISPE',
                             tags: ['springboot', 'java', 'mapstruct', 'mapper', 'code-example'],
                             content: `**CRISPE Framework Prompt**
 
@@ -3170,7 +3173,7 @@ Provide a MapStruct mapper implementation for the following mapping requirements
                         },
                         'springboot-webclient': {
                             title: 'Spring Boot WebClient Example (CRISPE)',
-                            category: 'Code Example Prompt',
+                            category: 'CRISPE',
                             tags: ['springboot', 'java', 'webclient', 'reactive', 'rest-client', 'code-example'],
                             content: `**CRISPE Framework Prompt**
 
@@ -3282,7 +3285,7 @@ Provide a WebClient implementation for the following API requirements:`
                         },
                         'springboot-unit-test': {
                             title: 'Professional Unit Test with Mockito & JUnit 5 (CRISPE)',
-                            category: 'Code Example Prompt',
+                            category: 'CRISPE',
                             tags: ['springboot', 'java', 'junit5', 'mockito', 'testing', 'unit-test', 'code-example'],
                             content: `**CRISPE Framework Prompt**
 
