@@ -616,7 +616,7 @@
                             🧪 Test Buttons
                         </button>
                         <!-- Import Button (Hidden on Mobile) -->
-                        <button @click="showImportModal = true" class="hidden md:flex px-3 md:px-4 py-2 bg-[#E5E5E5] dark:bg-gray-700 hover:bg-[#F5F5F5] dark:hover:bg-gray-600 rounded-lg transition-colors text-sm font-medium min-h-[44px] items-center">
+                        <button @click="$refs.importFileInput.click()" class="hidden md:flex px-3 md:px-4 py-2 bg-[#E5E5E5] dark:bg-gray-700 hover:bg-[#F5F5F5] dark:hover:bg-gray-600 rounded-lg transition-colors text-sm font-medium min-h-[44px] items-center">
                             Import
                         </button>
                         <!-- Export Button (Hidden on Mobile) -->
@@ -1419,18 +1419,17 @@ DIEP Framework:
                             </div>
                         </div>
                         
-                        <!-- Import/Export Actions -->
-                        <div class="pt-4 border-t border-[#E5E5E5] dark:border-gray-700">
+                        <!-- Import/Export Actions (Mobile Only) -->
+                        <div class="pt-4 border-t border-[#E5E5E5] dark:border-gray-700 md:hidden">
                             <div class="flex gap-2">
                                 <button 
-                                    @click="showImportModal = true; closeSidebarOnMobile()" 
+                                    @click="$refs.importFileInput.click(); closeSidebarOnMobile()" 
                                     class="flex-1 px-3 py-2 bg-[#E5E5E5] dark:bg-gray-700 hover:bg-[#F5F5F5] dark:hover:bg-gray-600 rounded-lg transition-colors text-sm font-medium min-h-[44px] flex items-center justify-center gap-2"
                                 >
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
                                     </svg>
-                                    <span class="hidden md:inline">Import</span>
-                                    <span class="md:hidden">Import</span>
+                                    <span>Import</span>
                                 </button>
                                 <button 
                                     @click="exportData(); closeSidebarOnMobile()" 
@@ -1439,8 +1438,7 @@ DIEP Framework:
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                                     </svg>
-                                    <span class="hidden md:inline">Export</span>
-                                    <span class="md:hidden">Export</span>
+                                    <span>Export</span>
                                 </button>
                             </div>
                         </div>
@@ -2109,28 +2107,14 @@ DIEP Framework:
             </div>
         </div>
 
-        <!-- Import Modal -->
-        <div x-show="showImportModal" x-cloak class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click.self="showImportModal = false">
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-md w-full mx-4" :style="darkMode ? 'background-color: rgb(31 41 55) !important;' : 'background-color: rgb(255 255 255) !important;'">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Import Prompts</h3>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Upload JSON file</label>
-                        <input 
-                            type="file" 
-                            @change="handleFileImport($event)"
-                            accept=".json"
-                            class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
-                        >
-                    </div>
-                    <div class="flex gap-3">
-                        <button @click="showImportModal = false" class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg transition-colors">
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Hidden File Input for Import -->
+        <input 
+            type="file" 
+            x-ref="importFileInput"
+            @change="handleFileImport($event)"
+            accept=".json"
+            class="hidden"
+        >
     </div>
 
     <script>
@@ -4534,7 +4518,6 @@ Write a reflection on the following:`
                 showEditModal: false,
                 showViewModal: false,
                 showCategoryModal: false,
-                showImportModal: false,
                 sidebarOpen: false, // Mobile sidebar state
                 frameworks: [
                     { name: 'CRISPE', description: 'Multi-step technical tasks, code generation, architectural decisions' },
@@ -5427,6 +5410,7 @@ Be specific, constructive, and educational in your feedback.`;
                     URL.revokeObjectURL(url);
                 },
 
+
                 handleFileImport(event) {
                     const file = event.target.files[0];
                     if (!file) return;
@@ -5534,7 +5518,11 @@ Be specific, constructive, and educational in your feedback.`;
                                 this.saveData();
                                 this.updateAllTags();
                                 this.filterPrompts();
-                                this.showImportModal = false;
+                                
+                                // Reset file input after successful import
+                                if (this.$refs.importFileInput) {
+                                    this.$refs.importFileInput.value = '';
+                                }
                                 
                                 // Show detailed import results
                                 let message = 'Import completed!';
@@ -5554,6 +5542,10 @@ Be specific, constructive, and educational in your feedback.`;
                             } catch (saveError) {
                                 console.error('Error saving imported data:', saveError);
                                 alert('Data imported but failed to save. Please try exporting again.');
+                                // Reset file input even on save error
+                                if (this.$refs.importFileInput) {
+                                    this.$refs.importFileInput.value = '';
+                                }
                             }
                         } catch (error) {
                             console.error('Import error:', error);
@@ -5564,6 +5556,10 @@ Be specific, constructive, and educational in your feedback.`;
                                 errorMessage += error.message || 'Unknown error occurred.';
                             }
                             alert(errorMessage);
+                            // Reset file input on error
+                            if (this.$refs.importFileInput) {
+                                this.$refs.importFileInput.value = '';
+                            }
                         }
                     };
                     
