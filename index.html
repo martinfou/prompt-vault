@@ -977,6 +977,69 @@ DIEP Framework:
                                     <option value="sparc-ic-documentation">Individual Contributor Documentation (SPARC)</option>
                                     <option value="sparc-manager-documentation">Manager Documentation (SPARC)</option>
                                 </optgroup>
+                                <optgroup label="RISEN Framework">
+                                    <option value="risen-data-analysis">Data Analysis Assistant (RISEN)</option>
+                                </optgroup>
+                                <optgroup label="PGTC Framework">
+                                    <option value="pgtc-content-creation">Quick Content Creator (PGTC)</option>
+                                </optgroup>
+                                <optgroup label="RTF Framework">
+                                    <option value="rtf-data-conversion">Data Format Converter (RTF)</option>
+                                </optgroup>
+                                <optgroup label="RACE Framework">
+                                    <option value="race-email-summary">Email & Summary Writer (RACE)</option>
+                                </optgroup>
+                                <optgroup label="TAG Framework">
+                                    <option value="tag-process-documentation">Process Documentation Writer (TAG)</option>
+                                </optgroup>
+                                <optgroup label="STAR Framework">
+                                    <option value="star-interview-case-study">Interview & Case Study Writer (STAR)</option>
+                                </optgroup>
+                                <optgroup label="CLEAR Framework">
+                                    <option value="clear-communication">Clear Communication Prompter (CLEAR)</option>
+                                </optgroup>
+                                <optgroup label="SMART Framework">
+                                    <option value="smart-goal-setting">Goal Setting Assistant (SMART)</option>
+                                </optgroup>
+                                <optgroup label="RIDE Framework">
+                                    <option value="ride-medical-education">Medical Education Tutor (RIDE)</option>
+                                </optgroup>
+                                <optgroup label="PROMPT Framework">
+                                    <option value="prompt-comprehensive-planning">Comprehensive Project Planner (PROMPT)</option>
+                                </optgroup>
+                                <optgroup label="TAP Framework">
+                                    <option value="tap-tutorial-guide">Tutorial Creator (TAP)</option>
+                                </optgroup>
+                                <optgroup label="CARE Framework">
+                                    <option value="care-structured-output">Structured Data Generator (CARE)</option>
+                                </optgroup>
+                                <optgroup label="COSTAR Framework">
+                                    <option value="costar-marketing-copy">Marketing Copy Writer (COSTAR)</option>
+                                </optgroup>
+                                <optgroup label="Chain-of-Thought">
+                                    <option value="chain-of-thought-reasoning">Chain-of-Thought Problem Solver</option>
+                                </optgroup>
+                                <optgroup label="5C Framework">
+                                    <option value="5c-prompt-improvement">Prompt Refinement Assistant (5C Framework)</option>
+                                </optgroup>
+                                <optgroup label="Tree-of-Thought">
+                                    <option value="tree-of-thought-reasoning">Tree-of-Thought Problem Solver</option>
+                                </optgroup>
+                                <optgroup label="Zero-Shot/Few-Shot">
+                                    <option value="zero-shot-few-shot-learning">Format Learning Assistant (Zero-Shot/Few-Shot)</option>
+                                </optgroup>
+                                <optgroup label="AI-Aided Clinical Reasoning">
+                                    <option value="clinical-reasoning">Clinical Reasoning Assistant</option>
+                                </optgroup>
+                                <optgroup label="GOLD Framework">
+                                    <option value="gold-decision-making">Decision Maker (GOLD Framework)</option>
+                                </optgroup>
+                                <optgroup label="PEACE Framework">
+                                    <option value="peace-reflection">Self-Reflection Guide (PEACE)</option>
+                                </optgroup>
+                                <optgroup label="Reflective Writing">
+                                    <option value="reflective-writing">Reflective Writing Assistant</option>
+                                </optgroup>
                             </select>
                             <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Select a template to pre-fill the form with an example prompt</p>
                         </div>
@@ -3455,6 +3518,446 @@ spring.jpa.show-sql=false
 \`\`\`
 
 Provide a professional unit test implementation for the following class/method:`
+                        },
+                        'risen-data-analysis': {
+                            title: 'Data Analysis Assistant (RISEN)',
+                            category: 'RISEN',
+                            tags: ['data-analysis', 'analytics', 'problem-solving', 'structured-analysis'],
+                            content: `**RISEN Framework Prompt**
+
+**Role**: Act as a data analyst with expertise in data analysis, statistical methods, and structured problem-solving approaches. You excel at breaking down complex problems into manageable steps and providing clear, actionable insights.
+
+**Input**: [Provide the data, dataset, or problem you want to analyze here]
+
+**Steps**: 
+1. Review and understand the data/problem
+2. Identify key patterns and relationships
+3. Apply appropriate analytical methods
+4. Extract meaningful insights
+5. Present findings clearly
+
+**Expectation**: Provide a comprehensive analysis with clear findings, patterns identified, and actionable recommendations based on the data.
+
+**Narrowing**: Focus on [specific aspect, metric, or area of focus]
+
+---
+
+Analyze the following data/problem:`
+                        },
+                        'pgtc-content-creation': {
+                            title: 'Quick Content Creator (PGTC)',
+                            category: 'PGTC',
+                            tags: ['content', 'copywriting', 'quick-writing', 'content-creation'],
+                            content: `**PGTC Framework Prompt**
+
+**Persona**: You are a professional content creator and copywriter specializing in creating engaging, clear, and effective content quickly.
+
+**Goal**: Create compelling content that achieves its purpose and engages the target audience effectively.
+
+**Task**: Generate [type of content: article, social media post, email, etc.] that [specific goal or objective]
+
+**Context**: [Provide context about the audience, purpose, tone, or any specific requirements]
+
+---
+
+Create the requested content:`
+                        },
+                        'rtf-data-conversion': {
+                            title: 'Data Format Converter (RTF)',
+                            category: 'RTF',
+                            tags: ['data-conversion', 'formatting', 'transformation', 'rtf'],
+                            content: `**RTF Framework Prompt**
+
+**Request**: Convert or transform the provided data into the specified format.
+
+**Task**: Transform the following data: [Provide source data]
+
+**Format**: Convert to [target format: JSON, XML, CSV, table, etc.] with the following structure:
+- [Specify structure requirements, fields, or schema]
+
+---
+
+Convert the following data:`
+                        },
+                        'race-email-summary': {
+                            title: 'Email & Summary Writer (RACE)',
+                            category: 'RACE',
+                            tags: ['email', 'summary', 'communication', 'report'],
+                            content: `**RACE Framework Prompt**
+
+**Role**: You are a professional communication specialist skilled in writing clear, concise emails and summaries.
+
+**Action**: Create a [type: email, summary, report] that effectively communicates the required information.
+
+**Context**: 
+- Purpose: [What is the goal of this communication?]
+- Audience: [Who is receiving this?]
+- Key points: [What needs to be communicated?]
+
+**Execute**: Write the communication in a professional, clear, and action-oriented manner.
+
+---
+
+Create the requested communication:`
+                        },
+                        'tag-process-documentation': {
+                            title: 'Process Documentation Writer (TAG)',
+                            category: 'TAG',
+                            tags: ['process', 'documentation', 'workflow', 'task-breakdown'],
+                            content: `**TAG Framework Prompt**
+
+**Task**: Document the process or workflow for [specific task or process]
+
+**Action**: Break down the process into clear, sequential steps with detailed instructions for each phase.
+
+**Goal**: Create comprehensive documentation that enables readers to understand and execute the process successfully.
+
+---
+
+Document the following process:`
+                        },
+                        'star-interview-case-study': {
+                            title: 'Interview & Case Study Writer (STAR)',
+                            category: 'STAR',
+                            tags: ['interview', 'case-study', 'storytelling', 'narrative'],
+                            content: `**STAR Framework Prompt**
+
+**Situation**: [Describe the situation or context]
+
+**Task**: [What was the task or challenge that needed to be addressed?]
+
+**Action**: [What actions were taken to address the situation?]
+
+**Result**: [What was the outcome or result of the actions taken?]
+
+---
+
+Provide a detailed STAR response for the following scenario:`
+                        },
+                        'clear-communication': {
+                            title: 'Clear Communication Prompter (CLEAR)',
+                            category: 'CLEAR',
+                            tags: ['communication', 'clarity', 'refinement', 'iterative'],
+                            content: `**CLEAR Framework Prompt**
+
+**Concise**: Keep the communication brief and to the point, avoiding unnecessary details.
+
+**Logical**: Structure the information in a logical flow that follows a clear sequence.
+
+**Explicit**: Be specific and clear about what is required, expected, or requested.
+
+**Adaptive**: Adjust the communication style and detail level based on the audience and context.
+
+**Reflective**: Consider the response and refine based on feedback or outcomes.
+
+---
+
+Create a CLEAR communication for the following:`
+                        },
+                        'smart-goal-setting': {
+                            title: 'Goal Setting Assistant (SMART)',
+                            category: 'SMART',
+                            tags: ['goal-setting', 'planning', 'objectives', 'project-planning'],
+                            content: `**SMART Framework Prompt**
+
+**Specific**: Define clear, specific goals with no ambiguity about what needs to be achieved.
+
+**Measurable**: Establish measurable criteria and metrics to track progress and determine success.
+
+**Achievable**: Ensure goals are realistic and attainable given available resources and constraints.
+
+**Relevant**: Align goals with broader objectives, values, and priorities.
+
+**Time-bound**: Set clear deadlines and timeframes for achieving the goals.
+
+---
+
+Define SMART goals for the following objective:`
+                        },
+                        'ride-medical-education': {
+                            title: 'Medical Education Tutor (RIDE)',
+                            category: 'RIDE',
+                            tags: ['medical', 'education', 'tutoring', 'clinical-scenarios'],
+                            content: `**RIDE Framework Prompt**
+
+**Role**: Act as a medical tutor and educator specializing in clinical reasoning and medical education.
+
+**Input**: [Provide the medical case, scenario, or question]
+
+**Directive**: Help the student understand [specific learning objective] by explaining concepts, reasoning through the case, and providing educational guidance.
+
+**Examples**: Include relevant examples, similar cases, or clinical scenarios that illustrate key concepts.
+
+---
+
+Provide medical education guidance for the following:`
+                        },
+                        'prompt-comprehensive-planning': {
+                            title: 'Comprehensive Project Planner (PROMPT)',
+                            category: 'PROMPT',
+                            tags: ['project-planning', 'comprehensive', 'detailed-planning'],
+                            content: `**PROMPT Framework Prompt**
+
+**Purpose**: Define the clear purpose and objectives of the project or task.
+
+**Role**: Identify the roles and responsibilities of team members and stakeholders.
+
+**Output**: Specify the expected deliverables, outcomes, and success criteria.
+
+**Mechanics**: Describe the processes, methods, and approaches to be used.
+
+**Parameters**: Define constraints, resources, timelines, and limitations.
+
+**Testing**: Establish how success will be measured and validated.
+
+---
+
+Create a comprehensive plan for the following project:`
+                        },
+                        'tap-tutorial-guide': {
+                            title: 'Tutorial Creator (TAP)',
+                            category: 'TAP',
+                            tags: ['tutorial', 'education', 'instructional', 'guide'],
+                            content: `**TAP Framework Prompt**
+
+**Task**: Create a tutorial that teaches [specific skill or concept]
+
+**Audience**: [Define the target audience and their skill level]
+
+**Purpose**: [What should learners be able to do after completing this tutorial?]
+
+---
+
+Create a tutorial with the following requirements:`
+                        },
+                        'care-structured-output': {
+                            title: 'Structured Data Generator (CARE)',
+                            category: 'CARE',
+                            tags: ['structured-data', 'json', 'xml', 'formatting'],
+                            content: `**CARE Framework Prompt**
+
+**Context**: [Describe the context or use case for the structured output]
+
+**Action**: Generate structured data in [format: JSON, XML, CSV, etc.]
+
+**Result**: Produce the output with the following structure:
+- [Specify required fields, format, and structure]
+
+**Example**: 
+\`\`\`json
+{
+  "example": "structure",
+  "format": "to follow"
+}
+\`\`\`
+
+---
+
+Generate structured data for the following:`
+                        },
+                        'costar-marketing-copy': {
+                            title: 'Marketing Copy Writer (COSTAR)',
+                            category: 'COSTAR',
+                            tags: ['marketing', 'copywriting', 'brand', 'audience'],
+                            content: `**COSTAR Framework Prompt**
+
+**Context**: [Describe the marketing context, campaign, or situation]
+
+**Objective**: [What is the marketing goal or objective?]
+
+**Style**: [Define the desired style: modern, professional, casual, etc.]
+
+**Tone**: [Specify the tone: friendly, authoritative, inspirational, etc.]
+
+**Audience**: [Define the target audience demographics and characteristics]
+
+**Response**: Create marketing copy that achieves the objective while maintaining style and tone for the specified audience.
+
+---
+
+Create marketing copy with the following requirements:`
+                        },
+                        'chain-of-thought-reasoning': {
+                            title: 'Chain-of-Thought Problem Solver',
+                            category: 'Chain-of-Thought',
+                            tags: ['problem-solving', 'reasoning', 'step-by-step', 'analysis'],
+                            content: `**Chain-of-Thought Prompt**
+
+Let's think step by step to solve this problem:
+
+1. First, identify and understand the problem clearly
+2. Break down the problem into smaller components
+3. Analyze each component systematically
+4. Consider possible approaches and solutions
+5. Evaluate the pros and cons of each approach
+6. Select the best solution based on the analysis
+7. Verify the solution addresses all aspects of the problem
+
+---
+
+Apply chain-of-thought reasoning to solve the following problem:`
+                        },
+                        '5c-prompt-improvement': {
+                            title: 'Prompt Refinement Assistant (5C Framework)',
+                            category: '5C Framework',
+                            tags: ['prompt-engineering', 'refinement', 'optimization', 'improvement'],
+                            content: `**5C Framework Prompt**
+
+**Clarity**: Review and refine the prompt to ensure it is clear, unambiguous, and easy to understand.
+
+**Contextualization**: Add necessary context, background information, and relevant details to help the AI understand the task better.
+
+**Command**: Ensure the prompt includes clear, specific instructions and commands about what needs to be done.
+
+**Chaining**: Break down complex tasks into logical steps or chains that build upon each other.
+
+**Continuous Refinement**: Iteratively improve the prompt based on outputs, feedback, and results.
+
+---
+
+Apply the 5C Framework to improve the following prompt:`
+                        },
+                        'tree-of-thought-reasoning': {
+                            title: 'Tree-of-Thought Problem Solver',
+                            category: 'Tree-of-Thought',
+                            tags: ['problem-solving', 'reasoning', 'decision-tree', 'multi-branch'],
+                            content: `**Tree-of-Thought Prompt**
+
+Let's explore this problem using a tree-of-thought approach:
+
+1. **Root Problem**: [State the main problem]
+
+2. **Branch Analysis**: Explore different approaches or paths:
+   - Branch A: [Approach 1] → [Outcome 1] → [Pros/Cons]
+   - Branch B: [Approach 2] → [Outcome 2] → [Pros/Cons]
+   - Branch C: [Approach 3] → [Outcome 3] → [Pros/Cons]
+
+3. **Evaluation**: Compare branches and identify the most promising path
+
+4. **Refinement**: Expand the selected branch with more detailed analysis
+
+5. **Conclusion**: Select the best path and provide reasoning
+
+---
+
+Apply tree-of-thought reasoning to the following problem:`
+                        },
+                        'zero-shot-few-shot-learning': {
+                            title: 'Format Learning Assistant (Zero-Shot/Few-Shot)',
+                            category: 'Zero-Shot/Few-Shot',
+                            tags: ['format-learning', 'pattern-recognition', 'examples', 'training'],
+                            content: `**Zero-Shot/Few-Shot Prompt**
+
+**Task**: Learn the format and pattern from the examples below, then apply it to the new input.
+
+**Examples**:
+
+Example 1:
+[Provide example 1]
+
+Example 2:
+[Provide example 2]
+
+Example 3:
+[Provide example 3]
+
+**New Input**: [Provide the new input that needs to be formatted]
+
+**Instructions**: Apply the same format, structure, and pattern from the examples to the new input.
+
+---
+
+Apply the format from the examples to the following input:`
+                        },
+                        'clinical-reasoning': {
+                            title: 'Clinical Reasoning Assistant',
+                            category: 'AI-Aided Clinical Reasoning',
+                            tags: ['medical', 'clinical', 'reasoning', 'diagnosis'],
+                            content: `**AI-Aided Clinical Reasoning Prompt**
+
+**Patient Presentation**: [Describe patient symptoms, history, and presentation]
+
+**Clinical Task**: Apply clinical reasoning to:
+1. Identify differential diagnoses
+2. Analyze symptoms and findings
+3. Consider relevant clinical factors
+4. Evaluate diagnostic possibilities
+5. Recommend next steps or investigations
+
+**Reasoning Process**: 
+- Consider pathophysiology
+- Evaluate symptom patterns
+- Assess risk factors
+- Apply clinical guidelines
+- Consider evidence-based practices
+
+---
+
+Apply clinical reasoning to the following case:`
+                        },
+                        'gold-decision-making': {
+                            title: 'Decision Maker (GOLD Framework)',
+                            category: 'GOLD',
+                            tags: ['decision-making', 'analysis', 'reasoning', 'optimization'],
+                            content: `**GOLD Framework Prompt**
+
+**Goal**: [Define the decision-making goal or objective]
+
+**Options**: [List the available options or alternatives]
+
+**Logic**: Apply logical reasoning to:
+- Evaluate each option against criteria
+- Consider pros and cons
+- Assess risks and benefits
+- Analyze outcomes and implications
+
+**Decision**: Select the best option based on logical analysis and provide clear reasoning.
+
+---
+
+Make a decision for the following scenario:`
+                        },
+                        'peace-reflection': {
+                            title: 'Self-Reflection Guide (PEACE)',
+                            category: 'PEACE',
+                            tags: ['reflection', 'self-analysis', 'decision-making', 'learning'],
+                            content: `**PEACE Framework Prompt**
+
+**Present**: [What is the current situation or state?]
+
+**Explore**: [What options, possibilities, or perspectives are available?]
+
+**Analyze**: [What are the implications, pros/cons, and factors to consider?]
+
+**Choose**: [What decision or action will you take?]
+
+**Evaluate**: [How will you assess the outcome and what did you learn?]
+
+---
+
+Apply the PEACE framework to reflect on the following:`
+                        },
+                        'reflective-writing': {
+                            title: 'Reflective Writing Assistant',
+                            category: 'Reflective Writing',
+                            tags: ['reflection', 'writing', 'learning', 'journal'],
+                            content: `**Reflective Writing Prompt**
+
+Reflect on the following experience or topic:
+
+**What happened?**: [Describe the experience, event, or situation]
+
+**What did you learn?**: [What insights, lessons, or understanding did you gain?]
+
+**How did it make you feel?**: [What were your emotional responses and reactions?]
+
+**What was significant?**: [What aspects were particularly meaningful or important?]
+
+**What will you do differently?**: [How will this reflection influence your future actions or approach?]
+
+---
+
+Write a reflection on the following:`
                         }
                     };
 
