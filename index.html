@@ -184,6 +184,700 @@
                                 </template>
                             </div>
                         </div>
+
+                        <!-- Prompt Frameworks -->
+                        <div>
+                            <button @click="frameworksCollapsed = !frameworksCollapsed" class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors mb-2">
+                                <svg class="w-4 h-4 transition-transform" :class="{'rotate-90': !frameworksCollapsed}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                                Frameworks
+                            </button>
+                            <div x-show="!frameworksCollapsed" x-transition class="space-y-3 text-sm max-h-[80vh] overflow-y-auto">
+                                <!-- General Purpose Frameworks -->
+                                <div class="border-t border-gray-200 dark:border-gray-700 pt-2">
+                                    <button @click="generalPurposeCollapsed = !generalPurposeCollapsed" class="w-full text-left flex items-center gap-2 mb-2">
+                                        <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !generalPurposeCollapsed}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                        <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase">General Purpose</p>
+                                    </button>
+                                </div>
+                                <div x-show="!generalPurposeCollapsed" x-transition class="space-y-3">
+                                <!-- CRISPE Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.crispe = !frameworkBodyCollapsed.crispe" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.crispe}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            CRISPE
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Multi-step technical tasks, code generation, architectural decisions.</p>
+                                    <div x-show="!frameworkBodyCollapsed.crispe" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Capacity/Role, Insight, Statement, Personality, Experiment</p>
+                                        <button @click="frameworkExamples.crispe = !frameworkExamples.crispe" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.crispe}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.crispe" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Capacity:</strong> Act as a senior software architect
+<strong>Role:</strong> Technical documentation expert
+<strong>Insight:</strong> Our team needs clear API documentation for a REST service
+<strong>Statement:</strong> Create comprehensive API documentation
+<strong>Personality:</strong> Professional, clear, and concise
+<strong>Experiment:</strong> Provide 3 different documentation styles</div>
+                                    </div>
+                                </div>
+
+                                <!-- ELAVIS Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.elavis = !frameworkBodyCollapsed.elavis" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.elavis}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            ELAVIS
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Blog posts, emails, social media, marketing copy.</p>
+                                    <div x-show="!frameworkBodyCollapsed.elavis" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Instruction, Context, Input Data, Output Indicator</p>
+                                        <button @click="frameworkExamples.elavis = !frameworkExamples.elavis" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.elavis}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.elavis" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Instruction:</strong> Generate a professional blog post
+<strong>Context:</strong> Writing for a tech company blog
+<strong>Input Data:</strong> Topic: "AI in Healthcare"
+<strong>Output Indicator:</strong> 800-1000 words, engaging tone, SEO optimized</div>
+                                    </div>
+                                </div>
+
+                                <!-- SPARC Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.sparc = !frameworkBodyCollapsed.sparc" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.sparc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            SPARC
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Technical documentation, user guides, API docs, project proposals.</p>
+                                    <div x-show="!frameworkBodyCollapsed.sparc" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Situation, Purpose, Audience, Result, Constraints</p>
+                                        <button @click="frameworkExamples.sparc = !frameworkExamples.sparc" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.sparc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.sparc" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Situation:</strong> Need technical documentation for API
+<strong>Purpose:</strong> Help developers integrate the API
+<strong>Audience:</strong> Software developers with mid-level experience
+<strong>Result:</strong> Clear, well-structured documentation
+<strong>Constraints:</strong> Must include code examples, max 2000 words</div>
+                                    </div>
+                                </div>
+
+                                <!-- RISEN Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.risen = !frameworkBodyCollapsed.risen" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.risen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            RISEN
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Data analysis, structured problem-solving, analytical tasks.</p>
+                                    <div x-show="!frameworkBodyCollapsed.risen" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Role, Input, Steps, Expectation, Narrowing</p>
+                                        <button @click="frameworkExamples.risen = !frameworkExamples.risen" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.risen}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.risen" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Role:</strong> Act as a data analyst
+<strong>Input:</strong> Sales data for Q1 2024
+<strong>Steps:</strong> Analyze trends, identify patterns, create summary
+<strong>Expectation:</strong> Provide actionable insights
+<strong>Narrowing:</strong> Focus on top 3 product categories</div>
+                                    </div>
+                                </div>
+
+                                <!-- PGTC Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.pgtc = !frameworkBodyCollapsed.pgtc" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.pgtc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            PGTC
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Quick content creation, copywriting, simple structured outputs.</p>
+                                    <div x-show="!frameworkBodyCollapsed.pgtc" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Persona, Goal, Task, Context</p>
+                                        <button @click="frameworkExamples.pgtc = !frameworkExamples.pgtc" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.pgtc}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.pgtc" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Persona:</strong> You are a professional copywriter
+<strong>Goal:</strong> Create compelling marketing copy
+<strong>Task:</strong> Write a product description
+<strong>Context:</strong> Promoting a new SaaS tool for developers</div>
+                                    </div>
+                                </div>
+
+                                <!-- RTF Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.rtf = !frameworkBodyCollapsed.rtf" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.rtf}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            RTF
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Data conversion, formatting tasks, quick transformations.</p>
+                                    <div x-show="!frameworkBodyCollapsed.rtf" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Request, Task, Format</p>
+                                        <button @click="frameworkExamples.rtf = !frameworkExamples.rtf" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.rtf}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.rtf" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Request:</strong> Convert this list to JSON
+<strong>Task:</strong> Transform the following notes into structured data
+<strong>Format:</strong> JSON with keys: title, date, priority</div>
+                                    </div>
+                                </div>
+
+                                <!-- RACE Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.race = !frameworkBodyCollapsed.race" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.race}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            RACE
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Emails, summaries, reports, daily communication tasks.</p>
+                                    <div x-show="!frameworkBodyCollapsed.race" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Role, Action, Context, Execute</p>
+                                        <button @click="frameworkExamples.race = !frameworkExamples.race" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.race}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.race" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Role:</strong> You are a professional email writer
+<strong>Action:</strong> Draft a meeting follow-up email
+<strong>Context:</strong> Meeting with client about project timeline
+<strong>Execute:</strong> Send professional, concise email</div>
+                                    </div>
+                                </div>
+
+                                <!-- TAG Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.tag = !frameworkBodyCollapsed.tag" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.tag}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            TAG
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Process documentation, workflow definition, task breakdown.</p>
+                                    <div x-show="!frameworkBodyCollapsed.tag" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Task, Action, Goal</p>
+                                        <button @click="frameworkExamples.tag = !frameworkExamples.tag" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.tag}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.tag" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Task:</strong> Review code for security vulnerabilities
+<strong>Action:</strong> Analyze codebase and identify issues
+<strong>Goal:</strong> Produce a security audit report</div>
+                                    </div>
+                                </div>
+
+                                <!-- STAR Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.star = !frameworkBodyCollapsed.star" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.star}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            STAR
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Interview responses, case studies, problem-solving narratives.</p>
+                                    <div x-show="!frameworkBodyCollapsed.star" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Situation, Task, Action, Result</p>
+                                        <button @click="frameworkExamples.star = !frameworkExamples.star" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.star}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.star" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Situation:</strong> Customer complaints about slow response times
+<strong>Task:</strong> Improve system performance
+<strong>Action:</strong> Implemented caching and optimized queries
+<strong>Result:</strong> Reduced response time by 60%</div>
+                                    </div>
+                                </div>
+
+                                <!-- CLEAR Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.clear = !frameworkBodyCollapsed.clear" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.clear}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            CLEAR
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Clear communication, adaptable prompts, iterative refinement.</p>
+                                    <div x-show="!frameworkBodyCollapsed.clear" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Concise, Logical, Explicit, Adaptive, Reflective</p>
+                                        <button @click="frameworkExamples.clear = !frameworkExamples.clear" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.clear}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.clear" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Concise:</strong> Brief and to the point
+<strong>Logical:</strong> Follows clear reasoning
+<strong>Explicit:</strong> Clear instructions
+<strong>Adaptive:</strong> Adjusts to context
+<strong>Reflective:</strong> Considers feedback</div>
+                                    </div>
+                                </div>
+
+                                <!-- SMART Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.smart = !frameworkBodyCollapsed.smart" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.smart}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            SMART
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Goal setting, project planning, measurable objectives.</p>
+                                    <div x-show="!frameworkBodyCollapsed.smart" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Specific, Measurable, Achievable, Relevant, Time-bound</p>
+                                        <button @click="frameworkExamples.smart = !frameworkExamples.smart" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.smart}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.smart" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Specific:</strong> Increase user engagement by 25%
+<strong>Measurable:</strong> Track via analytics dashboard
+<strong>Achievable:</strong> With current resources
+<strong>Relevant:</strong> Aligns with business goals
+<strong>Time-bound:</strong> Within 3 months</div>
+                                    </div>
+                                </div>
+
+                                <!-- RIDE Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.ride = !frameworkBodyCollapsed.ride" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.ride}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            RIDE
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Medical education, tutoring, educational scenarios with examples.</p>
+                                    <div x-show="!frameworkBodyCollapsed.ride" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Role, Input, Directive, Examples</p>
+                                        <button @click="frameworkExamples.ride = !frameworkExamples.ride" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.ride}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.ride" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Role:</strong> Act as a medical tutor
+<strong>Input:</strong> Patient case with symptoms
+<strong>Directive:</strong> Help identify differential diagnosis
+<strong>Examples:</strong> Include 3 possible diagnoses with justification</div>
+                                    </div>
+                                </div>
+
+                                <!-- PROMPT Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.prompt = !frameworkBodyCollapsed.prompt" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.prompt}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            PROMPT
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Complex projects, thorough planning, comprehensive prompts.</p>
+                                    <div x-show="!frameworkBodyCollapsed.prompt" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Purpose, Role, Output, Mechanics, Parameters, Testing</p>
+                                        <button @click="frameworkExamples.prompt = !frameworkExamples.prompt" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.prompt}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.prompt" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Purpose:</strong> Generate marketing copy
+<strong>Role:</strong> Professional copywriter
+<strong>Output:</strong> 500-word article
+<strong>Mechanics:</strong> Use persuasive language
+<strong>Parameters:</strong> Target audience: B2B SaaS
+<strong>Testing:</strong> A/B test two versions</div>
+                                    </div>
+                                </div>
+
+                                <!-- TAP Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.tap = !frameworkBodyCollapsed.tap" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.tap}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            TAP
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Tutorials, educational content, instructional materials.</p>
+                                    <div x-show="!frameworkBodyCollapsed.tap" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Task, Audience, Purpose</p>
+                                        <button @click="frameworkExamples.tap = !frameworkExamples.tap" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.tap}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.tap" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Task:</strong> Create a tutorial
+<strong>Audience:</strong> Beginner developers
+<strong>Purpose:</strong> Teach basic Python concepts</div>
+                                    </div>
+                                </div>
+
+                                <!-- CARE Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.care = !frameworkBodyCollapsed.care" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.care}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            CARE
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Format-specific outputs, JSON/XML generation, structured data.</p>
+                                    <div x-show="!frameworkBodyCollapsed.care" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Context, Action, Result, Example</p>
+                                        <button @click="frameworkExamples.care = !frameworkExamples.care" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.care}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.care" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Context:</strong> Need formatted JSON response
+<strong>Action:</strong> Convert user data to JSON
+<strong>Result:</strong> Properly formatted JSON object
+<strong>Example:</strong> {"name": "John", "age": 30}</div>
+                                    </div>
+                                </div>
+
+                                <!-- COSTAR Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.costar = !frameworkBodyCollapsed.costar" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.costar}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            COSTAR
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Marketing copy, brand-aligned content, audience-specific writing.</p>
+                                    <div x-show="!frameworkBodyCollapsed.costar" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Context, Objective, Style, Tone, Audience, Response</p>
+                                        <button @click="frameworkExamples.costar = !frameworkExamples.costar" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.costar}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.costar" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Context:</strong> Marketing campaign for new product
+<strong>Objective:</strong> Increase brand awareness
+<strong>Style:</strong> Engaging and modern
+<strong>Tone:</strong> Friendly and professional
+<strong>Audience:</strong> Millennials and Gen Z
+<strong>Response:</strong> Create social media posts</div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <!-- AI Reasoning & Chain-of-Thought -->
+                                <div class="border-t border-gray-200 dark:border-gray-700 pt-2 mt-3">
+                                    <button @click="aiReasoningCollapsed = !aiReasoningCollapsed" class="w-full text-left flex items-center gap-2 mb-2">
+                                        <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !aiReasoningCollapsed}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                        <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase">AI Reasoning & Chain-of-Thought</p>
+                                    </button>
+                                </div>
+                                <div x-show="!aiReasoningCollapsed" x-transition class="space-y-3">
+                                <!-- Chain-of-Thought Prompting -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.chainOfThought = !frameworkBodyCollapsed.chainOfThought" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.chainOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            Chain-of-Thought
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Complex problem-solving, step-by-step analysis, logical reasoning tasks</p>
+                                    <div x-show="!frameworkBodyCollapsed.chainOfThought" x-transition class="mt-2 space-y-2">
+                                        <button @click="frameworkExamples.chainOfThought = !frameworkExamples.chainOfThought" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.chainOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.chainOfThought" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+Let's think step by step:
+1. First, identify all relevant symptoms
+2. Then, narrow down possible diagnoses
+3. Finally, justify the most likely diagnosis</div>
+                                    </div>
+                                </div>
+
+                                <!-- 5C Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.fiveC = !frameworkBodyCollapsed.fiveC" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.fiveC}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            5C Framework
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Iterative prompt improvement, refining outputs, continuous optimization.</p>
+                                    <div x-show="!frameworkBodyCollapsed.fiveC" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Clarity, Contextualization, Command, Chaining, Continuous Refinement</p>
+                                        <button @click="frameworkExamples.fiveC = !frameworkExamples.fiveC" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.fiveC}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.fiveC" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Clarity:</strong> Clear instructions
+<strong>Contextualization:</strong> Provide background info
+<strong>Command:</strong> Use imperative language
+<strong>Chaining:</strong> Break into steps
+<strong>Continuous Refinement:</strong> Iterate based on feedback</div>
+                                    </div>
+                                </div>
+
+                                <!-- Tree-of-Thought Prompting -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.treeOfThought = !frameworkBodyCollapsed.treeOfThought" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.treeOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            Tree-of-Thought
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Exploring multiple solutions, comparing options, diagnostic reasoning</p>
+                                    <div x-show="!frameworkBodyCollapsed.treeOfThought" x-transition class="mt-2 space-y-2">
+                                        <button @click="frameworkExamples.treeOfThought = !frameworkExamples.treeOfThought" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.treeOfThought}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.treeOfThought" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+List multiple approaches:
+1. Approach A: [description]
+2. Approach B: [description]
+3. Approach C: [description]
+Evaluate each one and choose the best</div>
+                                    </div>
+                                </div>
+
+                                <!-- Zero-Shot/Few-Shot Prompting -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.zeroShot = !frameworkBodyCollapsed.zeroShot" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.zeroShot}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            Zero-Shot/Few-Shot
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Format learning, pattern recognition, example-based training</p>
+                                    <div x-show="!frameworkBodyCollapsed.zeroShot" x-transition class="mt-2 space-y-2">
+                                        <button @click="frameworkExamples.zeroShot = !frameworkExamples.zeroShot" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.zeroShot}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.zeroShot" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+Example 1: [Sample patient note]
+Example 2: [Sample patient note]
+Now write one for: [Current case]</div>
+                                    </div>
+                                </div>
+
+                                <!-- AI-Aided Clinical Reasoning -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.clinicalReasoning = !frameworkBodyCollapsed.clinicalReasoning" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.clinicalReasoning}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            AI-Aided Clinical Reasoning
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Medical training, clinical scenarios, educational simulations</p>
+                                    <div x-show="!frameworkBodyCollapsed.clinicalReasoning" x-transition class="mt-2 space-y-2">
+                                        <button @click="frameworkExamples.clinicalReasoning = !frameworkExamples.clinicalReasoning" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.clinicalReasoning}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.clinicalReasoning" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+You are a virtual standardized patient presenting with chest pain. Answer questions based on typical symptoms of myocardial infarction, and ask the learner to explain their diagnosis at the end.</div>
+                                    </div>
+                                </div>
+
+                                <!-- GOLD Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.gold = !frameworkBodyCollapsed.gold" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.gold}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            GOLD
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Problem analysis, strategic planning, obstacle identification.</p>
+                                    <div x-show="!frameworkBodyCollapsed.gold" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Goal, Obstacles, Logic, Data</p>
+                                        <button @click="frameworkExamples.gold = !frameworkExamples.gold" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.gold}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.gold" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Goal:</strong> Optimize database performance
+<strong>Obstacles:</strong> Limited budget, existing infrastructure
+<strong>Logic:</strong> Use indexing and query optimization
+<strong>Data:</strong> Current performance metrics</div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <!-- Specialized Prompts -->
+                                <div class="border-t border-gray-200 dark:border-gray-700 pt-2 mt-3">
+                                    <button @click="specializedPromptsCollapsed = !specializedPromptsCollapsed" class="w-full text-left flex items-center gap-2 mb-2">
+                                        <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !specializedPromptsCollapsed}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                        </svg>
+                                        <p class="text-xs font-semibold text-gray-700 dark:text-gray-300 uppercase">Specialized Prompts</p>
+                                    </button>
+                                </div>
+                                <div x-show="!specializedPromptsCollapsed" x-transition class="space-y-3">
+                                <!-- PEACE Framework -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.peace = !frameworkBodyCollapsed.peace" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.peace}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            PEACE
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Self-reflection, decision analysis, learning journals.</p>
+                                    <div x-show="!frameworkBodyCollapsed.peace" x-transition class="mt-2 space-y-2">
+                                        <p class="text-xs text-gray-600 dark:text-gray-400"><strong>Stands for:</strong> Present, Explore, Analyze, Choose, Evaluate</p>
+                                        <button @click="frameworkExamples.peace = !frameworkExamples.peace" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.peace}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.peace" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+<strong>Present:</strong> Describe the current situation
+<strong>Explore:</strong> Identify thoughts and feelings
+<strong>Analyze:</strong> Consider alternatives
+<strong>Choose:</strong> Select a path forward
+<strong>Evaluate:</strong> Assess the outcome</div>
+                                    </div>
+                                </div>
+
+                                <!-- Reflective Prompting -->
+                                <div class="border border-gray-200 dark:border-gray-700 rounded p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <button @click="frameworkBodyCollapsed.reflective = !frameworkBodyCollapsed.reflective" class="w-full text-left">
+                                        <h4 class="font-semibold text-gray-900 dark:text-white mb-1 flex items-center gap-2">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-90': !frameworkBodyCollapsed.reflective}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                            </svg>
+                                            Reflective Prompting
+                                        </h4>
+                                    </button>
+                                    <p class="text-xs text-gray-500 dark:text-gray-500 mt-1 mb-2 ml-5"><strong>Good for:</strong> Learning reflection, educational journals, experience analysis</p>
+                                    <div x-show="!frameworkBodyCollapsed.reflective" x-transition class="mt-2 space-y-2">
+                                        <button @click="frameworkExamples.reflective = !frameworkExamples.reflective" class="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 mb-1 flex items-center gap-1">
+                                            <svg class="w-3 h-3 transition-transform" :class="{'rotate-180': !frameworkExamples.reflective}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                            </svg>
+                                            Example
+                                        </button>
+                                        <div x-show="!frameworkExamples.reflective" x-transition class="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-xs text-gray-700 dark:text-gray-300 font-mono whitespace-pre-wrap">
+DIEP Framework:
+<strong>Describe:</strong> What happened?
+<strong>Interpret:</strong> What did you learn?
+<strong>Evaluate:</strong> What was significant?
+<strong>Plan:</strong> What will you do differently?</div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </aside>
 
@@ -797,8 +1491,64 @@
                 showViewModal: false,
                 showCategoryModal: false,
                 showImportModal: false,
-                categoriesCollapsed: false,
-                tagsCollapsed: false,
+                categoriesCollapsed: true,
+                tagsCollapsed: true,
+                frameworksCollapsed: true,
+                generalPurposeCollapsed: true,
+                aiReasoningCollapsed: true,
+                specializedPromptsCollapsed: true,
+                frameworkExamples: {
+                    crispe: true,
+                    elavis: true,
+                    sparc: true,
+                    risen: true,
+                    pgtc: true,
+                    rtf: true,
+                    race: true,
+                    tag: true,
+                    star: true,
+                    clear: true,
+                    smart: true,
+                    ride: true,
+                    prompt: true,
+                    tap: true,
+                    care: true,
+                    costar: true,
+                    chainOfThought: true,
+                    fiveC: true,
+                    treeOfThought: true,
+                    zeroShot: true,
+                    clinicalReasoning: true,
+                    gold: true,
+                    peace: true,
+                    reflective: true
+                },
+                frameworkBodyCollapsed: {
+                    crispe: true,
+                    elavis: true,
+                    sparc: true,
+                    risen: true,
+                    pgtc: true,
+                    rtf: true,
+                    race: true,
+                    tag: true,
+                    star: true,
+                    clear: true,
+                    smart: true,
+                    ride: true,
+                    prompt: true,
+                    tap: true,
+                    care: true,
+                    costar: true,
+                    chainOfThought: true,
+                    fiveC: true,
+                    treeOfThought: true,
+                    zeroShot: true,
+                    clinicalReasoning: true,
+                    gold: true,
+                    peace: true,
+                    reflective: true
+                },
                 viewingPrompt: null,
                 currentPrompt: {
                     id: null,

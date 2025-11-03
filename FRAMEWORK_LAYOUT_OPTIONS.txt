@@ -1,0 +1,79 @@
+FRAMEWORK COLLAPSED LAYOUT OPTIONS
+=====================================
+
+Option 1: Title + "Good for" inline (single line)
+--------------------------------------------------
+┌─────────────────────────────────────────────┐
+│ ▶ CRISPE                                    │
+│   Good for: Multi-step technical tasks...    │
+└─────────────────────────────────────────────┘
+(Expanded shows: Stands for + Example)
+
+Option 2: Title + "Good for" on separate line below
+----------------------------------------------------
+┌─────────────────────────────────────────────┐
+│ ▶ CRISPE                                    │
+│   Good for: Multi-step technical tasks...    │
+└─────────────────────────────────────────────┘
+(Expanded shows: Stands for + Example)
+
+Option 3: Title with badge/tag style "Good for"
+------------------------------------------------
+┌─────────────────────────────────────────────┐
+│ ▶ CRISPE                                    │
+│   ┌─────────────────────────────────────┐   │
+│   │ Good for: Multi-step technical...   │   │
+│   └─────────────────────────────────────┘   │
+└─────────────────────────────────────────────┘
+(Expanded shows: Stands for + Example)
+
+Option 4: Title + "Good for" with icon/separator
+--------------------------------------------------
+┌─────────────────────────────────────────────┐
+│ ▶ CRISPE                                    │
+│   ───────────────────────────────────────    │
+│   Good for: Multi-step technical tasks...    │
+└─────────────────────────────────────────────┘
+(Expanded shows: Stands for + Example)
+
+Option 5: Title + "Good for" in smaller text
+---------------------------------------------
+┌─────────────────────────────────────────────┐
+│ ▶ CRISPE                                    │
+│   Good for: Multi-step technical tasks...    │
+│   (smaller, lighter text)                   │
+└─────────────────────────────────────────────┘
+(Expanded shows: Stands for + Example)
+
+Option 6: Title + compact "Good for" chip
+------------------------------------------
+┌─────────────────────────────────────────────┐
+│ ▶ CRISPE                                    │
+│   [Multi-step tasks] [Code generation]     │
+└─────────────────────────────────────────────┘
+(Expanded shows: Full "Good for" + Stands for + Example)
+
+Option 7: Title + "Good for" with ellipsis
+-------------------------------------------
+┌─────────────────────────────────────────────┐
+│ ▶ CRISPE                                    │
+│   Good for: Multi-step technical tasks...    │
+│   (truncated with "..." if too long)        │
+└─────────────────────────────────────────────┘
+(Expanded shows: Full "Good for" + Stands for + Example)
+
+Option 8: Title + "Good for" in muted color background
+--------------------------------------------------------
+┌─────────────────────────────────────────────┐
+│ ▶ CRISPE                                    │
+│   ░░░ Good for: Multi-step technical... ░░░  │
+│   (subtle background highlight)             │
+└─────────────────────────────────────────────┘
+(Expanded shows: Stands for + Example)
+
+RECOMMENDED: Option 2 or Option 5
+- Clean and readable
+- Shows key information at a glance
+- Doesn't clutter the interface
+- Easy to scan multiple frameworks
+
