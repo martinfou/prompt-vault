@@ -2,6 +2,8 @@
 
 > **Stop losing your best prompts. Start organizing like a pro.**
 
+**🌐 [Try the Live Demo](https://martinfou.github.io/prompt-vault/)**
+
 Transform your scattered AI prompts into a powerful, organized knowledge base. Prompt Vault is the modern, zero-configuration solution that helps developers, content creators, and AI power users save time, boost productivity, and never lose a great prompt again.
 
 ---
@@ -84,9 +86,8 @@ Transform your scattered AI prompts into a powerful, organized knowledge base. P
 
 ### Option 1: Use Online (If Deployed)
 If Prompt Vault is deployed to GitHub Pages, simply visit:
-```
-https://<your-username>.github.io/prompt-vault/
-```
+- **🌐 Live Demo**: [https://martinfou.github.io/prompt-vault/](https://martinfou.github.io/prompt-vault/)
+
 No download required! Just open in your browser and start using it immediately.
 
 ### Option 2: Download Locally
