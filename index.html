@@ -2779,14 +2779,28 @@ Provide a professional unit test implementation for the following class/method:`
                         try {
                             const data = JSON.parse(e.target.result);
                             
+                            let importedCount = 0;
+                            let skippedCount = 0;
+                            
                             if (data.prompts && Array.isArray(data.prompts)) {
-                                // Merge prompts
+                                // Merge prompts with duplicate detection
                                 data.prompts.forEach(importedPrompt => {
-                                    // Generate new ID to avoid conflicts
-                                    importedPrompt.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
-                                    importedPrompt.createdAt = importedPrompt.createdAt || new Date().toISOString();
-                                    importedPrompt.modifiedAt = importedPrompt.modifiedAt || new Date().toISOString();
-                                    this.prompts.push(importedPrompt);
+                                    // Check for duplicates by title and content
+                                    const isDuplicate = this.prompts.some(existingPrompt => 
+                                        existingPrompt.title === importedPrompt.title && 
+                                        existingPrompt.content === importedPrompt.content
+                                    );
+                                    
+                                    if (!isDuplicate) {
+                                        // Generate new ID to avoid conflicts
+                                        importedPrompt.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+                                        importedPrompt.createdAt = importedPrompt.createdAt || new Date().toISOString();
+                                        importedPrompt.modifiedAt = importedPrompt.modifiedAt || new Date().toISOString();
+                                        this.prompts.push(importedPrompt);
+                                        importedCount++;
+                                    } else {
+                                        skippedCount++;
+                                    }
                                 });
                             }
 
@@ -2803,7 +2817,16 @@ Provide a professional unit test implementation for the following class/method:`
                             this.updateAllTags();
                             this.filterPrompts();
                             this.showImportModal = false;
-                            alert('Import successful!');
+                            
+                            // Show detailed import results
+                            let message = `Import successful!`;
+                            if (importedCount > 0) {
+                                message += `\n${importedCount} prompt(s) imported.`;
+                            }
+                            if (skippedCount > 0) {
+                                message += `\n${skippedCount} duplicate(s) skipped.`;
+                            }
+                            alert(message);
                         } catch (error) {
                             alert('Error importing file: ' + error.message);
                         }
