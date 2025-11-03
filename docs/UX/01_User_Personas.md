@@ -61,7 +61,7 @@ This document defines the primary user personas for Prompt Vault, a web applicat
 - Real-time search across title, content, tags, and category
 - Export/import JSON functionality for backup and sharing
 - Tag and category system with collapsible sections
-- Template library with 23+ prompt frameworks (CRISPE, ELAVIS, SPARC, RISEN, PGTC, RTF, RACE, TAG, STAR, CLEAR, SMART, RIDE, PROMPT, TAP, CARE, COSTAR, Chain-of-Thought, 5C Framework, Tree-of-Thought, Zero-Shot/Few-Shot, AI-Aided Clinical Reasoning, GOLD, PEACE, Reflective Writing)
+- Template library with 27 pre-built templates covering 23 prompt frameworks (CRISPE, ELAVIS, SPARC, RISEN, PGTC, RTF, RACE, TAG, STAR, CLEAR, SMART, RIDE, PROMPT, TAP, CARE, COSTAR, Chain-of-Thought, 5C Framework, Tree-of-Thought, Zero-Shot/Few-Shot, AI-Aided Clinical Reasoning, GOLD, PEACE, Reflective Writing)
 - Rating system (1-5 stars) for prompt quality tracking
 - Model preference selection (GPT-4, Claude, Gemini, Llama, etc.)
 - Syntax highlighting toggle for code content
@@ -122,7 +122,7 @@ This document defines the primary user personas for Prompt Vault, a web applicat
 ### Design Implications
 - Visual, intuitive interface with card-based layout
 - Clear categorization by framework type (ELAVIS, SPARC, CRISPE, etc.)
-- Template library with 23+ frameworks organized by purpose
+- Template library with 27 templates covering 23 frameworks organized by purpose
 - Framework examples with expandable details showing "Good for" descriptions
 - Easy search across all prompt fields
 - Multi-tag filtering for flexible organization
@@ -243,7 +243,7 @@ This document defines the primary user personas for Prompt Vault, a web applicat
 
 ### Design Implications
 - JSON export/import for easy team sharing
-- Comprehensive template library (23+ frameworks) for team standardization
+- Comprehensive template library (27 templates covering 23 frameworks) for team standardization
 - Last used timestamp tracking for usage patterns
 - Rating system for quality assessment
 - Import merges with existing data and assigns new IDs to prevent conflicts

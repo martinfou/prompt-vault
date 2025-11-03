@@ -46,12 +46,12 @@ This document maps the complete user journey for Prompt Vault users, from initia
 - Header with dark mode toggle, Import, Export, and "+ New Prompt" buttons
 - Sidebar with collapsible sections (Search, Categories, Tags, Frameworks)
 - Main content area showing prompt cards or empty state
-- Template library with 23+ frameworks organized by type (General Purpose, AI Reasoning, Specialized)
+- Template library with 27 templates covering 23 frameworks organized by type (General Purpose, AI Reasoning, Specialized)
 - Framework examples expandable with "Good for" descriptions and example prompts
 
 ### Opportunities
 - **Clear Value Proposition**: Single-page app loads instantly with no signup
-- **Template Library Prominence**: 23+ frameworks visible in collapsible sidebar
+- **Template Library Prominence**: 27 templates covering 23 frameworks visible in collapsible sidebar
 - **Framework Examples**: Expandable examples show "Good for" descriptions and sample prompts
 - **Sample Prompt Pre-filled**: Create modal includes sample code review prompt for guidance
 - **Local Storage**: Data stored in browser localStorage (privacy-focused)
@@ -93,7 +93,7 @@ This document maps the complete user journey for Prompt Vault users, from initia
 - **Cautious Optimism** - Wanting to invest but unsure
 
 ### Touchpoints
-- Create prompt modal with template dropdown (23+ frameworks)
+- Create prompt modal with template dropdown (27 templates)
 - Template dropdown organized by framework type with descriptions
 - Sidebar with collapsible sections (Categories, Tags, Frameworks)
 - Real-time search input (filters as you type)

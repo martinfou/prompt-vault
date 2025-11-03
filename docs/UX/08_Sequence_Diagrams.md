@@ -29,7 +29,7 @@ sequenceDiagram
     
     alt User selects template
         User->>TemplateDropdown: Click template dropdown
-        TemplateDropdown->>TemplateDropdown: Show 23+ frameworks
+        TemplateDropdown->>TemplateDropdown: Show 27 templates
         User->>TemplateDropdown: Select framework template
         TemplateDropdown->>Form: Populate form fields
         Form->>User: Display pre-filled template content
@@ -65,7 +65,7 @@ sequenceDiagram
 ```
 
 ### Key Interactions
-- **Template Selection**: Optional dropdown with 23+ frameworks
+- **Template Selection**: Optional dropdown with 27 templates
 - **Form Validation**: Title and content are required fields
 - **Autocomplete**: Category and tag inputs provide suggestions
 - **Data Persistence**: All data saved to localStorage immediately
@@ -352,7 +352,7 @@ sequenceDiagram
 ## Sequence Diagram 6: Template Selection and Framework Display
 
 ### Description
-This sequence diagram shows how users browse and select from the template library with 23+ frameworks.
+This sequence diagram shows how users browse and select from the template library with 27 templates covering 23 frameworks.
 
 ```mermaid
 sequenceDiagram
@@ -401,7 +401,7 @@ sequenceDiagram
 ```
 
 ### Key Interactions
-- **Framework Discovery**: Collapsible sections organize 23+ frameworks
+- **Framework Discovery**: Collapsible sections organize 23 frameworks (with 27 templates available)
 - **Framework Details**: Expandable cards show "Good for" and "Stands for" info
 - **Example Prompts**: Expandable examples show actual template content
 - **Template Selection**: Dropdown in create modal loads template data
