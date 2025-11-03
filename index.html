@@ -160,7 +160,7 @@
                                 </svg>
                                 Tags
                             </button>
-                            <div x-show="!tagsCollapsed" x-transition class="flex flex-wrap gap-1 max-h-96 overflow-y-auto pr-1">
+                            <div x-show="!tagsCollapsed" x-transition class="flex flex-wrap gap-1">
                                 <template x-for="tag in allTags" :key="tag">
                                     <button 
                                         @click="toggleTagFilter(tag)"
