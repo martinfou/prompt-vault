@@ -203,13 +203,16 @@ prompt-vault/
 
 The repository includes a GitHub Actions workflow that automatically deploys to GitHub Pages when you push to the `master` or `main` branch.
 
-**First-time Setup:**
+**⚠️ IMPORTANT: You MUST enable GitHub Pages FIRST before the workflow can deploy!**
 
-1. **Enable GitHub Pages** in your repository:
-   - Go to your repository on GitHub
-   - Click **Settings** → **Pages**
+**First-time Setup (CRITICAL - Do this FIRST):**
+
+1. **Enable GitHub Pages** in your repository (DO THIS BEFORE PUSHING):
+   - Go to your repository on GitHub: `https://github.com/<your-username>/prompt-vault/settings/pages`
+   - Click **Settings** → **Pages** (in the left sidebar)
    - Under **Source**, select **GitHub Actions**
-   - Save the settings
+   - Click **Save** to enable Pages
+   - ⚠️ **If you don't do this first, the workflow will fail with "Not Found" errors**
 
 2. **Push your code** to trigger deployment:
    ```bash
@@ -222,6 +225,18 @@ The repository includes a GitHub Actions workflow that automatically deploys to 
    - Your site will be available at: `https://<your-username>.github.io/prompt-vault/`
 
 **That's it!** Every time you push to `master` or `main`, your site will automatically update.
+
+### Troubleshooting
+
+**Error: "Not Found" or "Get Pages site failed"**
+- This means GitHub Pages is not enabled yet
+- Go to **Settings** → **Pages** and select **GitHub Actions** as the source
+- Save the settings, then the next workflow run will succeed
+
+**Workflow fails on first run**
+- Make sure you enabled Pages in Settings first (step 1 above)
+- Wait a few minutes after enabling Pages before pushing
+- Check the Actions tab for detailed error messages
 
 ### Manual Deployment
 
