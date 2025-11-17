@@ -116,17 +116,13 @@ Prompt Vault is a well-designed, single-page web application for managing LLM pr
    - ✅ Tag filtering uses OR logic (shows prompts with ANY selected tag)
 
 3. **Templates System**
-   - 8 pre-built templates covering common use cases:
-     - Professional Git Commit Message Generator (CRISPE)
-     - Senior Programmer Assistant (CRISPE)
-     - Scrum Master - Sprint Planning Assistant (CRISPE)
-     - Software Architect Advisor (CRISPE)
-     - Code Review Assistant (CRISPE)
-     - Technical Documentation Architect (CRISPE)
-     - UX Designer & User Experience Architect (CRISPE)
-     - Content Generator (Elavis)
-   - Well-structured prompts using CRISPE and Elavis Saravia frameworks
-   - Template titles clearly indicate framework type (CRISPE vs Elavis)
+   - 47 pre-built templates covering multiple prompt engineering frameworks:
+     - **CRISPE Framework** (12 templates): Professional Git Commit Message Generator, Senior Programmer Assistant, Scrum Master, Software Architect Advisor, Code Review Assistant, Technical Documentation Architect, UX Designer, Individual Contributor Assistant, Engineering Manager Assistant, Spring Boot MapStruct Mapper, Spring Boot WebClient, Professional Unit Test
+     - **Elavis Framework** (7 templates): Content Generator, Professional Email Writer, Blog Post Generator, Technical Writer, Social Media Content Writer, Individual Contributor Communication, Manager Communication
+     - **SPARC Framework** (7 templates): Technical Documentation, Code Explanation & Documentation, Project Proposal Writer, User Guide Writer, Meeting Summary Writer, Individual Contributor Documentation, Manager Documentation
+     - **Additional Frameworks** (21 templates): Covering RISEN, PGTC, RTF, RACE, TAG, STAR, CLEAR, SMART, RIDE, PROMPT, TAP, CARE, COSTAR, Chain-of-Thought, 5C Framework, Tree-of-Thought, Zero-Shot/Few-Shot, AI-Aided Clinical Reasoning, GOLD, PEACE, Reflective Writing, and TACT frameworks
+   - Well-structured prompts using multiple prompt engineering frameworks
+   - Template titles clearly indicate framework type
    - Easy to extend with new templates
 
 4. **Additional Features**

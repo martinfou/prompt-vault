@@ -93,7 +93,7 @@ Represents a prompt framework category available in the system.
 
 #### Available Frameworks
 
-The application includes 23 predefined frameworks:
+The application includes 24 predefined frameworks:
 
 1. **CRISPE** - Multi-step technical tasks, code generation, architectural decisions
 2. **ELAVIS** - Blog posts, emails, social media, marketing copy
@@ -119,6 +119,7 @@ The application includes 23 predefined frameworks:
 22. **GOLD** - Optimized Language for Decision - Decision-making, structured analysis, logical reasoning
 23. **PEACE** - Self-reflection, decision analysis, learning journals
 24. **Reflective Writing** - Learning journals, reflection, personal growth
+25. **TACT** - Task organization, calendar planning, productivity, todo management
 
 ### 3. Template Entity
 
@@ -142,7 +143,7 @@ Represents a pre-built prompt template that users can select when creating new p
 
 #### Available Templates
 
-The application includes 27 pre-built templates:
+The application includes 47 pre-built templates covering multiple frameworks:
 
 **CRISPE Framework Templates (12 templates)**:
 - Professional Git Commit Message Generator
@@ -175,6 +176,30 @@ The application includes 27 pre-built templates:
 - Meeting Summary Writer
 - Individual Contributor Documentation
 - Manager Documentation
+
+**Additional Framework Templates (21 templates)**:
+- Data Analysis Assistant (RISEN)
+- Quick Content Creator (PGTC)
+- Data Format Converter (RTF)
+- Email & Summary Writer (RACE)
+- Process Documentation Writer (TAG)
+- Interview & Case Study Writer (STAR)
+- Clear Communication Prompter (CLEAR)
+- Goal Setting Assistant (SMART)
+- Medical Education Tutor (RIDE)
+- Comprehensive Project Planner (PROMPT)
+- Tutorial Creator (TAP)
+- Structured Data Generator (CARE)
+- Marketing Copy Writer (COSTAR)
+- Chain-of-Thought Problem Solver
+- Prompt Refinement Assistant (5C Framework)
+- Tree-of-Thought Problem Solver
+- Format Learning Assistant (Zero-Shot/Few-Shot)
+- Clinical Reasoning Assistant
+- Decision Maker (GOLD Framework)
+- Self-Reflection Guide (PEACE)
+- Reflective Writing Assistant
+- Task & Calendar Organizer (TACT Framework)
 
 ### 4. Application State Entity
 

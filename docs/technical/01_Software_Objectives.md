@@ -18,8 +18,8 @@ Prompt Vault is a client-side web application designed to help users manage, org
 ### Core Features
 
 - **Full CRUD Operations**: Create, Read, Update, Delete prompts with validation
-- **Template System**: 27 pre-built templates covering multiple prompt engineering frameworks
-- **Category Management**: Organize prompts by framework type (CRISPE, ELAVIS, SPARC, etc.)
+- **Template System**: 47 pre-built templates covering 24 prompt engineering frameworks (CRISPE, ELAVIS, SPARC, RISEN, PGTC, RTF, RACE, TAG, STAR, CLEAR, SMART, RIDE, PROMPT, TAP, CARE, COSTAR, Chain-of-Thought, 5C Framework, Tree-of-Thought, Zero-Shot/Few-Shot, AI-Aided Clinical Reasoning, GOLD, PEACE, Reflective Writing, TACT)
+- **Category Management**: Organize prompts by framework type (24 frameworks available)
 - **Tag System**: Multi-tag support with comma-separated tag input
 - **Advanced Filtering**: Filter by category and tags (OR logic for tags)
 - **Full-Text Search**: Search across title, content, category, and tags

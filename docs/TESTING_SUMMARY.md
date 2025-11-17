@@ -41,7 +41,7 @@
    - ✅ Combined filters work
 
 5. **Templates**
-   - ✅ 8 templates available (7 CRISPE framework, 1 Elavis Saravia framework)
+   - ✅ 47 templates available across multiple frameworks (CRISPE, Elavis, SPARC, RISEN, PGTC, RTF, RACE, TAG, STAR, CLEAR, SMART, RIDE, PROMPT, TAP, CARE, COSTAR, Chain-of-Thought, 5C Framework, Tree-of-Thought, Zero-Shot/Few-Shot, AI-Aided Clinical Reasoning, GOLD, PEACE, Reflective Writing, TACT)
    - ✅ Templates load correctly
    - ✅ Template data pre-fills form
    - ✅ Template titles clearly indicate framework type

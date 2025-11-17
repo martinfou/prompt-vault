@@ -203,10 +203,10 @@ Prompt Vault (Single Page Application)
 - **Purpose**: Starting points for new prompts
 - **Characteristics**:
   - Pre-built prompt structures organized by framework type
-  - 23 frameworks available (with 27 templates):
+  - 24 frameworks available (with 47 templates):
     - **General Purpose**: CRISPE, ELAVIS, SPARC, RISEN, PGTC, RTF, RACE, TAG, STAR, CLEAR, SMART, RIDE, PROMPT, TAP, CARE, COSTAR
     - **AI Reasoning**: Chain-of-Thought, 5C Framework, Tree-of-Thought, Zero-Shot/Few-Shot, AI-Aided Clinical Reasoning
-    - **Specialized**: GOLD, PEACE, Reflective Writing
+    - **Specialized**: GOLD, PEACE, Reflective Writing, TACT
   - Each framework includes:
     - Framework name and description
     - "Good for" use case description

@@ -16,7 +16,7 @@ Transform your scattered AI prompts into a powerful, organized knowledge base. P
 - **Works Offline**: Everything runs locally in your browser. No internet? No problem.
 
 ### 💎 **Powerful Organization**
-- **27 Pre-built Templates**: Hit the ground running with professional prompts for CRISPE, Elavis, and SPARC frameworks.
+- **47 Pre-built Templates**: Hit the ground running with professional prompts covering 24 frameworks including CRISPE, Elavis, SPARC, RISEN, PGTC, RTF, RACE, TAG, STAR, CLEAR, SMART, RIDE, PROMPT, TAP, CARE, COSTAR, Chain-of-Thought, 5C Framework, Tree-of-Thought, Zero-Shot/Few-Shot, AI-Aided Clinical Reasoning, GOLD, PEACE, Reflective Writing, and TACT.
 - **Smart Categorization**: Organize prompts by project, role, or any system that works for you.
 - **Flexible Tagging**: Find exactly what you need with multi-tag filtering and instant search.
 
@@ -26,7 +26,7 @@ Transform your scattered AI prompts into a powerful, organized knowledge base. P
 - **Portable**: Move your entire prompt library between devices with a single JSON file.
 
 ### 🌟 **Built for Real Work**
-- **Professional Templates**: From Git commit messages to technical documentation, we've got you covered.
+- **Professional Templates**: From Git commit messages to technical documentation, data analysis to medical education, we've got you covered with 47 templates across 24 frameworks.
 - **Usage Tracking**: Know which prompts work best with built-in usage history.
 - **Dark Mode**: Work comfortably in any lighting condition.
 
@@ -34,7 +34,7 @@ Transform your scattered AI prompts into a powerful, organized knowledge base. P
 
 ## 🎁 What You Get
 
-### 📚 **27 Professional Templates Ready to Use**
+### 📚 **47 Professional Templates Ready to Use**
 
 **CRISPE Framework** (12 templates):
 - Professional Git Commit Message Generator
@@ -67,6 +67,32 @@ Transform your scattered AI prompts into a powerful, organized knowledge base. P
 - Meeting Summary Writer
 - Individual Contributor Documentation
 - Manager Documentation
+
+**Additional Frameworks** (21 templates):
+- Data Analysis Assistant (RISEN)
+- Quick Content Creator (PGTC)
+- Data Format Converter (RTF)
+- Email & Summary Writer (RACE)
+- Process Documentation Writer (TAG)
+- Interview & Case Study Writer (STAR)
+- Clear Communication Prompter (CLEAR)
+- Goal Setting Assistant (SMART)
+- Medical Education Tutor (RIDE)
+- Comprehensive Project Planner (PROMPT)
+- Tutorial Creator (TAP)
+- Structured Data Generator (CARE)
+- Marketing Copy Writer (COSTAR)
+- Chain-of-Thought Problem Solver
+- Prompt Refinement Assistant (5C Framework)
+- Tree-of-Thought Problem Solver
+- Format Learning Assistant (Zero-Shot/Few-Shot)
+- Clinical Reasoning Assistant
+- Decision Maker (GOLD Framework)
+- Self-Reflection Guide (PEACE)
+- Reflective Writing Assistant
+- Task & Calendar Organizer (TACT Framework)
+
+**24 Prompt Engineering Frameworks Supported**: CRISPE, ELAVIS, SPARC, RISEN, PGTC, RTF, RACE, TAG, STAR, CLEAR, SMART, RIDE, PROMPT, TAP, CARE, COSTAR, Chain-of-Thought, 5C Framework, Tree-of-Thought, Zero-Shot/Few-Shot, AI-Aided Clinical Reasoning, GOLD, PEACE, Reflective Writing, TACT
 
 ### 🛠️ **Everything You Need**
 
