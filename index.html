@@ -4854,8 +4854,8 @@ To help you understand the scope of this project, please ask me 10 yes/no questi
                             }
                         });
 
-                        // Merge with useful default tags
-                        this.getDefaultTags().forEach(tag => tagsSet.add(tag));
+                        // Only use tags from existing prompts
+
                         this.allTags = Array.from(tagsSet).sort();
                     },
 
@@ -5269,7 +5269,9 @@ Be specific, constructive, and educational in your feedback.`;
                         // Filter tags that:
                         // 1. Match the current input (if any)
                         // 2. Are not already in the tagsInput
-                        return this.allTags.filter(tag => {
+                        // Combine used tags with default tags for suggestions
+                        const allSuggestions = new Set([...this.allTags, ...this.getDefaultTags()]);
+                        return Array.from(allSuggestions).sort().filter(tag => {
                             const tagLower = tag.toLowerCase();
                             const isNotAlreadyAdded = !existingTags.includes(tagLower);
                             const matchesInput = currentTag === '' || tagLower.includes(currentTag);
